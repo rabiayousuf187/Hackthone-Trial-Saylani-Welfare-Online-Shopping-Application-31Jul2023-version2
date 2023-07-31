@@ -1,0 +1,35 @@
+.main-page {
+    /* width: 430px;
+    height: 932px;
+    flex-shrink: 0; */
+}
+
+.logo-main {
+    display: flex;
+    width: 342px;
+    height: 268px;
+    padding: 2.252px 2.25px 2.547px 2.813px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.main-heading {
+    color: #61B846;
+    font-family: Inter;
+    font-size: 38px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 25px;
+    /* 65.789% */
+}
+
+.main-sub-heading {
+    color: #024F9D;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 25px;
+    /* 125% */
+}
