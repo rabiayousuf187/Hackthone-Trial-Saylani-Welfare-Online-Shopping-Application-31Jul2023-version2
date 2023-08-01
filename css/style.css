@@ -1,19 +1,41 @@
-.main-page {
-    /* width: 430px;
-    height: 932px;
-    flex-shrink: 0; */
+* {
+    margin: 0px;
+    padding: 0px;
 }
-
-.logo-main {
+/* ****************** Main Page ******************** */
+.main-page-content {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background: black; */
+}
+.main-page-logo{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+.logo-main {
+    /* display: flex; */
     width: 342px;
     height: 268px;
     padding: 2.252px 2.25px 2.547px 2.813px;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* flex-shrink: 0; */
 }
 
+.main-page-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    /* background: blanchedalmond; */
+}
 .main-heading {
     color: #61B846;
     font-family: Inter;
@@ -23,8 +45,7 @@
     line-height: 25px;
     /* 65.789% */
 }
-
-.main-sub-heading {
+.main-sub-heading{
     color: #024F9D;
     font-family: Inter;
     font-size: 20px;
@@ -37,7 +58,6 @@
 .btn-get-started {
     width: 226px;
     height: 69px;
-    flex-shrink: 0;
     border-radius: 15px;
     background: #61B846;
     box-shadow: 0px 4px 4px 5px #D4D3D3;
@@ -54,7 +74,8 @@
 .btn-get-started:hover,
 .btn-get-started:focus,
 .btn-get-started:visited {
-    color: #61B846;
-    background: #FFF;
+    color: #61B846 !important;
+    background: #FFF !important;
     
 }
+/* ****************** End Main Page ******************** */
