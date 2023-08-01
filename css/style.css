@@ -10,6 +10,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    width: 100%;
     /* background: black; */
 }
 
@@ -37,6 +38,7 @@
     justify-content: space-around;
     align-items: center;
     height: 100%;
+    width: 100%;
     /* background: blanchedalmond; */
 }
 
@@ -105,6 +107,38 @@
     font-weight: 600;
     line-height: 25px;
     /* 125% */
+}
+.signup .form {
+    width: 100%;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center; */
+    /* background: brown; */
+}
+.signup .form input,
+.signup .form .inp-icon{
+    border: none;
+    border-radius: 0px;
+    border-bottom: 2px solid #D4D3D3;
+}
+
+.signup .form input::placeholder {
+    color: #D4D3D3;
+    /* font-family: Inter; */
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    /* line-height: 25px; */
+    /* 125% */
+}
+/* input:focus::placeholder {
+    color: #999;
+  } */
+
+.signup .form img {
+    filter: invert(0.7);
+    width: 40px;
 }
 
 /* ****************** End Signup Page ******************** */
