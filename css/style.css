@@ -2,6 +2,7 @@
     margin: 0px;
     padding: 0px;
 }
+
 /* ****************** Main Page ******************** */
 .main-page-content {
     display: flex;
@@ -11,13 +12,15 @@
     height: 100vh;
     /* background: black; */
 }
-.main-page-logo{
+
+.main-page-logo {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
 }
+
 .logo-main {
     /* display: flex; */
     width: 342px;
@@ -36,6 +39,7 @@
     height: 100%;
     /* background: blanchedalmond; */
 }
+
 .main-heading {
     color: #61B846;
     font-family: Inter;
@@ -45,7 +49,8 @@
     line-height: 25px;
     /* 65.789% */
 }
-.main-sub-heading{
+
+.main-sub-heading {
     color: #024F9D;
     font-family: Inter;
     font-size: 20px;
@@ -76,6 +81,30 @@
 .btn-get-started:visited {
     color: #61B846 !important;
     background: #FFF !important;
-    
+
 }
+
 /* ****************** End Main Page ******************** */
+
+/* ****************** Signup Page ********************* */
+.signup .main-page-text h1 {
+    color: #61B846;
+    font-family: Inter;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 25px;
+    /* 71.429% */
+}
+
+.signup .main-page-text h2 {
+    color: #024F9D;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 25px;
+    /* 125% */
+}
+
+/* ****************** End Signup Page ******************** */
