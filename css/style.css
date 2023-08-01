@@ -33,3 +33,19 @@
     line-height: 25px;
     /* 125% */
 }
+
+.btn-get-started {
+    width: 226px;
+    height: 69px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    background: #61B846;
+    box-shadow: 0px 4px 4px 5px #D4D3D3;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 25px;
+    /* 83.333% */
+}
