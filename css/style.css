@@ -49,3 +49,12 @@
     line-height: 25px;
     /* 83.333% */
 }
+
+.btn-get-started:active,
+.btn-get-started:hover,
+.btn-get-started:focus,
+.btn-get-started:visited {
+    color: #61B846;
+    background: #FFF;
+    
+}
