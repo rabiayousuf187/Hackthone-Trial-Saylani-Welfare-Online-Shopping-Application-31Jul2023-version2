@@ -152,5 +152,12 @@
 .signup .form input:focus ~ span.inp-icon {
     border-bottom: 2px solid #61b846;
 }
-
+.signup .form .radio input {
+    border: 1px double #166dc5b0;
+    border-radius: 50%;
+    /* background: red; */
+}
+.form-check-input:checked[type=radio] {
+    --bs-form-check-bg-image: url('../img/icon/dot-single-svgrepo-com.png');
+}
 /* ****************** End Signup Page ******************** */
