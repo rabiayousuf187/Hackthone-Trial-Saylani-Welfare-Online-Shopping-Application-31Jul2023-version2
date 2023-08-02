@@ -128,7 +128,7 @@
     /* font-family: Inter; */
     font-size: 20px;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 600;
     /* line-height: 25px; */
     /* 125% */
 }
@@ -137,8 +137,20 @@
   } */
 
 .signup .form img {
-    filter: invert(0.7);
+    /* filter: invert(0.7); */
     width: 30px;
+}
+
+.form-control:focus,
+.form-control:active {
+    box-shadow: none;
+}
+.signup .form input:focus{
+    border-bottom: 2px solid #61b846;
+}
+
+.signup .form input:focus ~ span.inp-icon {
+    border-bottom: 2px solid #61b846;
 }
 
 /* ****************** End Signup Page ******************** */
