@@ -31,7 +31,7 @@
                         <div class="row justify-content-center">
                             <div class="col-md-5">
                                 <div class="input-group mb-3">
-                                    <input name="username" type="text" class="form-control" placeholder="User Name"
+                                    <input id="username" name="username" type="text" class="form-control" placeholder="User Name"
                                         aria-label="username" aria-describedby="basic-addon2">
                                     <span class="inp-icon"><img src="../../img/icon/username.png"
                                             style="height: 30px;" /></span>
@@ -41,7 +41,7 @@
                         <div class="row justify-content-center align-items-center">
                             <div class="col-md-5">
                                 <div class="input-group mb-3">
-                                    <input name="contact" type="text" class="form-control" placeholder="Contact"
+                                    <input id="contact" name="contact" type="text" class="form-control" placeholder="Contact"
                                         aria-label="Recipient's username" aria-describedby="basic-addon2">
                                     <span class="inp-icon"><img src="../../img/icon/phone.png" /></span>
                                 </div>
@@ -50,7 +50,7 @@
                         <div class="row justify-content-center">
                             <div class="col-md-5">
                                 <div class="input-group mb-3">
-                                    <input name="email" type="email" class="form-control" placeholder="Email"
+                                    <input id="email name="email" type="email" class="form-control" placeholder="Email"
                                         aria-label="email" aria-describedby="basic-addon2">
                                     <span class="inp-icon"><img src="../../img/icon/email.png" /></span>
                                 </div>
@@ -59,7 +59,7 @@
                         <div class="row justify-content-center">
                             <div class="col-md-5">
                                 <div class="input-group mb-3">
-                                    <input name="password" type="password" class="form-control" placeholder="Password"
+                                    <input id="password" name="password" type="password" class="form-control" placeholder="Password"
                                         aria-label="password" aria-describedby="basic-addon2">
                                     <span class="inp-icon"><img src="../../img/icon/password.png" /></span>
                                 </div>
@@ -82,8 +82,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <button type="button" class="btn btn-get-started" onclick="signup()">Sign Up</button>
+                    <button type="submit" value="submit" class="btn btn-get-started" onclick="signup()">Sign Up</button>
                 </div>
             </div>
         </div>
@@ -94,6 +93,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
+
+        
 </body>
 
 </html>
