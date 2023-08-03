@@ -162,11 +162,18 @@
 }
 
 .radio-box{
-    height: 95%;
+    /* height: 95%;
     /* background: bisque; */
-    display: flex;
-    align-items: flex-end;
+    /* display: flex;
+    align-items: flex-end; */
+    /* flex-direction: column; 
+    flex-wrap: wrap; */
+
+    height: 50%;
+    background: bisque;
+    display: inline-flex;
     /* flex-direction: column; */
-    /* flex-wrap: wrap; */
+    width: inherit;
+    align-content: end;
 }
 /* ****************** End Signup Page ******************** */
