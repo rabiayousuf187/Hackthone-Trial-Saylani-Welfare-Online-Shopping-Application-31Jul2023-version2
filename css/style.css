@@ -160,4 +160,13 @@
 .form-check-input:checked[type=radio] {
     --bs-form-check-bg-image: url('../img/icon/dot-single-svgrepo-com.png');
 }
+
+.radio-box{
+    height: 95%;
+    /* background: bisque; */
+    display: flex;
+    align-items: flex-end;
+    /* flex-direction: column; */
+    /* flex-wrap: wrap; */
+}
 /* ****************** End Signup Page ******************** */
