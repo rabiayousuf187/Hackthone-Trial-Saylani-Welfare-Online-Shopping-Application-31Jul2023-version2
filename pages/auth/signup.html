@@ -8,10 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
-    // Import the functions you need from the SDKs you need
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js"></script>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="icon" type="image/png" href="../../img/Logo.png">
 
@@ -23,17 +19,17 @@
     <section class="signup">
         <div class="container min-vh-100">
             <div class="main-page-content">
-                <div class="main-page-text">
-                    <div>
-                        <!-- Heading 1 -->
-                        <h1 class="text-center mb-3 main-heading">SAYLANI WELFARE</h1>
-                        <!-- Heading 2 -->
-                        <h2 class="text-center main-sub-heading">ONLINE MARKET PLACE</h2>
-                    </div>
+                <div class="text-center justify-content-center" style="padding: 20px 0px;">
+                    <!-- Heading 1 -->
+                    <h1 class="text-center mb-3 main-heading">SAYLANI WELFARE</h1>
+                    <!-- Heading 2 -->
+                    <h2 class="text-center main-sub-heading">ONLINE MARKET PLACE</h2>
+                </div>
 
-                    <div class="form">
+                <form class="form">
+                    <div class="upper-form">
                         <div class="row justify-content-center">
-                            <div class="col-md-5">
+                            <div class="col-lg-5 col-md-8 col-sm-8">
                                 <div class="input-group mb-3">
                                     <input id="username" name="username" type="text" class="form-control"
                                         placeholder="User Name" aria-label="username" aria-describedby="basic-addon2">
@@ -43,7 +39,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-center align-items-center">
-                            <div class="col-md-5">
+                            <div class="col-lg-5 col-md-8 col-sm-8">
                                 <div class="input-group mb-3">
                                     <input id="contact" name="contact" type="text" class="form-control"
                                         placeholder="Contact" aria-label="Recipient's username"
@@ -53,7 +49,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="col-md-5">
+                            <div class="col-lg-5 col-md-8 col-sm-8">
                                 <div class="input-group mb-3">
                                     <input id="email name=" email" type="email" class="form-control" placeholder="Email"
                                         aria-label="email" aria-describedby="basic-addon2">
@@ -62,7 +58,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="col-md-5">
+                            <div class="col-lg-5 col-md-8 col-sm-8">
                                 <div class="input-group mb-3">
                                     <input id="password" name="password" type="password" class="form-control"
                                         placeholder="Password" aria-label="password" aria-describedby="basic-addon2">
@@ -70,25 +66,33 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row justify-content-center radio-box">
-                            <div class="col-md-5">
-                                <div class="input-group mb-3 justify-content-evenly">
-                                    <div class="form-check radio">
-                                        <input class="form-check-input" type="radio" name="acc_type" id="sale"
-                                            value="sale">
-                                        <label class="form-check-label" for="sale">Sale</label>
-                                    </div>
-                                    <div class="form-check radio">
-                                        <input class="form-check-input" type="radio" name="acc_type" id="purchase"
-                                            value="purchase">
-                                        <label class="form-check-label" for="purchase">Purchase</label>
+
+
+                    </div>
+
+                    <div class="lower-form">
+                        <div class="row justify-content-center text-center">
+                            <div class="col-lg-5 col-md-8 col-sm-8">
+                                <div class="d-flex justify-content-end align-items-center">
+                                    <div class="input-group mb-3 justify-content-evenly">
+                                        <div class="form-check radio">
+                                            <input class="form-check-input" type="radio" name="acc_type" id="sale"
+                                                value="sale">
+                                            <label class="form-check-label" for="sale">Sale</label>
+                                        </div>
+                                        <div class="form-check radio">
+                                            <input class="form-check-input" type="radio" name="acc_type" id="purchase"
+                                                value="purchase">
+                                            <label class="form-check-label" for="purchase">Purchase</label>
+                                        </div>
                                     </div>
                                 </div>
+                                <button id="signup" name="signup" type="submit" value="submit"
+                                    class="btn btn-get-started">Sign Up</button>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" value="submit" class="btn btn-get-started" onclick="signup()">Sign Up</button>
-                </div>
+                </form>
             </div>
         </div>
     </section>

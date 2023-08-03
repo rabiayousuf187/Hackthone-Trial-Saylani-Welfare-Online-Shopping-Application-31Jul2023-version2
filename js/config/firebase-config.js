@@ -1,11 +1,15 @@
-// import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
-// import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+  // import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
+  
+  
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-// let firebase_settings= {
-
-    // Your web app's Firebase configuration
+  // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-let firebaseConfig = {
+  const firebaseConfig = {
     apiKey: "AIzaSyAT7yf6n4tFUjvqJKJWDcJpJM26qsQ9yOg",
     authDomain: "hackthonetrial-saylani-shopapp.firebaseapp.com",
     projectId: "hackthonetrial-saylani-shopapp",
@@ -15,5 +19,13 @@ let firebaseConfig = {
     measurementId: "G-DQZD8KB8J7"
   };
 
+  // Initialize Firebase
+  const appInitial = initializeApp(firebaseConfig);
 
-export {firebaseConfig};
+  // Initialize Firebase Authentication and get a reference to the service
+const auth = getAuth(appInitial);
+
+  // const analytics = getAnalytics(firebase);
+
+
+  export {auth, createUserWithEmailAndPassword};

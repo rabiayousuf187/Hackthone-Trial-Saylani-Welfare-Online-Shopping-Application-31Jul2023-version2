@@ -89,6 +89,10 @@
 /* ****************** End Main Page ******************** */
 
 /* ****************** Signup Page ********************* */
+.signup .main-page-content {
+    display: block;
+    padding: 70px 20px;
+}
 .signup .main-page-text h1 {
     color: #61B846;
     font-family: Inter;
@@ -110,11 +114,10 @@
 }
 .signup .form {
     width: 100%;
-    /* display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center; */
-    /* background: brown; */
+    padding: 70px 0px;
+}
+.lower-form {
+    padding: 50px 0px 0px;
 }
 .signup .form input,
 .signup .form .inp-icon{

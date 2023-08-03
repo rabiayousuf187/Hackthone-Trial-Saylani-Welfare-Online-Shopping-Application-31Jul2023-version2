@@ -1,33 +1,41 @@
-console.log("Signup JS integrated")
+console.log("Signup JS integrated");
 
-// Import the functions you need from the SDKs you need
+// Config and Initialize Firebase
+import {  auth,  createUserWithEmailAndPassword,} from "./config/firebase-config.js";
 
-import { firebaseConfig } from "./config/firebase-config.js";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+console.log("import firebaseConfig === ", );
 
-// let firebaseConfig = firebase_settings.firebaseConfig;
+ let signup = document.getElementById('signup');
+signup.addEventListener("submit", (e) => {
+  console.log("Form Submit!");
+  
+  e.preventDefault();
+  let email = document.getElementById('email').value;
+  let password = document.getElementById('password').value;
+  
+    console.log('Email and Password' , email, password);
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            // set(ref(Database , 'user/' ),{
+            //     email: email,
+            //     password: password,
+            // });
+            console.log('User Created');
+            alert('User Created');
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
 
-console.log("import firebaseConfig === ", firebaseConfig);
-// initializeApp()
-firebase.initializeApp(firebaseConfig);
-
-    signUpForm.addEventListener("submit", (e) => {
-        console.log("Form Submit!");
-
-        e.preventDefault();
-        const email = signUpForm.email.value;
-        const password = signUpForm.password.value;
-
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                // User signed up successfully
-                console.log("User signed up:", userCredential.user);
-            })
-            .catch((error) => {
-                // Handle signup errors
-                console.error("Error signing up:", error);
-            });
-    });
-
+            console.log(errorMessage ,errorCode);
+            // alert(errorMessage);
+            // ..
+        });
+}); 
