@@ -170,7 +170,7 @@
     flex-wrap: wrap; */
 
     height: 50%;
-    background: bisque;
+    /* background: bisque; */
     display: inline-flex;
     /* flex-direction: column; */
     width: inherit;
