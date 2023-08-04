@@ -14,7 +14,11 @@ console.log("import firebaseConfig === ");
 const signupForm = document.getElementById("signup-form");
 
 // Regular expressions for validation
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Email Regex: It should not start or end with whitespace.
+// It should have one "@" symbol in the middle.
+// It should have at least one character before and after the "@" symbol.
+// It should have at least one character after the last "." symbol.
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 const contactRegex = /^\d{11}$/;
 
@@ -75,6 +79,7 @@ function validateForm(event) {
         clearError(document.getElementById("email"));
     }
 
+
     // Validate password
     if (password.trim() === "") {
         showError(document.getElementById("password"), "Password is required.");
@@ -86,7 +91,6 @@ function validateForm(event) {
     } else {
         clearError(document.getElementById("password"));
     }
-
 
 
     if (!document.querySelector(".error")) {
