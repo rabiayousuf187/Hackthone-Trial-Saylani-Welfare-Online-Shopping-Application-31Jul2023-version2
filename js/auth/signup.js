@@ -4,8 +4,8 @@ console.log("Signup JS integrated");
 import {
     auth,
     createUserWithEmailAndPassword,
-    database, ref, set, push
-} from "./config/firebase-config.js";
+    database, ref, set
+} from "../config/firebase-config.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
