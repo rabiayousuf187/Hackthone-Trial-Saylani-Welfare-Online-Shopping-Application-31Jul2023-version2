@@ -16,7 +16,7 @@ const signupForm = document.getElementById("signup-form");
 // Regular expressions for validation
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-// const contactRegex = /^(?!\d{12,})\d{11}$/;
+const contactRegex = /^\d{11}$/;
 
 // Function to display error message for an input field
 function showError(inputElement, errorMessage) {
@@ -43,7 +43,7 @@ function validateForm(event) {
   console.log("email = ", email);
   console.log("password = ", password);
   console.log("contact = ", contact);
-  console.log("contact Actual length = " + contact.length + "Contact is not 11 digit");
+
   // Validate username
   if (username.trim() === "") {
     showError(document.getElementById("username"), "Username is required.");
@@ -73,21 +73,17 @@ function validateForm(event) {
   }
 
   // Validate contact
-  if (contact.trim() === "") {
-    console.log("contact Actual length = " + contact.length + "Contact is not 11 digit", contact.length != 11);
-    showError(document.getElementById("contact"), "Contact is required.");
-  } else if(contact.length != 11 ) {
-    console.log("contact Actual length = " + contact.length + "Contact is not 11 digit", contact.length != 11);
+  const contactInput = contact.trim();
+  if (!contactRegex.test(contactInput)) {
+      console.log("Contact must be exactly 11 digits.");
     showError(
       document.getElementById("contact"),
       "Contact must be exactly 11 digits."
     );
-    clearError(document.getElementById("contact"));
-  }else if(isNaN(Number(contact)))  {
-    showError(
-      document.getElementById("contact"),
-      "Contact must be 0-9 Numbers"
-    );
+  } else if (contactInput === "") {
+    console.log("Contact is required.");
+    showError(document.getElementById("contact"), "Contact is required.");
+} else {
     clearError(document.getElementById("contact"));
   }
 
