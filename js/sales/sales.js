@@ -131,7 +131,7 @@ function validateForm(event) {
                 userid = user.uid;
                 localStorage.setItem("userid",userid);
                 alert("User logged in Successfully!\nYou are redirected to Sales Corner");
-                openpage('sales/sales.html');
+                openpage('sales.html');
 
             })
             .catch((error) => {
