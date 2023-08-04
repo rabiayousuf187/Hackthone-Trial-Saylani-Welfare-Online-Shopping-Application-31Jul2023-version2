@@ -90,7 +90,7 @@
 
 /* ****************** Signup Page ********************* */
 .signup .main-page-content {
-    display: block;
+    /* display: block; */
     padding: 70px 20px;
 }
 .signup .main-page-text h1 {
