@@ -1,6 +1,7 @@
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
   import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+  import { getDatabase  } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
   // import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
   
   
@@ -12,6 +13,7 @@
   const firebaseConfig = {
     apiKey: "AIzaSyAT7yf6n4tFUjvqJKJWDcJpJM26qsQ9yOg",
     authDomain: "hackthonetrial-saylani-shopapp.firebaseapp.com",
+    databaseURL: "https://hackthonetrial-saylani-shopapp-default-rtdb.firebaseio.com",
     projectId: "hackthonetrial-saylani-shopapp",
     storageBucket: "hackthonetrial-saylani-shopapp.appspot.com",
     messagingSenderId: "450136022057",
@@ -24,8 +26,8 @@
 
   // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(appInitial);
-
+const database = getDatabase(appInitial);
   // const analytics = getAnalytics(firebase);
 
 
-  export {auth, createUserWithEmailAndPassword};
+  export {auth, createUserWithEmailAndPassword, database};
