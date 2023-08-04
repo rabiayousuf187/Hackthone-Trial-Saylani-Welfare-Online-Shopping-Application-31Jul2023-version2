@@ -26,6 +26,9 @@ const contactRegex = /^\d{11}$/;
 function showError(inputElement, errorMessage) {
     const errorElement = document.getElementById(inputElement.id + "Error");
     errorElement.textContent = errorMessage;
+
+    // Add the .error class to the input element
+    inputElement.classList.add('error');
 }
 
 // Function to clear error message for an input field
@@ -46,7 +49,8 @@ function validateForm(event) {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const contact = document.getElementById("contact").value;
-
+    const selectAccType = document.querySelector('input[name="acc_type"]:checked');
+    
     console.log("username = ", username);
     console.log("email = ", email);
     console.log("password = ", password);
@@ -96,6 +100,15 @@ function validateForm(event) {
     } else {
         clearError(document.getElementById("password"));
     }
+    
+    // Selected Account Type
+    if (selectAccType) {
+        const accTypeValue = selectAccType.value;
+        console.log("Selected Account Type:", accTypeValue);
+    } else {
+        console.log("Please select a Account Type.");
+    }
+
 
 
     console.log("!document.querySelector.error ==== ", document.querySelector("#signup-form"));
