@@ -2,8 +2,8 @@ console.log("Signup JS integrated");
 
 // Config and Initialize Firebase
 import {
-  auth,
-  createUserWithEmailAndPassword,
+    auth,
+    createUserWithEmailAndPassword,
 } from "./config/firebase-config.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -20,90 +20,92 @@ const contactRegex = /^\d{11}$/;
 
 // Function to display error message for an input field
 function showError(inputElement, errorMessage) {
-  const errorElement = document.getElementById(inputElement.id + "Error");
-  errorElement.textContent = errorMessage;
+    const errorElement = document.getElementById(inputElement.id + "Error");
+    errorElement.textContent = errorMessage;
 }
 
 // Function to clear error message for an input field
 function clearError(inputElement) {
-  const errorElement = document.getElementById(inputElement.id + "Error");
-  errorElement.textContent = "";
+    const errorElement = document.getElementById(inputElement.id + "Error");
+    errorElement.textContent = "";
 }
 
 // Function to validate the form on submission
 function validateForm(event) {
-  event.preventDefault();
+    event.preventDefault();
 
-  const username = document.getElementById("username").value;
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const contact = document.getElementById("contact").value;
+    const username = document.getElementById("username").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const contact = document.getElementById("contact").value;
 
-  console.log("username = ", username);
-  console.log("email = ", email);
-  console.log("password = ", password);
-  console.log("contact = ", contact);
+    console.log("username = ", username);
+    console.log("email = ", email);
+    console.log("password = ", password);
+    console.log("contact = ", contact);
 
-  // Validate username
-  if (username.trim() === "") {
-    showError(document.getElementById("username"), "Username is required.");
-  } else {
-    clearError(document.getElementById("username"));
-  }
+    // Validate username
+    if (username.trim() === "") {
+        showError(document.getElementById("username"), "Username is required.");
+    } else {
+        clearError(document.getElementById("username"));
+    }
 
-  // Validate email
-  if (email.trim() === "") {
-    showError(document.getElementById("email"), "Email is required.");
-  } else if (!emailRegex.test(email.trim())) {
-    showError(document.getElementById("email"), "Invalid email format.");
-  } else {
-    clearError(document.getElementById("email"));
-  }
+    // Validate contact
+    const contactInput = contact.trim();
+    if (!contactRegex.test(contactInput)) {
+        console.log("Contact must be exactly 11 digits.");
+        showError(
+            document.getElementById("contact"),
+            "Contact must be exactly 11 digits."
+        );
+    } else if (contactInput === "") {
+        console.log("Contact is required.");
+        showError(document.getElementById("contact"), "Contact is required.");
+    } else {
+        clearError(document.getElementById("contact"));
+    }
 
-  // Validate password
-  if (password.trim() === "") {
-    showError(document.getElementById("password"), "Password is required.");
-  } else if (!passwordRegex.test(password)) {
-    showError(
-        document.getElementById("password"),
-      "Password must be at least 8 characters long and contain at least one letter and one number."
-    );
-  } else {
-    clearError(document.getElementById("password"));
-  }
+    // Validate email
+    if (email.trim() === "") {
+        showError(document.getElementById("email"), "Email is required.");
+    } else if (!emailRegex.test(email.trim())) {
+        showError(document.getElementById("email"), "Invalid email format.");
+    } else {
+        clearError(document.getElementById("email"));
+    }
 
-  // Validate contact
-  const contactInput = contact.trim();
-  if (!contactRegex.test(contactInput)) {
-      console.log("Contact must be exactly 11 digits.");
-    showError(
-      document.getElementById("contact"),
-      "Contact must be exactly 11 digits."
-    );
-  } else if (contactInput === "") {
-    console.log("Contact is required.");
-    showError(document.getElementById("contact"), "Contact is required.");
-} else {
-    clearError(document.getElementById("contact"));
-  }
+    // Validate password
+    if (password.trim() === "") {
+        showError(document.getElementById("password"), "Password is required.");
+    } else if (!passwordRegex.test(password)) {
+        showError(
+            document.getElementById("password"),
+            "Password must be at least 8 characters long and contain at least one letter and one number."
+        );
+    } else {
+        clearError(document.getElementById("password"));
+    }
 
-  if (!document.querySelector(".error")) {
-    // Submit the form or do any other required action here
-    console.log("Form submitted successfully!");
-    // Call the function to create a user with Firebase Authentication
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log("User Created");
-        alert("User Created");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage, errorCode);
-      });
-  }
+
+
+    if (!document.querySelector(".error")) {
+        // Submit the form or do any other required action here
+        console.log("Form submitted successfully!");
+        // Call the function to create a user with Firebase Authentication
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                console.log("User Created");
+                alert("User Created");
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage, errorCode);
+            });
+    }
 }
 
 // Attach form validation function to the form's submit event
