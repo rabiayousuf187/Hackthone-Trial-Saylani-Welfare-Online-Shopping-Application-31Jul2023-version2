@@ -32,6 +32,10 @@ function showError(inputElement, errorMessage) {
 function clearError(inputElement) {
     const errorElement = document.getElementById(inputElement.id + "Error");
     errorElement.textContent = "";
+
+    // Remove the .error class from the input element
+    inputElement.classList.remove('error');
+    console.log("inputElement.classList.remove('error'); = ", inputElement.classList.remove('error'));
 }
 
 // Function to validate the form on submission
@@ -53,6 +57,7 @@ function validateForm(event) {
         showError(document.getElementById("username"), "Username is required.");
     } else {
         clearError(document.getElementById("username"));
+
     }
 
     // Validate contact
@@ -70,7 +75,7 @@ function validateForm(event) {
         clearError(document.getElementById("contact"));
     }
 
-    // Validate email
+    // Validate emailconsole.log("Email Value on change ==", )
     if (email.trim() === "") {
         showError(document.getElementById("email"), "Email is required.");
     } else if (!emailRegex.test(email.trim())) {
@@ -93,6 +98,8 @@ function validateForm(event) {
     }
 
 
+    console.log("!document.querySelector.error ==== ", document.querySelector("#signup-form"));
+    console.log("!document.querySelector.error ==== ", !document.querySelector(".error"));
     if (!document.querySelector(".error")) {
         // Submit the form or do any other required action here
         console.log("Form submitted successfully!");
