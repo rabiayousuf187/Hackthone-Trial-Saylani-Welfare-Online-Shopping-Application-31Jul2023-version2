@@ -22,7 +22,19 @@ const signinForm = document.getElementById("signin-form");
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
+// Open page
+function openpage(redirectPage) {
+    let current_url = window.location;
+    console.log("current_url main === ", current_url);
+    current_url = current_url.href.substring( 0, current_url.href.lastIndexOf("auth") );
+    console.log("current_url === ", current_url);
+    setTimeout(() => {
+        current_url = current_url + redirectPage;
+        console.log("current_url === ", current_url);
+        window.location.replace(current_url);
 
+    }, 2000);
+}
 // Function to display error message for an input field
 function showError(inputElement, errorMessage) {
     const errorElement = document.getElementById(inputElement.id + "Error");
@@ -118,7 +130,9 @@ function validateForm(event) {
                 console.log("User logged in Successfully!", user);
                 userid = user.uid;
                 localStorage.setItem("userid",userid);
-                alert("User logged in Successfully!");
+                alert("User logged in Successfully!\nYou are redirected to Sales Corner");
+                openpage('sales.html');
+
             })
             .catch((error) => {
                 const errorCode = error.code;
