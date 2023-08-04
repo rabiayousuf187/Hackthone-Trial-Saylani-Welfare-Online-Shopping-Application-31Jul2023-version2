@@ -187,3 +187,14 @@ div#radio_acc_typeError {
     padding: 0px 0px 26px;
 }
 /* ****************** End Signup Page ******************** */
+
+/* ******************  SignIn Page ******************** */
+button#forgotPass {
+    text-decoration: none;
+    color: #024F9D;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    /* line-height: 25px; */
+}
+/* ****************** End SignIn Page ******************** */

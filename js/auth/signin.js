@@ -3,7 +3,7 @@ console.log("Signup JS integrated");
 // Config and Initialize Firebase
 import {
     auth,
-    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
     database, ref, set
 } from "../config/firebase-config.js";
 
@@ -12,7 +12,7 @@ import {
 
 console.log("import firebaseConfig === ");
 
-const signupForm = document.getElementById("signup-form");
+const signinForm = document.getElementById("signin-form");
 
 // Regular expressions for validation
 // Email Regex: It should not start or end with whitespace.
@@ -21,7 +21,7 @@ const signupForm = document.getElementById("signup-form");
 // It should have at least one character after the last "." symbol.
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-const contactRegex = /^\d{11}$/;
+
 
 // Function to display error message for an input field
 function showError(inputElement, errorMessage) {
@@ -47,17 +47,15 @@ function clearError(inputElement) {
 // Function to validate the form on submission
 function validateForm(event) {
     event.preventDefault();
-
+    let userid;
     const username = document.getElementById("username").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    const contact = document.getElementById("contact").value;
     let acc_type = document.querySelector('input[name="acc_type"]:checked');
 
     console.log("username = ", username);
     console.log("email = ", email);
     console.log("password = ", password);
-    console.log("contact = ", contact);
 
     // Validate username
     if (username.trim() === "") {
@@ -65,21 +63,6 @@ function validateForm(event) {
     } else {
         clearError(document.getElementById("username"));
 
-    }
-
-    // Validate contact
-    const contactInput = contact.trim();
-    if (!contactRegex.test(contactInput)) {
-        console.log("Contact must be exactly 11 digits.");
-        showError(
-            document.getElementById("contact"),
-            "Contact must be exactly 11 digits."
-        );
-    } else if (contactInput === "") {
-        console.log("Contact is required.");
-        showError(document.getElementById("contact"), "Contact is required.");
-    } else {
-        clearError(document.getElementById("contact"));
     }
 
     // Validate emailconsole.log("Email Value on change ==", )
@@ -123,20 +106,19 @@ function validateForm(event) {
         );
     }
 
-
     console.log("!document.querySelector.error ==== ", document.querySelector("#signup-form"));
-    console.log("!document.querySelector.error ==== ", !document.querySelector(".error"));
     if (!document.querySelector(".error")) {
         // Submit the form or do any other required action here
         console.log("Form submitted successfully!");
         // Call the function to create a user with Firebase Authentication
-        createUserWithEmailAndPassword(auth, email, password)
+        signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
-                console.log("User Created", user);
-                writeUserData(user.uid, username, email, password, contact, acc_type)
-                alert("User Created");
+                console.log("User logged in Successfully!", user);
+                userid = user.uid;
+                localStorage.setItem("userid",userid);
+                alert("User logged in Successfully!");
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -147,25 +129,4 @@ function validateForm(event) {
 }
 
 // Attach form validation function to the form's submit event
-signupForm.addEventListener("submit", validateForm);
-
-function writeUserData(userId, username, email, password, contact, acc_type) {
-
-    // Create a reference to the Firebase Realtime Database
-    // Push data to the database
-    set(ref(database, 'users/' + userId), {
-        userId: userId,
-        username: username,
-        email: email,
-        password: password,
-        contact: contact,
-        acc_type: acc_type
-    })
-        .then(() => {
-            console.log("Data saved to Firebase Database.");
-            // Do any further actions after data has been saved successfully.
-        })
-        .catch((error) => {
-            console.error("Error saving data:", error);
-        });
-}
+signinForm.addEventListener("submit", validateForm);
