@@ -182,4 +182,8 @@
 .signup .error {
     color: red;
 }
+
+div#radio_acc_typeError {
+    padding: 0px 0px 26px;
+}
 /* ****************** End Signup Page ******************** */

@@ -4,7 +4,7 @@ console.log("Signup JS integrated");
 import {
     auth,
     createUserWithEmailAndPassword,
-    database
+    database, ref, set, push
 } from "./config/firebase-config.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -29,7 +29,9 @@ function showError(inputElement, errorMessage) {
     errorElement.textContent = errorMessage;
 
     // Add the .error class to the input element
-    inputElement.classList.add('error');
+    errorElement.classList.add('error');
+    console.log(" inputElement.classList.add('error') = ",  errorElement, errorElement.classList.add('error'));
+
 }
 
 // Function to clear error message for an input field
@@ -38,8 +40,8 @@ function clearError(inputElement) {
     errorElement.textContent = "";
 
     // Remove the .error class from the input element
-    inputElement.classList.remove('error');
-    console.log("inputElement.classList.remove('error'); = ", inputElement.classList.remove('error'));
+    errorElement.classList.remove('error');
+    console.log("inputElement.classList.remove('error'); = ", errorElement.classList.remove('error'));
 }
 
 // Function to validate the form on submission
@@ -50,8 +52,8 @@ function validateForm(event) {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const contact = document.getElementById("contact").value;
-    const selectAccType = document.querySelector('input[name="acc_type"]:checked');
-    
+    let acc_type = document.querySelector('input[name="acc_type"]:checked');
+
     console.log("username = ", username);
     console.log("email = ", email);
     console.log("password = ", password);
@@ -101,15 +103,25 @@ function validateForm(event) {
     } else {
         clearError(document.getElementById("password"));
     }
-    
+
     // Selected Account Type
-    if (selectAccType) {
-        const accTypeValue = selectAccType.value;
-        console.log("Selected Account Type:", accTypeValue);
+    if (username.trim() === "") {
+        showError(document.getElementById("username"), "Username is required.");
+    } else {
+        clearError(document.getElementById("username"));
+
+    }
+    if (acc_type) {
+        console.log("Selected Account Type:", acc_type.value);
+        clearError(document.getElementById("radio_acc_type"));
+        acc_type = acc_type.value;
     } else {
         console.log("Please select a Account Type.");
+        showError(
+            document.getElementById("radio_acc_type"),
+            "Account Type is required."
+        );
     }
-
 
 
     console.log("!document.querySelector.error ==== ", document.querySelector("#signup-form"));
@@ -122,7 +134,8 @@ function validateForm(event) {
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
-                console.log("User Created");
+                console.log("User Created", user);
+                writeUserData(user.uid, username, email, password, contact, acc_type)
                 alert("User Created");
             })
             .catch((error) => {
@@ -135,3 +148,24 @@ function validateForm(event) {
 
 // Attach form validation function to the form's submit event
 signupForm.addEventListener("submit", validateForm);
+
+function writeUserData(userId, username, email, password, contact, acc_type) {
+
+    // Create a reference to the Firebase Realtime Database
+    // Push data to the database
+    set(ref(database, 'users/' + userId), {
+        userId: userId,
+        username: username,
+        email: email,
+        password: password,
+        contact: contact,
+        acc_type: acc_type
+    })
+        .then(() => {
+            console.log("Data saved to Firebase Database.");
+            // Do any further actions after data has been saved successfully.
+        })
+        .catch((error) => {
+            console.error("Error saving data:", error);
+        });
+}

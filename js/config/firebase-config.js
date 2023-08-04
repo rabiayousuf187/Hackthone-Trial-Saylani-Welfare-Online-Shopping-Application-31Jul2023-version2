@@ -1,7 +1,7 @@
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
   import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
-  import { getDatabase  } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+  import { getDatabase, ref, push, set  } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
   // import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
   
   
@@ -26,8 +26,9 @@
 
   // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(appInitial);
-const database = getDatabase(appInitial);
+    // Create a reference to the Firebase Realtime Database
+const database = getDatabase();
   // const analytics = getAnalytics(firebase);
 
 
-  export {auth, createUserWithEmailAndPassword, database};
+  export {auth, createUserWithEmailAndPassword, database, ref, push, set};
