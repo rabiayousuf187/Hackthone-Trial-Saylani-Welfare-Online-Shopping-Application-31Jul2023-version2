@@ -130,8 +130,13 @@ function validateForm(event) {
                 console.log("User logged in Successfully!", user);
                 userid = user.uid;
                 localStorage.setItem("userid",userid);
-                alert("User logged in Successfully!\nYou are redirected to Sales Corner");
-                openpage('sales/sales.html');
+                if( acc_type === "sale"){
+                    openpage('sales/sales.html');
+                    alert("User logged in Successfully!\nYou are redirected to Sales Corner");
+                }else{
+                    alert("User logged in Successfully!\nYou are redirected to Purchase Corner");
+                    openpage('purchase/purchase.html');
+                }
 
             })
             .catch((error) => {
