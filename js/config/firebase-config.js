@@ -1,7 +1,7 @@
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
-  import { getDatabase, ref, push, set  } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
+  import { getDatabase, ref, push, set, get  } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
   // import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
   
   
@@ -31,4 +31,4 @@ const database = getDatabase();
   // const analytics = getAnalytics(firebase);
 
 
-  export {auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, database, ref, push, set};
+  export {auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, database, ref, push, set, get};
