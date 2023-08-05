@@ -3,6 +3,13 @@
     padding: 0px;
 }
 
+.container {
+    margin: 0 auto;
+    /* display: flex;
+    justify-content: center; */
+    padding: 0;
+}
+
 /* ****************** Main Page ******************** */
 .main-page-content {
     display: flex;
@@ -10,7 +17,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    width: 100%;
+    /* width: 100%; */
     /* background: black; */
 }
 
@@ -48,8 +55,9 @@
     font-size: 38px;
     font-style: normal;
     font-weight: 700;
-    line-height: 25px;
+    line-height: 0px;
     /* 65.789% */
+
 }
 
 .main-sub-heading {
@@ -93,6 +101,7 @@
     /* display: block; */
     padding: 70px 20px;
 }
+
 .signup .main-page-text h1 {
     color: #61B846;
     font-family: Inter;
@@ -112,15 +121,18 @@
     line-height: 25px;
     /* 125% */
 }
+
 .signup .form {
     width: 100%;
     padding: 70px 0px 10px;
 }
+
 .lower-form {
     padding: 50px 0px 0px;
 }
+
 .signup .form input,
-.signup .form .inp-icon{
+.signup .form .inp-icon {
     border: none;
     border-radius: 0px;
     border-bottom: 2px solid #D4D3D3;
@@ -135,6 +147,7 @@
     /* line-height: 25px; */
     /* 125% */
 }
+
 /* input:focus::placeholder {
     color: #999;
   } */
@@ -148,23 +161,26 @@
 .form-control:active {
     box-shadow: none;
 }
-.signup .form input:focus{
+
+.signup .form input:focus {
     border-bottom: 2px solid #61b846;
 }
 
-.signup .form input:focus ~ span.inp-icon {
+.signup .form input:focus~span.inp-icon {
     border-bottom: 2px solid #61b846;
 }
+
 .signup .form .radio input {
     border: 1px double #166dc5b0;
     border-radius: 50%;
     /* background: red; */
 }
+
 .form-check-input:checked[type=radio] {
     --bs-form-check-bg-image: url('../img/icon/dot-single-svgrepo-com.png');
 }
 
-.radio-box{
+.radio-box {
     /* height: 95%;
     /* background: bisque; */
     /* display: flex;
@@ -179,6 +195,7 @@
     width: inherit;
     align-content: end;
 }
+
 .signup .error {
     color: red;
 }
@@ -186,6 +203,7 @@
 div#radio_acc_typeError {
     padding: 0px 0px 26px;
 }
+
 /* ****************** End Signup Page ******************** */
 
 /* ******************  SignIn Page ******************** */
@@ -197,42 +215,64 @@ button#forgotPass {
     font-weight: 700;
     /* line-height: 25px; */
 }
+
 /* ****************** End SignIn Page ******************** */
 
 /* ****************** Sales Page ******************** */
-.sale .main-heading{
+.sale .container{
+    width: 60%;
+}
+header.main-header {
+    /* background: yellow; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 35px 30px 45px 35px;
+}
+.sale .main-page-content {
+    text-align: center;
+    /* align-items: center; */
+    /* padding: 0; */
+    height: 0vh;
+    /* width: 80%; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: flex-start; */
+    padding: 0px;
+}
+.sale .main-sub-heading {
+    font-size: 18px;
+    /* padding: 0; */
+    margin: 0;
+}
+.sale .main-heading {
     font-size: 28px;
 }
-.sale .main-sub-heading{
+
+.sale .main-sub-heading {
     font-size: 18px;
 }
-
-.sale .main-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* background-color: #f1f1f1; */
-    padding: 10px;
-  }
-  .sale a:hover,
-  .sale a:active,
-  .sale a:focus,
-  .sale a:visited
-  {
+sale a:hover,
+.sale a:active,
+.sale a:focus,
+.sale a:visited {
     text-decoration: none;
-  }
+}
 
-  .sale .icons {
-    display: flex;
-  }
-  
-  .sale .icon-link {
+.sale .icons {
+    /* display: flex; */
+}
+
+.sale .icon-link {
     margin-left: 10px;
-  }
-  
-  /* Styling for the icons */
-  .sale .icon-link img {
+}
+
+/* Styling for the icons */
+.sale .icon-link img {
     width: 24px;
     height: 24px;
-  }
+}
+
 /* ******************End Sales Page ******************** */
