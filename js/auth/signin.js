@@ -191,14 +191,14 @@ function validateForm(event) {
                     acc_type:acc_type
                 };
                 localStorage.setItem("userAcc",JSON.stringify(userAcc));
-                // openpage("sale/sale.html"); // Redirect to the sales page
+                openpage("sale/sale.html"); // Redirect to the sales page
               } else if (userData.acc_type === "purchase") {
                 console.log("User Data ACCType", userData.acc_type);
                 localStorage.setItem("userAcc",JSON.stringify(userAcc));
                 alert(
                   "User logged in Successfully!\nYou are redirected to Purchase Corner"
                 );
-                // openpage("purchase/purchase.html"); // Redirect to the purchase page
+                openpage("purchase/purchase.html"); // Redirect to the purchase page
               } else {
                 alert("Invalid Credential!");
               }
