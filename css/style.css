@@ -200,5 +200,39 @@ button#forgotPass {
 /* ****************** End SignIn Page ******************** */
 
 /* ****************** Sales Page ******************** */
+.sale .main-heading{
+    font-size: 28px;
+}
+.sale .main-sub-heading{
+    font-size: 18px;
+}
 
+.sale .main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: #f1f1f1; */
+    padding: 10px;
+  }
+  .sale a:hover,
+  .sale a:active,
+  .sale a:focus,
+  .sale a:visited
+  {
+    text-decoration: none;
+  }
+
+  .sale .icons {
+    display: flex;
+  }
+  
+  .sale .icon-link {
+    margin-left: 10px;
+  }
+  
+  /* Styling for the icons */
+  .sale .icon-link img {
+    width: 24px;
+    height: 24px;
+  }
 /* ******************End Sales Page ******************** */
