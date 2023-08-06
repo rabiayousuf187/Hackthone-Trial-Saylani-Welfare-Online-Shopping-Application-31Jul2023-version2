@@ -176,3 +176,10 @@ function writeUserData(userId, username, email, password, contact, acc_type) {
             console.error("Error saving data:", error);
         });
 }
+
+const loginLink = document.getElementById('loginLink');
+
+loginLink.addEventListener('click', () => {
+  // Replace 'target_page.html' with the path of the page you want to open
+  window.location.href = './signin.html';
+});
