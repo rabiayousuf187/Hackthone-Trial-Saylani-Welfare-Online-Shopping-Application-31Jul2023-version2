@@ -51,7 +51,7 @@
 
 .main-heading {
     color: #61B846;
-    font-family: Inter;
+    /* font-family: Inter; */
     font-size: 38px;
     font-style: normal;
     font-weight: 700;
@@ -62,7 +62,7 @@
 
 .main-sub-heading {
     color: #024F9D;
-    font-family: Inter;
+    /* font-family: Inter; */
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -77,7 +77,7 @@
     background: #61B846;
     box-shadow: 0px 4px 4px 5px #D4D3D3;
     color: #FFF;
-    font-family: Inter;
+    /* font-family: Inter; */
     font-size: 30px;
     font-style: normal;
     font-weight: 700;
@@ -104,7 +104,7 @@
 
 .signup .main-page-text h1 {
     color: #61B846;
-    font-family: Inter;
+    /* font-family: Inter; */
     font-size: 35px;
     font-style: normal;
     font-weight: 700;
@@ -114,7 +114,7 @@
 
 .signup .main-page-text h2 {
     color: #024F9D;
-    font-family: Inter;
+    /* font-family: Inter; */
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -207,7 +207,9 @@ div#radio_acc_typeError {
 /* ****************** End Signup Page ******************** */
 
 /* ******************  SignIn Page ******************** */
-button#forgotPass, #loginLink, #registerLink {
+button#forgotPass,
+#loginLink,
+#registerLink {
     text-decoration: none;
     color: #024F9D;
     font-size: 16px;
@@ -219,9 +221,10 @@ button#forgotPass, #loginLink, #registerLink {
 /* ****************** End SignIn Page ******************** */
 
 /* ****************** Sales Page ******************** */
-.sale .container{
+.sale .container {
     width: 60%;
 }
+
 header.main-header {
     /* background: yellow; */
     display: flex;
@@ -230,6 +233,7 @@ header.main-header {
     align-items: baseline;
     padding: 35px 30px 45px 35px;
 }
+
 .sale .main-page-content {
     text-align: center;
     /* align-items: center; */
@@ -242,11 +246,13 @@ header.main-header {
     /* align-items: flex-start; */
     padding: 0px;
 }
+
 .sale .main-sub-heading {
     font-size: 18px;
     /* padding: 0; */
     margin: 0;
 }
+
 .sale .main-heading {
     font-size: 28px;
 }
@@ -254,6 +260,7 @@ header.main-header {
 .sale .main-sub-heading {
     font-size: 18px;
 }
+
 sale a:hover,
 .sale a:active,
 .sale a:focus,
@@ -275,13 +282,15 @@ sale a:hover,
     height: 24px;
 }
 
-.sale-content-inner .content-heading{
+.sale-content-inner .content-heading {
     padding: 25px 25px 10px;
     text-align: center;
 }
-.sale-content .main-sub-heading{
+
+.sale-content .main-sub-heading {
     font-size: 30px;
 }
+
 .sale-content .content-heading h4 {
     color: #BFBCBC;
     font-size: 20px;
@@ -290,41 +299,86 @@ sale a:hover,
     line-height: 25px;
     padding: 15px;
 }
+
 .sale-content-inner .content {
     margin: 0 auto;
     width: 80%;
-    padding: 10px ;
+    padding: 10px;
     text-align: center;
 }
+
 .sale .cat-inp {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .sale .cat-inp img {
     width: 45px;
-    margin-right: 15px ;
+    margin-right: 15px;
 }
-.sale .cat-inp p{
-margin: 0;
+
+.sale .cat-inp p {
+    margin: 0;
 }
+
 .sale .content-category {
     display: flex;
     flex-wrap: wrap;
     /* width: 80%; */
     justify-content: space-between;
-  }
-  
-  .sale .cat-style {
+}
+
+.sale .cat-style {
     flex: 50%;
     /* flex: 1; */
     /* min-width: 300px; */
     /* max-width: 400px; */
-    display: flex; /* Add flex display to center the inner content */
-  justify-content: center; /* Center items horizontally within each column */
-  padding: 25px;
-  }
-
-
+    display: flex;
+    /* Add flex display to center the inner content */
+    justify-content: center;
+    /* Center items horizontally within each column */
+    padding: 25px;
+}
 
 /* ******************End Sales Page ******************** */
+/* **************     Admin: Sales-Product Page    *************** */
+
+.sale-product .main-header {
+    padding: 30px 30px 40px 35px;
+    border-bottom: 2px solid #D9D9D9;
+}
+
+.sale-product-content .sale-content-inner {
+    padding: 30px 30px 40px 35px;
+}
+
+.sale-product-content .content-heading h3 {
+    text-align: left;
+    color: #024F9D;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.sale-product .main-page-content {
+    flex-direction: row !important;
+    align-items: flex-end;
+    justify-content: center;
+    height: 15vh;
+}
+
+.account-title {
+    text-align: left;
+}
+
+.account-title .main-sub-heading {
+    font-size: 24px;
+}
+
+.account-title h3 {
+    color: #61B846;
+    font-size: 20px;
+}
+
+/* *************    End Admin: Sales-Product Page   *************** */
