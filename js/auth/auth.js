@@ -1,0 +1,3 @@
+function isAuth(){
+    localStorage.getItem
+}

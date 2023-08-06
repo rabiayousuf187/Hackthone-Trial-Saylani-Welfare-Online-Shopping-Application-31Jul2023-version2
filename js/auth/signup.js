@@ -47,13 +47,15 @@ function clearError(inputElement) {
 // Function to validate the form on submission
 function validateForm(event) {
     event.preventDefault();
-
+    
     const username = document.getElementById("username").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const contact = document.getElementById("contact").value;
+    let acc_type = 'user';
+    let userAcc;
     // let acc_type = document.querySelector('input[name="acc_type"]:checked');
-
+    
     console.log("username = ", username);
     console.log("email = ", email);
     console.log("password = ", password);
@@ -135,8 +137,12 @@ function validateForm(event) {
                 // Signed in
                 const user = userCredential.user;
                 console.log("User Created", user);
-                writeUserData(user.uid, username, email, password, contact)
-                
+                writeUserData(user.uid, username, email, password, contact, acc_type)
+                userAcc= {
+                    userId: user.uid,
+                    acc_type: acc_type
+                };
+                localStorage.setItem("userAcc", JSON.stringify(userAcc));
                 alert("User Created");
             })
             .catch((error) => {
@@ -150,7 +156,7 @@ function validateForm(event) {
 // Attach form validation function to the form's submit event
 signupForm.addEventListener("submit", validateForm);
 
-function writeUserData(userId, username, email, password, contact) {
+function writeUserData(userId, username, email, password, contact, acc_type) {
 
     // Create a reference to the Firebase Realtime Database
     // Push data to the database
@@ -159,7 +165,8 @@ function writeUserData(userId, username, email, password, contact) {
         username: username,
         email: email,
         password: password,
-        contact: contact
+        contact: contact,
+        acc_type: acc_type
     })
         .then(() => {
             console.log("Data saved to Firebase Database.");
