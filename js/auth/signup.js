@@ -136,6 +136,7 @@ function validateForm(event) {
                 const user = userCredential.user;
                 console.log("User Created", user);
                 writeUserData(user.uid, username, email, password, contact)
+                
                 alert("User Created");
             })
             .catch((error) => {
