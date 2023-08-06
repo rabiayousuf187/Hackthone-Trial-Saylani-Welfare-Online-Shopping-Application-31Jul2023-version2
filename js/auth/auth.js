@@ -1,10 +1,11 @@
 function isAuth(redirect){
     localStorage.getItem('userAcc');
     if(userAcc!==null){
-        window.location.href = redirect;
+        console.log("Auth successfully! redirected to main page");
+       return true;
     }
     else{
-        window.location.href = './signin.html';    
+        window.location.href = redirect;    
     }
 }
 
