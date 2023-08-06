@@ -143,4 +143,4 @@ function validateForm(event) {
 }
 
 // Attach form validation function to the form's submit event
-signinForm.addEventListener("submit", validateForm);
+// signinForm.addEventListener("submit", validateForm);
