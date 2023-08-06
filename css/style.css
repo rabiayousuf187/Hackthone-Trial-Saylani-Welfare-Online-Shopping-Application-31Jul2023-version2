@@ -207,7 +207,7 @@ div#radio_acc_typeError {
 /* ****************** End Signup Page ******************** */
 
 /* ******************  SignIn Page ******************** */
-button#forgotPass, #loginLink {
+button#forgotPass, #loginLink, #registerLink {
     text-decoration: none;
     color: #024F9D;
     font-size: 16px;

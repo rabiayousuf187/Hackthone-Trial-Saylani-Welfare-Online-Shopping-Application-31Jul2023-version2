@@ -223,3 +223,11 @@ function validateForm(event) {
 
 // Attach form validation function to the form's submit event
 signinForm.addEventListener("submit", validateForm);
+
+const registerLink = document.getElementById('registerLink');
+
+registerLink.addEventListener('click', () => {
+  // Replace 'target_page.html' with the path of the page you want to open
+  window.location.href = './signup.html';
+});
+
