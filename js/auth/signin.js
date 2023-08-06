@@ -1,4 +1,4 @@
-console.log("Signup JS integrated");
+console.log("Signin JS integrated");
 
 // Config and Initialize Firebase
 import {
@@ -11,7 +11,7 @@ import {
 
 let userid;
 let userData;
-let acc_type;
+// let acc_type;
 let userAcc;
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
