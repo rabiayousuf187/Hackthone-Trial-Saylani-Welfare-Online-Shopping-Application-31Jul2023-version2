@@ -182,23 +182,25 @@ function validateForm(event) {
               // Data exists for the user ID
               console.log("User Data", userData);
               console.log("User Data ACCType", userData.acc_type);
-              if (userData.acc_type === "sale") {
+              if (userData.acc_type === "user") {
                 alert(
-                  "User logged in Successfully!\nYou are redirected to Sales Corner"
+                  "User logged in Successfully!\nYou are redirected to User Purchase Corner"
                 );
                 userAcc = {
                     id:userid,
                     acc_type:acc_type
                 };
                 localStorage.setItem("userAcc",JSON.stringify(userAcc));
-                openpage("sale/sale.html"); // Redirect to the sales page
-              } else if (userData.acc_type === "purchase") {
+                window.location.href = '../purchase/purchase.html';
+                // openpage("sale/sale.html"); // Redirect to the sales page
+              } else if (userData.acc_type === "admin") {
                 console.log("User Data ACCType", userData.acc_type);
                 localStorage.setItem("userAcc",JSON.stringify(userAcc));
+                window.location.href = './admin/sale-product.html';
                 alert(
-                  "User logged in Successfully!\nYou are redirected to Purchase Corner"
+                  "User logged in Successfully!\nYou are redirected to Admin Corner"
                 );
-                openpage("purchase/purchase.html"); // Redirect to the purchase page
+                // openpage("purchase/purchase.html"); // Redirect to the purchase page
               } else {
                 alert("Invalid Credential!");
               }
