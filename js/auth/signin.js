@@ -106,21 +106,13 @@ function clearError(inputElement) {
 // Function to validate the form on submission
 function validateForm(event) {
   event.preventDefault();
-  const username = document.getElementById("username").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  acc_type = document.querySelector('input[name="acc_type"]:checked');
+  // acc_type = document.querySelector('input[name="acc_type"]:checked');
 
-  console.log("username = ", username);
   console.log("email = ", email);
   console.log("password = ", password);
 
-  // Validate username
-  if (username.trim() === "") {
-    showError(document.getElementById("username"), "Username is required.");
-  } else {
-    clearError(document.getElementById("username"));
-  }
 
   // Validate emailconsole.log("Email Value on change ==", )
   if (email.trim() === "") {
@@ -143,23 +135,17 @@ function validateForm(event) {
     clearError(document.getElementById("password"));
   }
 
-  // Selected Account Type
-  if (username.trim() === "") {
-    showError(document.getElementById("username"), "Username is required.");
-  } else {
-    clearError(document.getElementById("username"));
-  }
-  if (acc_type) {
-    console.log("Selected Account Type:", acc_type.value);
-    clearError(document.getElementById("radio_acc_type"));
-    acc_type = acc_type.value;
-  } else {
-    console.log("Please select a Account Type.");
-    showError(
-      document.getElementById("radio_acc_type"),
-      "Account Type is required."
-    );
-  }
+  // if (acc_type) {
+  //   console.log("Selected Account Type:", acc_type.value);
+  //   clearError(document.getElementById("radio_acc_type"));
+  //   acc_type = acc_type.value;
+  // } else {
+  //   console.log("Please select a Account Type.");
+  //   showError(
+  //     document.getElementById("radio_acc_type"),
+  //     "Account Type is required."
+  //   );
+  // }
 
   console.log(
     "!document.querySelector.error ==== ",
@@ -188,7 +174,7 @@ function validateForm(event) {
                 );
                 userAcc = {
                     id:userid,
-                    acc_type:acc_type
+                    acc_type:userData.acc_type
                 };
                 localStorage.setItem("userAcc",JSON.stringify(userAcc));
                 window.location.href = '../purchase/purchase.html';
