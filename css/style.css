@@ -98,7 +98,7 @@
 
 /* ****************** Signup Page ********************* */
 .signup .main-page-content {
-    /* display: block; */
+    display: block;
     padding: 70px 20px;
 }
 
@@ -128,7 +128,7 @@
 }
 
 .lower-form {
-    padding: 50px 0px 0px;
+    padding: 50px 25px 70px;
 }
 
 .signup .form input,
