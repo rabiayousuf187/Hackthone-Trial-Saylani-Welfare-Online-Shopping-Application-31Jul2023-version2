@@ -275,4 +275,19 @@ sale a:hover,
     height: 24px;
 }
 
+.content-heading {
+    padding: 25px;
+    text-align: center;
+}
+.sale-content .main-sub-heading{
+    font-size: 30px;
+}
+.sale-content .content-heading h4 {
+    color: #BFBCBC;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 25px;
+    padding: 15px;
+}
 /* ******************End Sales Page ******************** */
