@@ -404,7 +404,7 @@ sale a:hover,
     background: none;
     border: 2px solid #61b846cf;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
 }
 .sale-product-content .cat-inp img {
     width: 150px;
@@ -419,8 +419,11 @@ sale a:hover,
 }
 .sale-product-content p#fruit-weight,
 .sale-product-content p#fruit-price
- {
+{
     color: #BFBCBC;
     font-weight: 400;
+}
+.sale-product-content .fruit-title {
+    display: flex;
 }
 /* *************    End Admin: Sales-Product Page   *************** */
