@@ -283,7 +283,7 @@ sale a:hover,
 }
 
 .sale-content-inner .content-heading {
-    padding: 25px 25px 10px;
+    padding: 5px 25px;
     text-align: center;
 }
 
@@ -343,14 +343,16 @@ sale a:hover,
 
 /* ******************End Sales Page ******************** */
 /* **************     Admin: Sales-Product Page    *************** */
-
+section.sale-product-content {
+    padding: 20px 35px;
+}
 .sale-product .main-header {
     padding: 30px 30px 40px 35px;
     border-bottom: 2px solid #D9D9D9;
 }
 
 .sale-product-content .sale-content-inner {
-    padding: 30px 30px 40px 35px;
+    padding: 0px 35px;
 }
 
 .sale-product-content .content-heading h3 {
@@ -391,7 +393,7 @@ sale a:hover,
 .sale-product-content .content {
     /* margin: 0 auto; */
     width: 100%;
-    padding: 20px;
+    padding: 10px;
     /* text-align: center; */
 }
 
@@ -442,21 +444,62 @@ sale a:hover,
 .sale-product-content .fruit-title {
     display: flex;
 }
+section.footer {
+    /* margin: 0px 0px 60px; */
+    padding: 15px 40px 80px;
+}
 footer.footer-menu {
-    padding: 25px 10px;
-    width: 80%;
+    padding: 15px 40px;
+    width: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    /* background: bisque; */
+}
+.footer-content {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    background: bisque;
+    align-items: center;
+    width: 100%;
+    /* background: aquamarine; */
 }
 .footer-text{
     text-decoration: none;
     font-size: 18px;
-    color: #61B846;
+    color: #6D6E71;;
     font-weight: 600;
+    text-align: center;
 }
-.footer-text img {
-    width: 40px;
+.footer-text img{
+   width: 40px;
+   /* filter: invert(62%) sepia(112%) saturate(349%) hue-rotate(51deg) brightness(60%) contrast(168%); */
+}
+.footer-text img:active,
+.footer-text img:hover,
+.footer-text img:focus,
+.footer-text img:visited
+{
+    /* width: 40px; */
+    filter: invert(62%) sepia(112%) saturate(349%) hue-rotate(51deg) brightness(60%) contrast(168%);
+}
+.footer-text .bi-plus-circle-fill {
+    font-size: 32px;
+    color: #6D6E71;;
+}
+.footer-content:hover a .bi-plus-circle-fill,
+.footer-content:active a .bi-plus-circle-fill,
+.footer-content:focus a .bi-plus-circle-fill,
+.footer-content:visited a .bi-plus-circle-fill,
+.footer-content:hover a p,
+.footer-content:hover a p,
+.footer-content:hover a p,
+.footer-content:hover a p
+{
+    color: #61B846;;
+}
+.footer-text p{
+    margin: 0;
 }
 /* *************    End Admin: Sales-Product Page   *************** */

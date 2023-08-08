@@ -12,6 +12,24 @@ import {
 
 console.log("import firebaseConfig === ");
 
+let current_page  = document.getElementById("home");
+console.log("current_page color change", current_page);
+current_page.querySelector('img').style.filter = 'invert(62%) sepia(112%) saturate(349%) hue-rotate(61deg) brightness(56%) contrast(168%)';
+current_page.querySelector('p').style.color = "#61B846";
+
+let add_item  = document.getElementById("add-item");
+add_item.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default link behavior
+    window.location.href = "./add-item.html"
+});
+
+let acc_setting  = document.getElementById("acc-setting");
+acc_setting.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default link behavior
+    window.location.href = "./account-setting.html"
+});
+
+
 const signinForm = document.getElementById("signin-form");
 
 // Regular expressions for validation
