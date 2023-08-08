@@ -230,7 +230,7 @@ header.main-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     padding: 35px 30px 45px 35px;
 }
 
@@ -365,9 +365,9 @@ section.sale-product-content {
 
 .sale-product .main-page-content {
     flex-direction: row !important;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
-    height: 15vh;
+    height: 0vh;
 }
 
 .account-title {
@@ -446,7 +446,7 @@ section.sale-product-content {
 }
 section.footer {
     /* margin: 0px 0px 60px; */
-    padding: 15px 40px 80px;
+    padding: 15px 40px 50px;
 }
 footer.footer-menu {
     padding: 15px 40px;
