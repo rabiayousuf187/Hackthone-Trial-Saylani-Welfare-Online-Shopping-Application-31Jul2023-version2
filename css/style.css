@@ -221,7 +221,7 @@ button#forgotPass,
 /* ****************** End SignIn Page ******************** */
 
 /* ****************** Sales Page ******************** */
-.sale .container {
+.sale .container, .footer .container {
     width: 60%;
 }
 
@@ -428,7 +428,7 @@ sale a:hover,
 
 .sale-product-content p#fruit-name {
     color: #61B846;
-    font-size: 35px;
+    font-size: 26px;
     font-weight: 500;
 }
 
@@ -436,9 +436,27 @@ sale a:hover,
 .sale-product-content p#fruit-price {
     color: #BFBCBC;
     font-weight: 400;
+    font-size: 22px;
 }
 
 .sale-product-content .fruit-title {
     display: flex;
-    /* *************    End Admin: Sales-Product Page   *************** */
 }
+footer.footer-menu {
+    padding: 25px 10px;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background: bisque;
+}
+.footer-text{
+    text-decoration: none;
+    font-size: 18px;
+    color: #61B846;
+    font-weight: 600;
+}
+.footer-text img {
+    width: 40px;
+}
+/* *************    End Admin: Sales-Product Page   *************** */
