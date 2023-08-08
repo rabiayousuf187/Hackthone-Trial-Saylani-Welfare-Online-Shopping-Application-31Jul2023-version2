@@ -42,64 +42,100 @@
         <div class="container">
             <div class="sale-content-inner">
                 <div class="content-heading">
-                    <h3>All Products</h3>
+                    <h3>Add New Item</h3>
                 </div>
                 <div class="content">
                     <div class="content-category">
-                        <div class="cat-1">
-                            <button id="apply" type="submit" class="col-12 btn btn-get-started cat-inp">
-                                <div class="fruit-title">
-                                    <img src="../../img/sales/fruit/apple.png" alt="apple" />
-                                    <div class="">
-                                        <p id="fruit-name">Apple</p>
-                                        <p id="fruit-weight">1.2 Kg</p>
+                        <form class="form" id="signup-form">
+                            <div class="upper-form">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-5 col-md-8 col-sm-8">
+                                        <div class="input-group mb-3">
+                                            <input id="username" name="username" type="text" class="form-control"
+                                                placeholder="User Name" aria-label="username"
+                                                aria-describedby="basic-addon2">
+
+                                        </div>
+                                        <span id="usernameError"></span>
                                     </div>
                                 </div>
-                                <p id="fruit-price">$2.1</p>
-                            </button>
-                        </div>
-                        <div class="cat-1">
-                            <button id="apply" type="submit" class="col-12 btn btn-get-started cat-inp">
-                                <div class="fruit-title">
-                                    <img src="../../img/sales/fruit/mango.png" alt="apple" />
-                                    <div class="">
-                                        <p id="fruit-name">Mango</p>
-                                        <p id="fruit-weight">1.2 Kg</p>
+                                <div class="row justify-content-center align-items-center">
+                                    <div class="col-lg-5 col-md-8 col-sm-8">
+                                        <div class="input-group mb-3">
+                                            <input id="itemname" name="itemname" type="text" class="form-control"
+                                                placeholder="Item Name" aria-label="itemname"
+                                                aria-describedby="basic-addon2">
+
+                                        </div>
+                                        <span id="contactError"></span>
                                     </div>
                                 </div>
-                                <p id="fruit-price">$2.1</p>
-                            </button>
-                        </div>
-                        <div class="cat-1">
-                            <button id="apply" type="submit" class="col-12 btn btn-get-started cat-inp">
-                                <div class="fruit-title">
-                                    <img src="../../img/sales/fruit/kivi.png" alt="apple" />
-                                    <div class="">
-                                        <p id="fruit-name">Kivi</p>
-                                        <p id="fruit-weight">1.2 Kg</p>
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-5 col-md-8 col-sm-8">
+                                        <div class="btn-group">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                data-bs-toggle="dropdown" data-bs-auto-close="true"
+                                                aria-expanded="false">
+                                                Select Category
+                                            </button>
+                                            <ul class="dropdown-menu" id="itemcategory">
+                                                <li><a class="dropdown-item" href="#">Menu item</a></li>
+                                                <li><a class="dropdown-item" href="#">Menu item</a></li>
+                                                <li><a class="dropdown-item" href="#">Menu item</a></li>
+                                            </ul>
+                                        </div>
+                                        <span id="itemcontentError"></span>
                                     </div>
                                 </div>
-                                <p id="fruit-price">$2.1</p>
-                            </button>
-                        </div>
-                        <div class="cat-1">
-                            <button id="apply" type="submit" class="col-12 btn btn-get-started cat-inp">
-                                <div class="fruit-title">
-                                    <img src="../../img/sales/fruit/watermelon.png" alt="apple" />
-                                    <div class="">
-                                        <p id="fruit-name">Watermelon</p>
-                                        <p id="fruit-weight">1.2 Kg</p>
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-5 col-md-8 col-sm-8">
+                                        <div class="form-floating">
+                                            <textarea class="form-control" placeholder="Describe this Item"
+                                                id="itemcontent" style="height: 100px"></textarea>
+                                            <label for="itemcontent">Describe this Item</label>
+                                        </div>
+                                        <span id="itemcontentError"></span>
                                     </div>
                                 </div>
-                                <p id="fruit-price">$2.1</p>
-                            </button>
-                        </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-5 col-md-8 col-sm-8">
+                                        <div class="mb-3 row">
+                                            <label for="unitname" class="col-sm-2 col-form-label">Unit Name:</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="unitname">
+                                            </div>
+                                        </div>
+                                        <span id="unitnameError"></span>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-5 col-md-8 col-sm-8">
+                                        <div class="mb-3 row">
+                                            <label for="unitprice" class="col-sm-2 col-form-label">Unit Price:</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="unitprice">
+                                            </div>
+                                        </div>
+                                        <span id="unitpriceError"></span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="lower-form">
+                                <div class="row justify-content-center text-center">
+                                    <div class="col-lg-5 col-md-8 col-sm-8">
+                                        <button id="add-production" name="add-production" type="submit" value="submit"
+                                            class="btn btn-get-started">Add Product</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
             </div>
             <div>
-
             </div>
         </div>
     </section>
