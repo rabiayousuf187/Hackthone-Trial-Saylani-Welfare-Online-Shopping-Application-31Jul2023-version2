@@ -398,6 +398,7 @@ sale a:hover,
 .sale-product-content .cat-1 {
     margin: 30px 0px;
 }
+
 .sale-product-content .cat-inp {
     width: 100%;
     padding: 50px 15px;
@@ -405,25 +406,39 @@ sale a:hover,
     border: 2px solid #61b846cf;
     align-items: center;
     justify-content: space-between;
+    box-shadow: none;
 }
+
+.sale-product-content .cat-inp:active,
+.sale-product-content .cat-inp:hover,
+.sale-product-content .cat-inp:focus,
+.sale-product-content .cat-inp:visited {
+    color: #61B846 !important;
+    background: #FFF !important;
+    box-shadow: 0px 4px 4px 5px #d1d0d0;
+}
+
 .sale-product-content .cat-inp img {
     width: 150px;
 }
-.sale-product-content .cat-inp p{
-    padding:8px 0px;
+
+.sale-product-content .cat-inp p {
+    padding: 8px 0px;
 }
+
 .sale-product-content p#fruit-name {
     color: #61B846;
     font-size: 35px;
     font-weight: 500;
 }
+
 .sale-product-content p#fruit-weight,
-.sale-product-content p#fruit-price
-{
+.sale-product-content p#fruit-price {
     color: #BFBCBC;
     font-weight: 400;
 }
+
 .sale-product-content .fruit-title {
     display: flex;
+    /* *************    End Admin: Sales-Product Page   *************** */
 }
-/* *************    End Admin: Sales-Product Page   *************** */
