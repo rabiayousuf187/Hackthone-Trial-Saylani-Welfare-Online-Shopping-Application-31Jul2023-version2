@@ -14,3 +14,17 @@ acc_setting.addEventListener('click', function(event) {
     event.preventDefault(); // Prevent the default link behavior
     window.location.href = "./account-setting.html"
 });
+
+// get data from dropdown
+    // var dropdownItems = document.querySelectorAll('.dropdown-item');
+    
+    // dropdownItems.forEach(function(item) {
+    //     item.addEventListener('click', function(event) {
+    //         event.preventDefault(); // Prevent the link from navigating
+            
+    //         var selectedValue = item.textContent.trim();
+    //         console.log('Selected category:', selectedValue);
+            
+    //         // You can perform additional actions with the selectedValue here
+    //     });
+    // });

@@ -510,3 +510,29 @@ footer.footer-menu {
     margin: 0;
 }
 /* *************    End Admin: Sales-Product Page   *************** */
+/* *************    Admin: Add-Item Page   *************** */
+.add-item .form {
+    width: 100%;
+    padding: 20px 10px;
+}
+.add-item .btn-group {
+    width: 100%; 
+}
+
+.add-item .img-placeholder {
+    height: 250px;
+    width: 100%;
+    border: 2px solid #D9D9D9 !important;
+    border-radius: 15px !important;
+    background: url(../../img/icon/image.png), #D9D9D9;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+.add-item button.btn.btn-secondary.dropdown-toggle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+/* *************    End Admin: Add-Item Page   *************** */
