@@ -504,7 +504,11 @@ footer.footer-menu {
 .footer-content:hover a img,
 .footer-content:active a img,
 .footer-content:visited a img,
-.footer-content:focus a img
+.footer-content:focus a img,
+.icons:hover a img,
+.icons:active a img,
+.icons:visited a img,
+.icons:focus a img
 {
     filter: invert(62%) sepia(100%) saturate(349%) hue-rotate(61deg) brightness(56%) contrast(168%);
 }
