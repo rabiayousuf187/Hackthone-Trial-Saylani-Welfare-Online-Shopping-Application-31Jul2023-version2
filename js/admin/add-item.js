@@ -14,6 +14,11 @@ acc_setting.addEventListener('click', function(event) {
     event.preventDefault(); // Prevent the default link behavior
     window.location.href = "./account-setting.html"
 });
+let order  = document.getElementById("order");
+order.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default link behavior
+    window.location.href = "./order.html"
+});
 
 // get data from dropdown
     // var dropdownItems = document.querySelectorAll('.dropdown-item');

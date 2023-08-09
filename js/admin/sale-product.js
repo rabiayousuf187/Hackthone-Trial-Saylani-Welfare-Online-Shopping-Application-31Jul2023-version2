@@ -29,6 +29,11 @@ acc_setting.addEventListener('click', function(event) {
     window.location.href = "./account-setting.html"
 });
 
+let order  = document.getElementById("order");
+order.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default link behavior
+    window.location.href = "./order.html"
+});
 
 const signinForm = document.getElementById("signin-form");
 

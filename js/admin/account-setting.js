@@ -14,3 +14,9 @@ add_item.addEventListener('click', function(event) {
     event.preventDefault(); // Prevent the default link behavior
     window.location.href = "./add-item.html"
 });
+
+let order  = document.getElementById("order");
+order.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default link behavior
+    window.location.href = "./order.html"
+});
