@@ -282,7 +282,7 @@ sale a:hover,
     height: 24px;
 }
 
-.sale-content-inner .content-heading {
+.sale-content-inner .content-heading{
     padding: 5px 25px;
     text-align: center;
 }
@@ -355,7 +355,9 @@ section.sale-product-content {
     padding: 0px 35px;
 }
 
-.sale-product-content .content-heading h3 {
+.sale-product-content .content-heading h3,
+ .unitname-inp label, 
+ .unitprice-inp label {
     text-align: left;
     color: #024F9D;
     font-size: 20px;
@@ -515,8 +517,15 @@ footer.footer-menu {
     width: 100%;
     padding: 20px 10px;
 }
+.add-item .lower-form {
+    padding: 10px 25px 10px;
+}
 .add-item .btn-group {
     width: 100%; 
+}
+.add-item .upper-form .row.justify-content-center {
+    margin: 15px 0px;
+    align-items: center;
 }
 
 .add-item .img-placeholder {
