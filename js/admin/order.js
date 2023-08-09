@@ -1,6 +1,8 @@
 let current_page  = document.getElementById("order");
 console.log("current_page color change", current_page);
 current_page.querySelector('img').style.filter = 'invert(62%) sepia(112%) saturate(349%) hue-rotate(61deg) brightness(56%) contrast(168%)';
+current_page.querySelector('img').style.background = '#2b75142b';
+current_page.querySelector('img').style.borderRadius = '4px';
 
 let home  = document.getElementById("home");
 home.addEventListener('click', function(event) {
