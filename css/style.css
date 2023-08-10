@@ -697,6 +697,7 @@ button#add-cat {
 .acc-settin-content .cat-inp p {
     /* padding: 8px 0px; */
     color: #61b846;
+    font-size: 20px;
 }
 .acc-settin-content .lower-form {
     padding: 10px 25px 10px;
