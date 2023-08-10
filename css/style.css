@@ -662,4 +662,7 @@ p#order-list-item {
 i.bi.bi-chevron-compact-left {
     color: black;
 }
+.acc-setting .admin-icon {
+    padding: 35px 10px 0px;
+}
 /* *************    End Admin: Account Setting   *************** */
