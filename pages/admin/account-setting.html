@@ -16,17 +16,14 @@
 </head>
 
 <body id="Top">
-    <section class="signup sale sale-product">
+    <section class="signup sale sale-product acc-setting">
         <div class="container">
             <header class="main-header">
-                <div class="main-page-content">
-                    <a href="#" class="icon-link" id="order">
-                        <img src="../../img/icon/list_item.png" alt="list_item" style="width: 40px;
-                        height: 40px;" />
+                <div class="main-header-content">
+                    <a href="#" class="icon-link">
+                        <i class="bi bi-chevron-compact-left"></i>
                     </a>
-                    <div class="account-title">
-                        <h2 class="main-sub-heading">Settings</h2>
-                    </div>
+                    <p class="main-sub-heading">Settings</p>
                 </div>
                 <div class="admin-icon">
                     <img src="../../img/icon/admin.png" alt="admin" style="width: 65px;    margin-left: 10px;
@@ -46,21 +43,25 @@
                                 <div class="row justify-content-center">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
                                         <div class="input-group mb-3">
-                                            <label for="itemimg" class="btn btn-primary btn-block btn-outlined img-placeholder">  </label>
+                                            <label for="itemimg"
+                                                class="btn btn-primary btn-block btn-outlined img-placeholder"> </label>
                                             <input id="itemimg" name="itemimg" type="file" class="form-control"
                                                 placeholder="User Name" aria-label="itemimg"
-                                                aria-describedby="basic-addon2" accept="image/*" style="display: none;"/>
-                                            </div>
+                                                aria-describedby="basic-addon2" accept="image/*"
+                                                style="display: none;" />
+                                        </div>
                                         <span id="itemimgError"></span>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row justify-content-center unitprice-inp">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
                                         <div class="mb-3 row">
-                                            <label for="unitprice" class="col-sm-3 col-form-label" style="text-align: left;">Unit Price:</label>
+                                            <label for="unitprice" class="col-sm-3 col-form-label"
+                                                style="text-align: left;">Unit Price:</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="unitprice" placeholder=" $3.22">
+                                                <input type="text" class="form-control" id="unitprice"
+                                                    placeholder=" $3.22">
                                             </div>
                                         </div>
                                         <span id="unitpriceError"></span>
@@ -88,6 +89,65 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+                <div class="content-heading">
+                    <h3>Add New Item</h3>
+                </div>
+
+                <div class="content">
+                    <div class="content-category">
+                        <div class="cat-1 cat-style">
+                            <button id="fruit-btn" name="signup" type="submit" value="submit"
+                                class="btn btn-get-started cat-inp">
+                                <img src="../../img/sales/category/fruit.png" alt="fruit" />
+                                <p id="fruit">Fruit</p>
+                            </button>
+                        </div>
+                        <div class="cat-2 cat-style">
+                            <button id="oil-btn" name="signup" type="submit" value="submit"
+                                class="btn btn-get-started cat-inp">
+                                <img src="../../img/sales/category/oil.png" alt="oil" />
+                                <p id="oil">Oil</p>
+                            </button>
+                        </div>
+                        <div class="cat-3 cat-style">
+                            <button id="meat-btn" name="signup" type="submit" value="submit"
+                                class="btn btn-get-started cat-inp">
+                                <img src="../../img/sales/category/meat.png" alt="meat" />
+                                <p id="meat">Meat</p>
+                            </button>
+                        </div>
+                        <div class="cat-4 cat-style">
+                            <button id="dry-fruit-btn" name="signup" type="submit" value="submit"
+                                class="btn btn-get-started cat-inp">
+                                <img src="../../img/sales/category/dry-fruit.png" alt="dry-fruit" />
+                                <p id="dry-fruit">Dry fruit</p>
+                            </button>
+                        </div>
+                        <div class="cat-1 cat-style">
+                            <button id="vegetable-btn" name="signup" type="submit" value="submit"
+                                class="btn btn-get-started cat-inp">
+                                <img src="../../img/sales/category/vegetable.png" alt="vegetable" />
+                                <p id="vegetable">Vegetable</p>
+                            </button>
+                        </div>
+                        <div class="cat-6 cat-style">
+                            <button id="sea-food-btn" name="signup" type="submit" value="submit"
+                                class="btn btn-get-started cat-inp">
+                                <img src="../../img/sales/category/sea-food.png" alt="sea-food" />
+                                <p id="sea-food">Sea Food</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lower-form">
+                    <div class="row justify-content-center text-center">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <button id="save" name="save" type="submit" value="save"
+                                class="btn btn-get-started">Save</button>
+                        </div>
                     </div>
                 </div>
             </div>
