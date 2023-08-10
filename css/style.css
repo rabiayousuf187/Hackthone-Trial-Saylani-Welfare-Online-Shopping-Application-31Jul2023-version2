@@ -647,13 +647,17 @@ p#order-list-item {
 }
 .acc-setting header .main-header-content {
     width: 100%;
+    /* background: burlywood; */
+    display: flex;
 }
 .acc-setting header .main-header-content a{
     display: flex;
 }  
 .acc-setting header .main-header-content .main-sub-heading{
     font-size: 24px;
-    
+    text-align: center;
+    width: 100%;
+    display: inline-block;
 }
 i.bi.bi-chevron-compact-left {
     color: black;
