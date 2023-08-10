@@ -407,7 +407,7 @@ section.sale-product-content {
 
 .sale-product-content .cat-inp {
     width: 100%;
-    padding: 50px 15px;
+    padding: 10px 15px;
     background: none;
     border: 2px solid #61b846cf;
     align-items: center;
@@ -692,7 +692,7 @@ button#add-cat {
     padding: 40px 25px;
 }
 .acc-settin-content .cat-inp img {
-    width: 70px;
+    width: 40px;
 }
 .acc-settin-content .cat-inp p {
     /* padding: 8px 0px; */
