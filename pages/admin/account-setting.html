@@ -42,7 +42,7 @@
                                     <input id="fullname" name="fullname" type="text" class="form-control fullname-inp"
                                         placeholder="Update Full Name" aria-label="fullname"
                                         aria-describedby="basic-addon2">
-                                    <span class="inp-icon" id="update-fullname"><i class="bi bi-check-lg"></i></span>
+                                    <span class="inp-icon" id="update-fullname"><a role="button"><i class="bi bi-check-lg"></i></a></span>
                                 </div>
                                 <span id="fullnameError"></span>
                             </div>
@@ -65,37 +65,22 @@
 
                                 <div class="row justify-content-center unitprice-inp">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="mb-3 row">
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="unitprice"
-                                                    placeholder=" $3.22">
+                                        <div class="mb-3 row" style="
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                    ">
+                                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                                <input type="categoryname" class="form-control" id="categoryname"
+                                                    placeholder="new category name">
                                             </div>
-                                            <div for="unitprice" class="col-sm-3 col-form-label"
-                                                style="text-align: left;"><button id="add-production"
-                                                    name="add-production" type="submit" value="submit"
-                                                    class="btn btn-get-started">Add Product</button></div>
+                                            <div for="categoryname" class="col-lg-3 col-md-3 col-sm-3 col-form-label"
+                                                >
+                                                <button id="add-cat" name="add-cat" type="submit"
+                                                    value="submit" class="btn btn-get-started add-cat">Add</button>
+                                            </div>
                                         </div>
-                                        <span id="unitpriceError"></span>
-                                    </div>
-                                </div>
-                                <div class="row justify-content-center align-items-center">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="input-group mb-3">
-                                            <input id="itemname" name="itemname" type="text" class="form-control"
-                                                placeholder="Item Name" aria-label="itemname"
-                                                aria-describedby="basic-addon2">
-
-                                        </div>
-                                        <span id="contactError"></span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="lower-form">
-                                <div class="row justify-content-center text-center">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <button id="add-production" name="add-production" type="submit" value="submit"
-                                            class="btn btn-get-started">Add Product</button>
+                                        <span id="categorynameError"></span>
                                     </div>
                                 </div>
                             </div>

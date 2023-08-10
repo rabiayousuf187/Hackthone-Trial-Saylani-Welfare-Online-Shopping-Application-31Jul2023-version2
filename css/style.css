@@ -674,4 +674,9 @@ i.bi.bi-chevron-compact-left {
 .acc-settin-content .fullname-div {
     padding: 0px 30px;
 }
+button#add-cat {
+    width: 90%;
+    height: 50px;
+    font-size: 18px;
+}
 /* *************    End Admin: Account Setting   *************** */
