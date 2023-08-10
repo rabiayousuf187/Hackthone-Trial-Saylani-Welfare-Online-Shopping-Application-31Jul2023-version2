@@ -679,4 +679,27 @@ button#add-cat {
     height: 50px;
     font-size: 18px;
 }
+.acc-settin-content .content.show-all-cat {
+    height: 500px;
+    overflow: scroll;
+    width: 660px;
+}
+.acc-settin-content .cat-style {
+    margin: 10px 0px;
+    padding: 10px 5px;
+}
+.acc-settin-content .sale-product-content .cat-inp {
+    padding: 40px 25px;
+}
+.acc-settin-content .cat-inp img {
+    width: 70px;
+}
+.acc-settin-content .cat-inp p {
+    /* padding: 8px 0px; */
+    color: #61b846;
+}
+.acc-settin-content .lower-form {
+    padding: 10px 25px 10px;
+    margin: 90px 25px 25px;
+}
 /* *************    End Admin: Account Setting   *************** */
