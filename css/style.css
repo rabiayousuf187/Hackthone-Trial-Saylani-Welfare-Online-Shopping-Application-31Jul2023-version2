@@ -526,7 +526,7 @@ footer.footer-menu {
 
 /* *************    End Admin: Sales-Product Page   *************** */
 /* *************    Admin: Add-Item Page   *************** */
-.add-item .form {
+.add-item .form, .acc-settin-content .fullname-div {
     width: 100%;
     padding: 20px 10px;
 }
@@ -664,5 +664,14 @@ i.bi.bi-chevron-compact-left {
 }
 .acc-setting .admin-icon {
     padding: 35px 10px 0px;
+}
+
+.acc-settin-content i.bi.bi-check-lg {
+    font-size: 35px;
+    color: #61b846;
+    margin-right: -30px;
+}
+.acc-settin-content .fullname-div {
+    padding: 0px 30px;
 }
 /* *************    End Admin: Account Setting   *************** */
