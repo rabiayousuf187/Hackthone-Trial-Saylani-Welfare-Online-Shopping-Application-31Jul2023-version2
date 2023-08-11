@@ -60,8 +60,7 @@ function validateForm(event) {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const contact = document.getElementById("contact").value;
-  let acc_type = "user";
-  let userAcc;
+  let acc_type, userAcc;
   // let acc_type = document.querySelector('input[name="acc_type"]:checked');
 
   console.log("username = ", username);
@@ -118,6 +117,14 @@ function validateForm(event) {
   } else {
     clearError(document.getElementById("username"));
   }
+ 
+if (username.includes('admin')) {
+  console.log("Substring found!");
+  acc_type = 'admin';
+} else {
+  acc_type = 'user';
+}
+
   // if (acc_type) {
   //     console.log("Selected Account Type:", acc_type.value);
   //     clearError(document.getElementById("radio_acc_type"));
@@ -146,31 +153,60 @@ function validateForm(event) {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        console.log("User Role", acc_type);
         console.log("User Created", user);
-        writeUserData(user.uid, username, email, password, contact, acc_type);
-        userAcc = {
-          userId: user.uid,
-          acc_type: acc_type,
-        };
-        localStorage.setItem("userAcc", JSON.stringify(userAcc));
-        alert("User Created Successfully! ");
-        if (acc_type === "user") {
-          alert("You are redirected to User Purchase Corner");
-          window.location.href = "../purchase/purchase.html";
-          // openpage("sale/sale.html"); // Redirect to the sales page
-        } else if (acc_type === "admin") {
-          console.log("User Data ACCType", acc_type);
-          window.location.href = "./admin/sale-product.html";
-          alert("You are redirected to Admin Corner");
-          // openpage("purchase/purchase.html"); // Redirect to the purchase page
-        } else {
-          alert("Invalid Credential!");
-        }
+        writeUserData(user.uid, username, email, password, contact, acc_type)
+          .then(() => {
+            userAcc = {
+              userId: user.uid,
+              acc_type: acc_type,
+            };
+            localStorage.setItem("userAcc", JSON.stringify(userAcc));
+
+            if (acc_type === "user") {
+              alert("You are redirected to User Purchase Corner");
+              window.location.href = "../purchase/purchase.html";
+            } else if (acc_type === "admin") {
+              console.log("User Data ACCType", acc_type);
+              alert("You are redirected to Admin Corner");
+              window.location.href = "./admin/sale-product.html";
+            } else {
+              alert("Invalid Credential!");
+            }
+          })
+          .catch((error) => {
+            console.error("Error writing user data:", error);
+          });
+
+        // // .then((writedb) => {
+        // userAcc = {
+        //   userId: user.uid,
+        //   acc_type: acc_type,
+        // };
+        // localStorage.setItem("userAcc", JSON.stringify(userAcc));
+        // alert("User Created Successfully! ");
+        // if (acc_type === "user") {
+        //   alert("You are redirected to User Purchase Corner");
+        //   window.location.href = "../purchase/purchase.html";
+        //   // openpage("sale/sale.html"); // Redirect to the sales page
+        // } else if (acc_type === "admin") {
+        //   console.log("User Data ACCType", acc_type);
+        //   window.location.href = "./admin/sale-product.html";
+        //   alert("You are redirected to Admin Corner");
+        //   // openpage("purchase/purchase.html"); // Redirect to the purchase page
+        // } else {
+        //   alert("Invalid Credential!");
+        // }
+        // })
+        // .catch((error) => {
+        //   // Handle any errors that may occur during the data retrieval
+        //   console.error("Error:", error);
+        // });
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorMessage, errorCode);
+        console.log(error, error.message, error.code);
       });
   }
 }
@@ -179,24 +215,28 @@ function validateForm(event) {
 signupForm.addEventListener("submit", validateForm);
 
 function writeUserData(userId, username, email, password, contact, acc_type) {
-  // Create a reference to the Firebase Realtime Database
-  // Push data to the database
-  set(ref(database, "users/" + userId), {
-    userId: userId,
-    username: username,
-    email: email,
-    password: password,
-    contact: contact,
-    acc_type: acc_type,
-  })
-    .then(() => {
-      console.log("Data saved to Firebase Database.");
-      // Do any further actions after data has been saved successfully.
+  return new Promise((resolve, reject) => {
+    // Create a reference to the Firebase Realtime Database
+    // Push data to the database
+    set(ref(database, "users/" + userId), {
+      userId: userId,
+      username: username,
+      email: email,
+      password: password,
+      contact: contact,
+      acc_type: acc_type,
     })
-    .catch((error) => {
-      console.error("Error saving data:", error);
-    });
+      .then(() => {
+        console.log("Data saved to Firebase Database.");
+        resolve(); // Resolve the promise to indicate success
+      })
+      .catch((error) => {
+        console.error("Error saving data:", error);
+        reject(error); // Reject the promise with the error
+      });
+  });
 }
+
 
 const loginLink = document.getElementById("loginLink");
 

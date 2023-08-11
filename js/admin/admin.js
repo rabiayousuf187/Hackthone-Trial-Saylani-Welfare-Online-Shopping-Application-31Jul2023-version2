@@ -7,6 +7,7 @@ import {
     database, ref, set
 } from "../config/firebase-config.js";
 
+import {isAuth} from "../auth/auth.js"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,6 +22,7 @@ const signinForm = document.getElementById("signin-form");
 // It should have at least one character after the last "." symbol.
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
 
 // Open page
 function openpage(redirectPage) {

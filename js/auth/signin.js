@@ -147,10 +147,7 @@ function validateForm(event) {
   //   );
   // }
 
-  console.log(
-    "!document.querySelector.error ==== ",
-    document.querySelector("#signup-form")
-  );
+  console.log(    "!document.querySelector.error ==== ",   document.querySelector("#signup-form")  );
   if (!document.querySelector(".error")) {
     // Submit the form or do any other required action here
     console.log("Form submitted successfully!");
@@ -164,6 +161,7 @@ function validateForm(event) {
         // localStorage.setItem("userid",userid);
         getDataByUserId(userid)
           .then((userData) => {
+            console.log('GET userData === , ', userData);
             if (userData) {
               // Data exists for the user ID
               console.log("User Data", userData);
