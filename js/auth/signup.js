@@ -1,7 +1,11 @@
-console.log("Signup JS integrated");
 
 import firebaseExports from "../config/firebase-config.js";
+let userAcc = JSON.parse(localStorage.getItem("userAcc"));
 
+if (userAcc === null) {
+  console.log("Signup JS integrated");
+  
+  document.getElementById('Top').style.display = 'block';
 // Use the Firebase Configuration functions
 const {
   auth,
@@ -10,9 +14,6 @@ const {
   ref,
   set,
 } = firebaseExports;
-
-
-console.log("import firebaseConfig === ");
 
 const signupForm = document.getElementById("signup-form");
 
@@ -244,3 +245,10 @@ loginLink.addEventListener("click", () => {
   // Replace 'target_page.html' with the path of the page you want to open
   window.location.href = "./signin.html";
 });
+
+} else if (userAcc !== null) {
+  console.log("User is already logged In, did not required Create again");
+}else {
+  console.log("Unauth User Access!");
+  alert("Unauth User Access!");
+}
