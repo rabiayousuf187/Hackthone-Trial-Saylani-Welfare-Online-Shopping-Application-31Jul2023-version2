@@ -31,4 +31,25 @@ const database = getDatabase();
   // const analytics = getAnalytics(firebase);
 
 
-  export {auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, database, ref, push, set, get};
+
+  // ***************************************************** Firebase Web Own Auth
+// Check if userAcc exists in localStorage
+const userAcc = JSON.parse(localStorage.getItem("userAcc"));
+// Conditionally export Firebase functions
+let firebaseExports = null;
+
+if (userAcc === null) {
+  firebaseExports = {
+    auth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    database,
+    ref,
+    push,
+    set,
+    get,
+  };
+}
+
+export default firebaseExports;
+  // export {auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, database, ref, push, set, get};

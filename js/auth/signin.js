@@ -1,13 +1,10 @@
-console.log("Signin JS integrated");
+import { isAuth } from "./auth";
 
-// Config and Initialize Firebase
-import {
-  auth,
-  signInWithEmailAndPassword,
-  database,
-  ref,
-  get,
-} from "../config/firebase-config.js";
+
+if(isAuth){
+ console.log(isAuth);
+console.log("Signin Page redircted");
+
 
 let userid;
 let userData;
@@ -215,3 +212,7 @@ registerLink.addEventListener('click', () => {
   window.location.href = './signup.html';
 });
 
+}
+else{
+  console.log("User not Logged in");
+}

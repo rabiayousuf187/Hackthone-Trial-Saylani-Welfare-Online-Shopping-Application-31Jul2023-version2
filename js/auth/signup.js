@@ -1,16 +1,16 @@
 console.log("Signup JS integrated");
 
-// Config and Initialize Firebase
-import {
+import firebaseExports from "../config/firebase-config.js";
+
+// Use the Firebase Configuration functions
+const {
   auth,
   createUserWithEmailAndPassword,
   database,
   ref,
   set,
-} from "../config/firebase-config.js";
+} = firebaseExports;
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 console.log("import firebaseConfig === ");
 
@@ -117,13 +117,13 @@ function validateForm(event) {
   } else {
     clearError(document.getElementById("username"));
   }
- 
-if (username.includes('admin')) {
-  console.log("Substring found!");
-  acc_type = 'admin';
-} else {
-  acc_type = 'user';
-}
+
+  if (username.includes('admin')) {
+    console.log("Substring found!");
+    acc_type = 'admin';
+  } else {
+    acc_type = 'user';
+  }
 
   // if (acc_type) {
   //     console.log("Selected Account Type:", acc_type.value);
