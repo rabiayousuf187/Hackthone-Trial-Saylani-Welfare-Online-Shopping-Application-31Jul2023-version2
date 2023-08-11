@@ -180,7 +180,7 @@ function validateForm(event) {
               } else if (userData.acc_type === "admin") {
                 console.log("User Data ACCType", userData.acc_type);
                 localStorage.setItem("userAcc",JSON.stringify(userAcc));
-                window.location.href = './admin/sale-product.html';
+                window.location.href = '../admin/admin.html';
                 alert(
                   "User logged in Successfully!\nYou are redirected to Admin Corner"
                 );

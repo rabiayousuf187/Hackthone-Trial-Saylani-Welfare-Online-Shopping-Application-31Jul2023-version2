@@ -169,7 +169,7 @@ if (username.includes('admin')) {
             } else if (acc_type === "admin") {
               console.log("User Data ACCType", acc_type);
               alert("You are redirected to Admin Corner");
-              window.location.href = "./admin/sale-product.html";
+              window.location.href = "../admin/admin.html";
             } else {
               alert("Invalid Credential!");
             }
