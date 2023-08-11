@@ -16,7 +16,7 @@ function isAuth(){
 function logout() {
     localStorage.removeItem('userAcc');
     console.log("Logout successfully! redirected to signin");
-    window.location.href = '../auth/signin.html';
+    window.location.href = './auth/signin.html';
 }
 
 export { isAuth, logout };

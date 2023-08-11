@@ -1,36 +1,49 @@
-import { isAuth} from "../auth/auth.js";
-let userAcc = isAuth();
-console.log("userAcc get via is Auth()", userAcc);
+// import { isAuth } from "../auth/auth.js";
+// let userInfo = isAuth();
+// console.log("userInfo get via is Auth()", userInfo);
+document.getElementById("Top").style.display = "none";
+let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+let Auth = () => {
+  console.log("Admin Setting Page");
 
-if (userAcc && userAcc.acc_type === 'admin') {
-    console.log("Admin Setting Page");
+  document.getElementById("Top").style.display = "block";
+  let home = document.getElementById("home");
+  home.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default link behavior
+    window.location.href = "./sale-product.html";
+  });
 
-    let home = document.getElementById("home");
-    home.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        window.location.href = "./sale-product.html"
-    });
+  let add_item = document.getElementById("add-item");
+  add_item.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default link behavior
+    window.location.href = "./add-item.html";
+  });
 
-    let add_item = document.getElementById("add-item");
-    add_item.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        window.location.href = "./add-item.html"
-    });
+  let order = document.getElementById("order");
+  order.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default link behavior
+    window.location.href = "./order.html";
+  });
 
-    let order = document.getElementById("order");
-    order.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        window.location.href = "./order.html"
-    });
+  let acc_setting = document.getElementById("acc-setting");
+  acc_setting.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default link behavior
+    window.location.href = "./account-setting.html";
+  });
+};
 
-    let acc_setting = document.getElementById("acc-setting");
-    acc_setting.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        window.location.href = "./account-setting.html"
-    });
+let Unauth = () => {
+  console.log("Invalid User, redirect to Signin Page");
+  window.location.href = "../auth/signin.html";
+};
 
-}
-else{
-    console.log("User is Auth but role is not Admin");
-    window.location.href = './signin.html';
+// function isAuth(){
+if ((userInfo && userInfo.acc_type === "user") || userInfo === null) {
+  console.log("User is Auth but role is not Admin");
+  Unauth();
+} else if (userInfo !== null && userInfo.acc_type === "admin") {
+  console.log("user Exist ==== ", userInfo);
+  Auth();
+} else {
+  Unauth();
 }
