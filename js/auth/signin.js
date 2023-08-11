@@ -1,7 +1,7 @@
-import { isAuth } from "./auth";
+import { isAuth } from "./auth.js";
 
 
-if(isAuth){
+if(isAuth()){
  console.log(isAuth);
 console.log("Signin Page redircted");
 
