@@ -1,8 +1,15 @@
 // import { isAuth } from "./auth.js";
 import firebaseExports from "../config/firebase-config.js";
-let userAcc = JSON.parse(localStorage.getItem("userAcc"));
+console.log(localStorage.getItem("userAcc"));
+let userAcc = localStorage.getItem("userAcc");
 
-if (userAcc === null) {
+let localStExpCase = () => {
+  localStorage.removeItem("userAcc");
+};
+
+userAcc === null || userAcc === undefined ? localStExpCase() : (userAcc = JSON.parse(userAcc));
+
+if (userAcc === null || userAcc === undefined ) {
   console.log("Signin Page");
   document.getElementById('Top').style.display = 'block';
 
@@ -28,22 +35,6 @@ if (userAcc === null) {
   // It should have at least one character after the last "." symbol.
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-  // Open page
-  function openpage(redirectPage) {
-    let current_url = window.location;
-    console.log("current_url main === ", current_url);
-    current_url = current_url.href.substring(
-      0,
-      current_url.href.lastIndexOf("auth")
-    );
-    console.log("current_url === ", current_url);
-    setTimeout(() => {
-      current_url = current_url + redirectPage;
-      console.log("current_url === ", current_url);
-      window.location.replace(current_url);
-    }, 2000);
-  }
 
   // Function to get data from Firebase Realtime Database using user ID
   // function getDataByUserId(userId) {
@@ -177,17 +168,20 @@ if (userAcc === null) {
                     id: userid,
                     acc_type: userData.acc_type,
                   };
+                  console.log("User Data ACCType", userAcc);
                   localStorage.setItem("userAcc", JSON.stringify(userAcc));
                   window.location.href = "../purchase/purchase.html";
-                  // openpage("sale/sale.html"); // Redirect to the sales page
                 } else if (userData.acc_type === "admin") {
-                  console.log("User Data ACCType", userData.acc_type);
+                  userAcc = {
+                    id: userid,
+                    acc_type: userData.acc_type,
+                  };
+                  console.log("User Data ACCType", userAcc);
                   localStorage.setItem("userAcc", JSON.stringify(userAcc));
                   window.location.href = "../admin/admin.html";
                   alert(
                     "User logged in Successfully!\nYou are redirected to Admin Corner"
                   );
-                  // openpage("purchase/purchase.html"); // Redirect to the purchase page
                 } else {
                   alert("Invalid Credential!");
                 }
@@ -219,6 +213,21 @@ if (userAcc === null) {
   });
 } else if (userAcc !== null) {
   console.log("User is already logged In, did not required Login again");
+  if (userAcc.acc_type === "user") {
+    alert(
+      "User logged in Successfully!\nYou are redirected to User Purchase Corner"
+    );
+    console.log("User Data ACCType", userAcc);
+    window.location.href = "../purchase/purchase.html";
+  } else if (userAcc.acc_type === "admin") {
+    console.log("User Data ACCType", userAcc);
+    window.location.href = "../admin/admin.html";
+    alert(
+      "User is already logged In, did not required Login again\nYou are redirected to Admin Corner"
+    );
+  } else {
+    alert("Invalid Credential!");
+  }
 } else {
   console.log("Unauth User Access!");
   alert("Unauth User Access!");

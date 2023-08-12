@@ -30,9 +30,9 @@ if (userAcc && userAcc.acc_type === 'admin') {
     });
 
 }
-else if ( (userAcc && userAcc.acc_type === 'user') || userAcc === null) {
+else if ( (userAcc && userAcc.acc_type === 'user') || userAcc === null || userAcc === undefined) {
     console.log("User is Auth but role is not Admin");
-    window.location.href = './auth/signin.html';
+    window.location.href = '../auth/signin.html';
 }
 else{
     console.log("Unauth User Access!");

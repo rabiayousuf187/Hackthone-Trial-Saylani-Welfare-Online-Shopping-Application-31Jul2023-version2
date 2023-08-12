@@ -34,12 +34,12 @@ const database = getDatabase();
 
   // ***************************************************** Firebase Web Own Auth
 // Check if userAcc exists in localStorage
-const userAcc = JSON.parse(localStorage.getItem("userAcc"));
+// const userAcc = JSON.parse(localStorage.getItem("userAcc"));
 // Conditionally export Firebase functions
-let firebaseExports = null;
+// let firebaseExports = null;
 
-if (userAcc === null) {
-  firebaseExports = {
+// if (userAcc === null) {
+  let firebaseExports = {
     auth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -49,7 +49,7 @@ if (userAcc === null) {
     set,
     get,
   };
-}
+// }
 
 export default firebaseExports;
   // export {auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, database, ref, push, set, get};
