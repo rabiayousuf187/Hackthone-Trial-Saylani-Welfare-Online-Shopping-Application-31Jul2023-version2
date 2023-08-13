@@ -2,7 +2,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
   import { getDatabase, ref, push, set, get  } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
-  import { getStorage, ref as storageRef} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
+  import { getStorage, ref as storageRef, getDownloadURL, uploadBytes} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
   // import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
   
   
@@ -31,6 +31,8 @@ const auth = getAuth(appInitial);
 const database = getDatabase();
   // const analytics = getAnalytics(firebase);
 
+  const storage = getStorage();
+
 
 
   // ***************************************************** Firebase Web Own Auth
@@ -49,7 +51,9 @@ const database = getDatabase();
     push,
     set,
     get,
-    getStorage, storageRef
+    storage,
+    storageRef, 
+    getDownloadURL, uploadBytes,
   };
 // }
 

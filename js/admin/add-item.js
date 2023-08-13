@@ -14,10 +14,65 @@ if (userAcc && userAcc.acc_type === "admin") {
     database,
     ref,
     set,
-    getStorage,
+    storage,
     storageRef,
+    uploadBytes,
   } = firebaseExports;
 
+  let saveImg = (file) => {
+    // Assuming you have already initialized Firebase Storage
+    // const storageRef = storage.ref();
+    // const imageRef = storageRef.child("images/" + fileimg.name);
+    const imageRef = storageRef(storage, "images/" + file.name);
+
+    // Upload the file
+    uploadBytes(imageRef, file)
+      .then((snapshot) => {
+        console.log("Image uploaded successfully");
+        // You can store additional data in the Realtime Database along with the image URL
+
+        // Get the download URL
+        getDownloadURL(snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          // You can save the downloadURL in your database if needed
+          return downloadURL;
+        });
+      })
+      .catch((error) => {
+        console.error("Error uploading image:", error);
+        // Handle the error
+      });
+  };
+
+  function writeItemData(
+    downloadURL,
+    itemname,
+    selectedCategory,
+    itemcontent,
+    unitname,
+    unitprice
+  ) {
+    return new Promise((resolve, reject) => {
+      // Create a reference to the Firebase Realtime Database
+      // Push data to the database
+      set(ref(database, `items/` + selectedCategory), {
+        itemName: itemname,
+        itemCategory: itemCategorySelect,
+        itemContent: itemcontent,
+        unitName: unitname,
+        unitPrice: unitprice,
+        imageUrl: downloadURL, // Store the image URL here
+      })
+        .then(() => {
+          console.log("Data saved to Firebase Database.");
+          resolve(); // Resolve the promise to indicate success
+        })
+        .catch((error) => {
+          console.error("Error saving data:", error);
+          reject(error); // Reject the promise with the error
+        });
+    });
+  }
   let current_page = document.getElementById("add-item");
   // console.log("current_page color change", current_page);
   current_page.querySelector("i").style.color = "#61B846";
@@ -106,7 +161,7 @@ if (userAcc && userAcc.acc_type === "admin") {
       // Now you can proceed with uploading the image or other actions
       console.log("Image is valid:", fileimg.name, fileimg.type, fileimg.size);
       // Your upload logic here
-      clearError(document.getElementById("fileimg"));
+      clearError(document.getElementById("itemimg"));
     } else {
       // alert("Please select an image file.");
       console.log("Please select an image file.");
@@ -122,31 +177,37 @@ if (userAcc && userAcc.acc_type === "admin") {
 
     // Dropdown Valid
     itemCategorySelect.addEventListener("change", function () {
-      selectedCategory = itemcategory.value;
+      selectedCategory = itemCategorySelect.value; // Corrected variable name
       console.log("selectedCategory ==== ", selectedCategory);
+
+      if (
+        selectedCategory === "Select Category" ||
+        selectedCategory === undefined
+      ) {
+        // Handle case when the default "Select Category" is chosen
+        console.log("No category selected");
+        showError(
+          document.getElementById("itemcategory"),
+          "Item Category is required."
+        );
+      } else {
+        console.log("Selected Category:", selectedCategory);
+        clearError(document.getElementById("itemcategory"));
+      }
     });
-    if (
-      selectedCategory === "Select Category" ||
-      selectedCategory === undefined
-    ) {
-      // Handle case when the default "Select Category" is chosen
-      console.log("No category selected");
-      showError(
-        document.getElementById("itemcategory"),
-        "Item Category is required."
-      );
-    } else {
-      console.log("Selected Category:", selectedCategory);
-      clearError(document.getElementById("itemcategory"));
-    }
+
+    // Rest of your code...
 
     // Valid content
     if (itemcontent.trim() === "") {
-      showError(document.getElementById("itemcontent"), "Item content is required.");
+      showError(
+        document.getElementById("itemcontent"),
+        "Item content is required."
+      );
     } else {
       clearError(document.getElementById("itemcontent"));
     }
-        // Valid Unit
+    // Valid Unit
     if (unitname.trim() === "") {
       showError(document.getElementById("unitname"), "Item Unit is required.");
     } else {
@@ -163,78 +224,33 @@ if (userAcc && userAcc.acc_type === "admin") {
       clearError(document.getElementById("unitprice"));
     }
 
-    // Validate password
-    if (password.trim() === "") {
-      showError(document.getElementById("password"), "Password is required.");
-    } else if (!passwordRegex.test(password)) {
-      showError(
-        document.getElementById("password"),
-        "Password must be at least 8 characters long and contain at least one letter and one number."
-      );
-    } else {
-      clearError(document.getElementById("password"));
-    }
-
-    // Selected Account Type
-    if (username.trim() === "") {
-      showError(document.getElementById("username"), "Username is required.");
-    } else {
-      clearError(document.getElementById("username"));
-    }
-
-    if (username.includes("admin")) {
-      console.log("Substring found!");
-      acc_type = "admin";
-    } else {
-      acc_type = "user";
-    }
-
-    console.log(
-      "!document.querySelector.error ==== ",
-      document.querySelector("#signup-form")
-    );
     console.log(
       "!document.querySelector.error ==== ",
       !document.querySelector(".error")
     );
+
     if (!document.querySelector(".error")) {
       // Submit the form or do any other required action here
       console.log("Form submitted successfully!");
-      // Call the function to create a user with Firebase Authentication
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log("User Role", acc_type);
-          console.log("User Created", user);
-          writeUserData(user.uid, username, email, password, contact, acc_type)
-            .then(() => {
-              userAcc = {
-                userId: user.uid,
-                acc_type: acc_type,
-              };
-              localStorage.setItem("userAcc", JSON.stringify(userAcc));
 
-              if (acc_type === "user") {
-                alert("You are redirected to User Purchase Corner");
-                window.location.href = "../purchase/purchase.html";
-              } else if (acc_type === "admin") {
-                console.log("User Data ACCType", acc_type);
-                alert("You are redirected to Admin Corner");
-                window.location.href = "../admin/admin.html";
-              } else {
-                alert("Invalid Credential!");
-              }
-            })
-            .catch((error) => {
-              console.error("Error writing user data:", error);
-            });
+      // Store Img to Firebase Storage
+      saveImg(fileimg)
+        .then((downloadURL) => {
+          console.log("GET downloadURL === , ", downloadURL);
+          if (downloadURL) {
+          } else {
+            console.log("No DownloadURL RX.");
+          }
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(error, error.message, error.code);
+          // Handle any errors that may occur during the data retrieval
+          console.error("Error:", error);
         });
+
+      // userAcc = {
+      //   userId: user.uid,
+      //   acc_type: acc_type,
+      // };
     }
   }
 

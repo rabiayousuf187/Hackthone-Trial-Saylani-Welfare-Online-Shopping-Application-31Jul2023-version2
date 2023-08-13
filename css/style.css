@@ -582,9 +582,21 @@ footer.footer-menu {
     background-size: 20px 20px;
     background-repeat: no-repeat;
     background-position: 98% center;
-     /* Adjust padding to make space for the SVG */
+    /* Adjust padding to make space for the SVG */
+}
+.add-item #itemcategory::after {
+    content: "";
+    background-image: url('../img/icon/chevron-down.svg'); /* Set the path to your arrow SVG */
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Adjust this value to position the arrow */
+    transform: translateY(-50%);
+    width: 20px; /* Adjust this value to match the arrow SVG dimensions */
+    height: 20px; /* Adjust this value to match the arrow SVG dimensions */
+    pointer-events: none; /* Ensure the arrow doesn't interfere with interactions */
   }
-  
 
 .add-item input::placeholder,
 .form-floating>.form-control::placeholder {
