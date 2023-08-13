@@ -2,6 +2,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
   import { getDatabase, ref, push, set, get  } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
+  import { getStorage, ref } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js";
   // import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
   
   
@@ -48,6 +49,7 @@ const database = getDatabase();
     push,
     set,
     get,
+    getStorage, ref,
   };
 // }
 
