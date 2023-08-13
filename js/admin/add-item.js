@@ -39,6 +39,7 @@ if (userAcc && userAcc.acc_type === "admin") {
     function validateForm(event) {
         event.preventDefault();
     
+        const fileimg = document.getElementById("itemimg");
         const username = document.getElementById("username").value;
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
@@ -46,7 +47,7 @@ if (userAcc && userAcc.acc_type === "admin") {
         let acc_type, userAcc;
         // let acc_type = document.querySelector('input[name="acc_type"]:checked');
     
-        console.log("username = ", username);
+        console.log("fileimg = ", fileimg.file[0]);
         console.log("email = ", email);
         console.log("password = ", password);
         console.log("contact = ", contact);
