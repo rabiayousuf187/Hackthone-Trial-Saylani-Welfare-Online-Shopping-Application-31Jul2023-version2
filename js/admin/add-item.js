@@ -17,31 +17,32 @@ if (userAcc && userAcc.acc_type === "admin") {
     storage,
     storageRef,
     uploadBytes,
+    getDownloadURL,
   } = firebaseExports;
 
-  let saveImg = (file) => {
-    // Assuming you have already initialized Firebase Storage
-    // const storageRef = storage.ref();
-    // const imageRef = storageRef.child("images/" + fileimg.name);
-    const imageRef = storageRef(storage, "images/" + file.name);
+  let saveImg = (file, itemname, selectedCategory) => {
+    return new Promise((resolve, reject) => {
+      const imageRef = storageRef(
+        storage,
+        `images/${selectedCategory}/${itemname}/${file.name}`
+      );
 
-    // Upload the file
-    uploadBytes(imageRef, file)
-      .then((snapshot) => {
-        console.log("Image uploaded successfully");
-        // You can store additional data in the Realtime Database along with the image URL
+      uploadBytes(imageRef, file)
+        .then((snapshot) => {
+          console.log("Image uploaded successfully");
 
-        // Get the download URL
-        getDownloadURL(snapshot.ref).then((downloadURL) => {
+          // Get the download URL
+          return getDownloadURL(snapshot.ref);
+        })
+        .then((downloadURL) => {
           console.log("File available at", downloadURL);
-          // You can save the downloadURL in your database if needed
-          return downloadURL;
+          resolve(downloadURL); // Resolve the promise with the download URL
+        })
+        .catch((error) => {
+          console.error("Error uploading image:", error);
+          reject(error); // Reject the promise with the error
         });
-      })
-      .catch((error) => {
-        console.error("Error uploading image:", error);
-        // Handle the error
-      });
+    });
   };
 
   function writeItemData(
@@ -55,16 +56,16 @@ if (userAcc && userAcc.acc_type === "admin") {
     return new Promise((resolve, reject) => {
       // Create a reference to the Firebase Realtime Database
       // Push data to the database
-      set(ref(database, `items/` + selectedCategory), {
+      set(ref(database, `items/${selectedCategory}/${itemname}/`), {
         itemName: itemname,
-        itemCategory: itemCategorySelect,
+        itemCategory: selectedCategory,
         itemContent: itemcontent,
         unitName: unitname,
         unitPrice: unitprice,
         imageUrl: downloadURL, // Store the image URL here
       })
         .then(() => {
-          console.log("Data saved to Firebase Database.");
+          console.log("Data saved to Firebase Database. with Img");
           resolve(); // Resolve the promise to indicate success
         })
         .catch((error) => {
@@ -123,18 +124,36 @@ if (userAcc && userAcc.acc_type === "admin") {
       errorElement.classList.remove("error")
     );
   }
+  let itemCategorySelect = document.getElementById("itemcategory");
+  let selectedCategory;
+  // Adding the event listener for the itemCategorySelect
+  itemCategorySelect.addEventListener("change", function () {
+    selectedCategory = itemCategorySelect.value; // Corrected variable name
+    console.log("selectedCategory ==== ", selectedCategory);
 
+    if (selectedCategory === "Select Category" || selectedCategory === "") {
+      // Handle case when the default "Select Category" is chosen or if the value is empty
+      console.log("No category selected");
+      showError(
+        document.getElementById("itemcategory"),
+        "Item Category is required."
+      );
+    } else {
+      console.log("Selected Category:", selectedCategory);
+      clearError(document.getElementById("itemcategory"));
+    }
+  });
   // Function to validate the form on submission
   function validateForm(event) {
     event.preventDefault();
 
     const fileimg = document.getElementById("itemimg").files[0];
     const itemname = document.getElementById("itemname").value;
-    const itemCategorySelect = document.getElementById("itemcategory");
+    // const itemCategorySelect = document.getElementById("itemcategory");
     const itemcontent = document.getElementById("itemcontent").value;
     const unitname = document.getElementById("unitname").value;
     const unitprice = document.getElementById("unitprice").value;
-    let acc_type, userAcc, selectedCategory;
+    let acc_type, userAcc;
     // let acc_type = document.querySelector('input[name="acc_type"]:checked');
 
     console.log("fileimg = ", fileimg);
@@ -176,27 +195,6 @@ if (userAcc && userAcc.acc_type === "admin") {
     }
 
     // Dropdown Valid
-    itemCategorySelect.addEventListener("change", function () {
-      selectedCategory = itemCategorySelect.value; // Corrected variable name
-      console.log("selectedCategory ==== ", selectedCategory);
-
-      if (
-        selectedCategory === "Select Category" ||
-        selectedCategory === undefined
-      ) {
-        // Handle case when the default "Select Category" is chosen
-        console.log("No category selected");
-        showError(
-          document.getElementById("itemcategory"),
-          "Item Category is required."
-        );
-      } else {
-        console.log("Selected Category:", selectedCategory);
-        clearError(document.getElementById("itemcategory"));
-      }
-    });
-
-    // Rest of your code...
 
     // Valid content
     if (itemcontent.trim() === "") {
@@ -232,13 +230,30 @@ if (userAcc && userAcc.acc_type === "admin") {
     if (!document.querySelector(".error")) {
       // Submit the form or do any other required action here
       console.log("Form submitted successfully!");
+      console.log(
+        "Data before write === ",
+        itemname,
+        selectedCategory,
+        itemcontent,
+        unitname,
+        unitprice
+      );
 
       // Store Img to Firebase Storage
-      saveImg(fileimg)
-        .then((downloadURL) => {
+      saveImg(fileimg, itemname, selectedCategory)
+      .then((downloadURL) => {
           console.log("GET downloadURL === , ", downloadURL);
           if (downloadURL) {
-          } else {
+            console.log("Data before write === ", downloadURL,itemname,selectedCategory,itemcontent,unitname,unitprice);
+            writeItemData(downloadURL,itemname,selectedCategory,itemcontent,unitname,unitprice)
+            .then(() => {
+              window.location.href = `../admin/category/${selectedCategory}.html`;
+            })
+            .catch((error) => {
+              console.error("Error Adding Item data:", error);
+            });
+          }
+          else {
             console.log("No DownloadURL RX.");
           }
         })
