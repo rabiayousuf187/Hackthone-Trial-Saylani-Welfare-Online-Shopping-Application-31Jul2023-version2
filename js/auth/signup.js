@@ -226,7 +226,8 @@ if (userAcc === null || userAcc === undefined) {
     // Replace 'target_page.html' with the path of the page you want to open
     window.location.href = "./signin.html";
   });
-} else if (userAcc !== null) {
+} 
+}else if (userAcc !== null) {
   console.log("User is already logged In, did not required Create again");
   if (userAcc.acc_type === "user") {
     alert(
