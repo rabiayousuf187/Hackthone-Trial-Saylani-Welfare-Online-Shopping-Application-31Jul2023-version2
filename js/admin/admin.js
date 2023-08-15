@@ -3,14 +3,14 @@ let userAcc = isAuth();
 console.log("userAcc get via is Auth()", userAcc);
 
 if (userAcc && userAcc.acc_type === 'admin') {
-    console.log("Admin Setting Page");
+    console.log("Admin.Page");
     document.getElementById('Top').style.display = 'block';
-    let home = document.getElementById("home");
-    home.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        window.location.href = "./sale-product.html"
-    });
 
+    let current_page = document.getElementById("home");
+    console.log("current_page color change", current_page);
+    current_page.querySelector('img').style.filter = 'invert(62%) sepia(112%) saturate(349%) hue-rotate(61deg) brightness(56%) contrast(168%)';
+    current_page.querySelector('p').style.color = "#61B846";
+    
     let add_item = document.getElementById("add-item");
     add_item.addEventListener('click', function (event) {
         event.preventDefault(); // Prevent the default link behavior

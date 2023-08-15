@@ -4,7 +4,7 @@ let userAcc = isAuth();
 console.log("userAcc get via is Auth()", userAcc);
 
 if (userAcc && userAcc.acc_type === "admin") {
-    console.log("Add Item Page");
+    console.log("Admin-Home: Fruit Page");
 
     document.getElementById("Top").style.display = "block";
     // Use the Firebase Configuration functions
