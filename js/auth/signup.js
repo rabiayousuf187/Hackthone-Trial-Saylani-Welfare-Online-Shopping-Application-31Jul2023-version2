@@ -218,15 +218,56 @@ if (userAcc === null || userAcc === undefined) {
   signupForm.addEventListener("submit", validateForm);
 
   function writeUserData(userId, username, email, password, contact, acc_type) {
-    
+    return new Promise((resolve, reject) => {
+        const userRef = ref(database, 'users/' + userId);
 
-  const loginLink = document.getElementById("loginLink");
+        set(userRef, {
+            userId: userId,
+            username: username,
+            email: email,
+            password: password,
+            contact: contact,
+            acc_type: acc_type
+        })
+        .then(() => {
+            console.log("Data saved to Firebase Database.");
+            resolve(); // Resolve the promise to indicate success
+        })
+        .catch((error) => {
+            console.error("Error saving data:", error);
+            reject(error); // Reject the promise with the error
+        });
+    });
+}
 
-  loginLink.addEventListener("click", () => {
+  // function writeUserData(userId, username, email, password, contact, acc_type) {
+
+  //     // Create a reference to the Firebase Realtime Database
+  //     // Push data to the database
+  //     set(ref(database, 'users/' + userId), {
+  //         userId: userId,
+  //         username: username,
+  //         email: email,
+  //         password: password,
+  //         contact: contact,
+  //         acc_type: acc_type
+  //     })
+  //         .then(() => {
+  //             console.log("Data saved to Firebase Database.");
+  //             // Do any further actions after data has been saved successfully.
+  //         })
+  //         .catch((error) => {
+  //             console.error("Error saving data:", error);
+  //         });
+  // } 
+
+  const loginLinkbtn = document.getElementById("loginLink");
+
+  loginLinkbtn.addEventListener("click", () => {
     // Replace 'target_page.html' with the path of the page you want to open
     window.location.href = "./signin.html";
   });
-} 
+
 }else if (userAcc !== null) {
   console.log("User is already logged In, did not required Create again");
   if (userAcc.acc_type === "user") {
