@@ -48,6 +48,41 @@ if (userAcc && userAcc.acc_type === "admin") {
         window.location.href = "../order.html"
     });
 
+    let getAllItemData = () => {
+        return new Promise((resolve, reject) => {
+            // get reference to the Firebase Realtime Database
+            // get data to the database
+            set(ref(database, `items/fruit/`), {
+              itemName: itemname,
+              itemCategory: selectedCategory,
+              itemContent: itemcontent,
+              unitName: unitname,
+              unitPrice: unitprice,
+              imageUrl: downloadURL, // Store the image URL here
+            })
+            dataRef.once('value')
+        .then((snapshot) => {
+            // snapshot contains the data
+            const data = snapshot.val();
+
+            // Process the data as needed
+            console.log('Retrieved data:', data);
+        })
+        .catch((error) => {
+            console.error('Error fetching data:', error);
+        });
+
+              .then(() => {
+                console.log("Data saved to Firebase Database. with Img");
+                resolve(); // Resolve the promise to indicate success
+              })
+              .catch((error) => {
+                console.error("Error saving data:", error);
+                reject(error); // Reject the promise with the error
+              });
+          });
+    }
+
 } else if (
     (userAcc && userAcc.acc_type === "user") ||
     userAcc === null ||
