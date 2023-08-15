@@ -239,33 +239,48 @@ if (userAcc && userAcc.acc_type === "admin") {
         unitprice
       );
 
-      // Store Img to Firebase Storage
-      saveImg(fileimg, itemname, selectedCategory)
-      .then((downloadURL) => {
-          console.log("GET downloadURL === , ", downloadURL);
-          if (downloadURL) {
-            console.log("Data before write === ", downloadURL,itemname,selectedCategory,itemcontent,unitname,unitprice);
-            writeItemData(downloadURL,itemname,selectedCategory,itemcontent,unitname,unitprice)
-            .then(() => {
-              window.location.href = `../admin/category/${selectedCategory}.html`;
-            })
-            .catch((error) => {
-              console.error("Error Adding Item data:", error);
-            });
-          }
-          else {
-            console.log("No DownloadURL RX.");
-          }
-        })
-        .catch((error) => {
-          // Handle any errors that may occur during the data retrieval
-          console.error("Error:", error);
-        });
+      if (!fileimg || !itemname || !selectedCategory || !itemcontent || !unitname || !unitprice) {
+        alert("Refill Form for all Feilds\nSome Feilds are undefined.")
+        console.log("Refill Form for all Feilds\nSome Feilds are undefined.");
+      }
+      else {
 
-      // userAcc = {
-      //   userId: user.uid,
-      //   acc_type: acc_type,
-      // };
+        console.log("All feilds are well defined.");
+        // Store Img to Firebase Storage
+        saveImg(fileimg, itemname, selectedCategory)
+          .then((downloadURL) => {
+            console.log("GET downloadURL === , ", downloadURL);
+            if (downloadURL) {
+              console.log("Data before write === ", downloadURL, itemname, selectedCategory, itemcontent, unitname, unitprice);
+              writeItemData(downloadURL, itemname, selectedCategory, itemcontent, unitname, unitprice)
+                .then(() => {
+                  document.getElementById("itemname").value = "";
+                  document.getElementById("itemcategory").value = "Select Category";
+                  document.getElementById("itemcontent").value = "";
+                  document.getElementById("unitname").value = "";
+                  document.getElementById("unitprice").value = "";
+                  document.getElementById("itemimg").value = null; // Clear file input
+
+                  window.location.href = `../admin/category/${selectedCategory}.html`;
+                })
+                .catch((error) => {
+                  console.error("Error Adding Item data:", error);
+                });
+            }
+            else {
+              console.log("No DownloadURL RX.");
+            }
+          })
+          .catch((error) => {
+            // Handle any errors that may occur during the data retrieval
+            console.error("Error:", error);
+          });
+
+        // userAcc = {
+        //   userId: user.uid,
+        //   acc_type: acc_type,
+        // };
+      }
     }
   }
 
