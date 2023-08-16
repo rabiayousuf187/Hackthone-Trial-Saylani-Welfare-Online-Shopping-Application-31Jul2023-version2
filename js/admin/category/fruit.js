@@ -44,21 +44,19 @@ if (userAcc && userAcc.acc_type === "admin") {
       event.preventDefault(); // Prevent the default link behavior
       window.location.href = "../order.html";
     });
-    // let getImg = async (itemCategory, itemName) => {
-    //     try {
-    //         const imageUrl = await getDownloadURL(storageRef(storage, `images/${itemCategory}/${itemName}/`));
-    //         console.log("GET IMG URL _+++++ ", imageUrl)
-    //         return imageUrl;
-    //     } catch (error) {
-    //         console.error("Error getting image from storage:", error);
-    //         return null;
-    //     }
-    // }
+ 
+    const showElement = (elementId, display = "block") => {
+        document.getElementById(elementId).style.display = display;
+      };
+
+    const hideElement = (elementId) => {
+        document.getElementById(elementId).style.display = "none";
+      };
 
     let checkAllImagesLoaded = (detail1, detail2, detail3) => {
-      document.getElementById(detail1).style.display = "block";
-      document.getElementById(detail2).style.display = "block";
-      document.getElementById(detail3).style.display = "block";
+      showElement(detail1);
+      showElement(detail2);
+      showElement(detail3);
     };
     // Create a function to generate and add a fruit item to the container
     // Assuming you have a container element with id "content-category"
@@ -128,9 +126,6 @@ if (userAcc && userAcc.acc_type === "admin") {
     const simulateDataLoading = async () => {
       try {
         console.log("entered inloading");
-        // setTimeout(() => {
-
-        // }, 100); // Simulate 2 seconds of loading
 
         document.getElementById("Top").insertAdjacentHTML(
           "afterbegin",
@@ -164,14 +159,15 @@ if (userAcc && userAcc.acc_type === "admin") {
     };
 
     const loadingContainer = document.getElementById("loading-container");
+    showElement('loading-container',"flex" );
     // Show loading spinner while data is being loaded
-    loadingContainer.style.display = "flex";
+    
     console.log("Loadingggggggggggg");
     simulateDataLoading()
       .then(() => {
         console.log("Display Pageeeeeeeeeee");
-        document.getElementById("Top").style.display = "block";
-        loadingContainer.style.display = "none"; //
+        showElement("Top");
+        hideElement('loading-container');
         // Hide loading spinner once data is loaded
         getAllItemData()
           .then((itemsData) => {
@@ -224,11 +220,10 @@ if (userAcc && userAcc.acc_type === "admin") {
                     console.log("All lazy-loaded images are loaded.");
                     setTimeout(() => {
                       console.log("Page Completely Loaded");
-                      document.getElementById("header").style.display = "block";
-                      document.getElementById("cat-section").style.display =
-                        "block";
-                      document.getElementById("footer").style.display = "block";
-                      document.getElementById("loading").style.display = "none";
+                      showElement("header");
+                      showElement("cat-section");
+                        showElement("footer");
+                        showElement("loading");
                     
                     }, 2000);
                     // You can execute the rest of your code that depends on the loaded images here
@@ -241,15 +236,6 @@ if (userAcc && userAcc.acc_type === "admin") {
                     console.error("An error occurred:", error);
                   });
 
-                // loadImagesSequentially(lazyImages)
-                //     .then(() => {
-                //         console.log('All images loaded sequentially.');
-
-                //         // Now, images are cached for faster loading on subsequent visits
-                //         // Display your text content or do other actions
-                //         // document.getElementById("Top").style.visibility = "visible";
-                //     })
-
               });
             }
             // Process the retrieved data
@@ -261,7 +247,7 @@ if (userAcc && userAcc.acc_type === "admin") {
       })
       .catch((error) => {
         console.error("Error loading data:", error);
-        loadingContainer.style.display = "none"; // Hide loading spinner in case of error
+        // loadingContainer.style.display = "none"; // Hide loading spinner in case of error
       });
 
     // console.log("2nd Load");
