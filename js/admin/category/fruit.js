@@ -122,7 +122,7 @@ if (userAcc && userAcc.acc_type === "admin") {
                     "afterbegin",
                     `<div id='loading' class="loading" align="center">
         <div class="main">
-            <div class="small1">
+        <div class="small1 logo-loading">
             <div class="main-page-content">
             <h1 class="text-center mb-3 main-heading">SAYLANI WELFARE</h1>
             <!-- Heading 2 -->
@@ -167,7 +167,7 @@ if (userAcc && userAcc.acc_type === "admin") {
                 showElement("Top");
                 hideElement('loading-container');
                 // Hide loading spinner once data is loaded
-                
+
                 getAllItemData()
                     .then((itemsData) => {
                         if (!itemsData) {
@@ -222,7 +222,7 @@ if (userAcc && userAcc.acc_type === "admin") {
                       showElement("header");
                       showElement("cat-section");
                         showElement("footer");
-                        // hideElement("loading");
+                        hideElement("loading");
                     
                     }, 2000);
                     // You can execute the rest of your code that depends on the loaded images here
