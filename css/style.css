@@ -38,7 +38,12 @@
   transform: translate(-50%, -50%) rotate(45deg);
   background-color: transparent;
 }
-
+.logo-loading.small1 {
+    transform: none;
+    top: -10vh;
+    left: 0%;
+    width: 100%;
+}
 .bigcon {
   position: absolute;
   height: 95px;

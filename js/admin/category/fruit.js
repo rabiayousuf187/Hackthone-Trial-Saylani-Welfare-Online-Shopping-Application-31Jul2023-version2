@@ -123,6 +123,13 @@ if (userAcc && userAcc.acc_type === "admin") {
                     `<div id='loading' class="loading" align="center">
         <div class="main">
             <div class="small1">
+            <div class="main-page-content">
+            <h1 class="text-center mb-3 main-heading">SAYLANI WELFARE</h1>
+            <!-- Heading 2 -->
+            <h2 class="text-center main-sub-heading">ONLINE MARKET PLACE</h2>
+        </div>
+            </div>
+            <div class="small1">
               <div class="small ball smallball1"></div>
               <div class="small ball smallball2"></div>
               <div class="small ball smallball3"></div>
@@ -160,6 +167,7 @@ if (userAcc && userAcc.acc_type === "admin") {
                 showElement("Top");
                 hideElement('loading-container');
                 // Hide loading spinner once data is loaded
+                
                 getAllItemData()
                     .then((itemsData) => {
                         if (!itemsData) {
@@ -202,7 +210,7 @@ if (userAcc && userAcc.acc_type === "admin") {
 
                                     showElement("sub-cat-details-" + ind);
                                     showElement("sub-cat-price-" + ind);
-                                    showElement(`cat-fruit-${ ind }`);
+                                    showElement(`cat-fruit-${ind}`);
 
                   loadImagePromises.push(promise);
                 });
