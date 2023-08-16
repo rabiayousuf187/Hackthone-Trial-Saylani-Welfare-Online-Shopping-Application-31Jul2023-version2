@@ -97,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const imgElement = document.createElement("img");
                 imgElement.src = imageURL;
                 imgElement.alt = name;
+                imgElement.loading = "lazy"; // Enable lazy loading
 
                 const nameDiv = document.createElement("div");
 
