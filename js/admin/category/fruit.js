@@ -9,17 +9,10 @@ if (userAcc && userAcc.acc_type === "admin") {
     let itemsData;
     console.log("Admin-Home: Fruit Page");
 
-    document.getElementById("Top").style.display = "block";
-    // document.getElementById("Top").style.visibility = "visible";
-    // setTimeout(() => {
-    // Use the Firebase Configuration functions
     const {
         database,
         ref,
         get,
-        storage,
-        storageRef,
-        getDownloadURL,
     } = firebaseExports;
 
 
@@ -209,14 +202,16 @@ getAllItemData()
 
 
                 const lazyImages = document.querySelectorAll('.lazy-image');
-                loadImagesSequentially(lazyImages).then(() => {
+                loadImagesSequentially(lazyImages)
+                .then(() => {
                     console.log('All images loaded sequentially.');
 
                     checkAllImagesLoaded("sub-cat-details-" + ind, "sub-cat-price-" + ind, `cat-fruit-${ind}`);
                     // Now, images are cached for faster loading on subsequent visits
                     // Display your text content or do other actions
-                    document.getElementById("Top").style.visibility = "visible";
+                    // document.getElementById("Top").style.visibility = "visible";
                 });
+                
             });
 
             // Load images sequentially
@@ -232,6 +227,11 @@ getAllItemData()
         }
         // Process the retrieved data
 
+    })
+    .then( ()=>{
+        setTimeout(()=>{
+            document.getElementById("Top").style.display = "block";
+        }, 3000);
     })
     .catch((error) => {
         console.error('Error fetching Items Data:', error);
