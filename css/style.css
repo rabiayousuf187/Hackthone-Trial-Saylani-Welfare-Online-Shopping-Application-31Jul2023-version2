@@ -5,6 +5,15 @@
 .auth{
     display: none;
 }
+.visible{
+    visibility: hidden;
+}
+.lazy-image {
+    width: 110px; /* Adjust as needed */
+    height: fit-content; /* Maintain aspect ratio */
+    display: block;
+    margin: 10px;
+  }
 .container {
     margin: 0 auto;
     /* display: flex;
@@ -403,8 +412,8 @@ section.sale-product-content {
     /* text-align: center; */
 }
 
-.sale-product-content .cat-1 {
-    margin: 30px 0px;
+.sale-product-content .cat-fruit {
+    margin: 10px 0px;
 }
 
 .sale-product-content .cat-inp {
@@ -415,15 +424,14 @@ section.sale-product-content {
     align-items: center;
     justify-content: space-between;
     box-shadow: none;
+    height: fit-content;
 }
 
-.sale-product-content .cat-inp:active,
-.sale-product-content .cat-inp:hover,
-.sale-product-content .cat-inp:focus,
-.sale-product-content .cat-inp:visited {
-    color: #61B846 !important;
-    background: #FFF !important;
-    box-shadow: 0px 4px 4px 5px #d1d0d0;
+.content-category .cat-inp:active,
+.content-category .cat-inp:hover,
+.content-category .cat-inp:focus,
+.content-category .cat-inp:visited {
+    box-shadow: 0px 4px 4px 5px #13890f70;
 }
 
 .sale-product-content .cat-inp img {
@@ -435,20 +443,37 @@ section.sale-product-content {
     padding: 8px 0px;
 }
 
-.sale-product-content p#fruit-name {
+.sale-product-content .sub-cat-name {
     color: #61B846;
     font-size: 26px;
     font-weight: 500;
 }
 
-.sale-product-content p#fruit-weight,
-.sale-product-content p#fruit-price {
+.content-category .sub-cat-details{
+    display: none;
+    text-align: left;
+}
+
+.content-category .cat-fruit,
+.content-category .sub-cat-price{
+    display: none;
+}
+.content-category .sub-cat-price, 
+.content-category .sub-cat-weight {
+    color: #BFBCBC;
+    font-weight: 400;
+    font-size: 22px;
+}
+.content-category .cat-inp:active~.content-category .sub-cat-weight,
+.content-category .cat-inp:hover~.content-category .sub-cat-weight,
+.content-category .cat-inp:focus~.content-category .sub-cat-weight,
+.content-category .cat-inp:visited~.content-category .sub-cat-weight{
     color: #BFBCBC;
     font-weight: 400;
     font-size: 22px;
 }
 
-.sale-product-content .fruit-title {
+.sale-product-content .sub-cat-title {
     display: flex;
 }
 
