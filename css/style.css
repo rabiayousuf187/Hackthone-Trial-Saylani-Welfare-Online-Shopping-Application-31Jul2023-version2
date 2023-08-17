@@ -308,6 +308,9 @@
     width: 100%;
     padding: 70px 0px 10px;
 }
+#signup-form .row{
+    padding: 5px 0px;
+}
 
 .lower-form {
     padding: 50px 25px 10px;
@@ -329,7 +332,10 @@
     /* line-height: 25px; */
     /* 125% */
 }
-
+i.bi.bi-person-badge {
+    font-size: 27px;
+    color: #cccccc;
+}
 /* input:focus::placeholder {
     color: #999;
   } */
