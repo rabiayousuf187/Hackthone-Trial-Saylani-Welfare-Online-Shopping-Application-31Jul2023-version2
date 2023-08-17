@@ -59,6 +59,15 @@ if (userAcc && userAcc.acc_type === "admin") {
   const showElement = (elementId, display = "block") => {
     document.getElementById(elementId).style.display = display;
   };
+
+   // Open page
+   let openpage = (redirectPage, pagename) => {
+    setTimeout(() => {
+        alert("Redirtected to " + pagename);
+        window.location.href = redirectPage;
+
+    }, 800);
+}
   
   let replaceSpacesWithHyphens = (text) => {
     // Replace spaces with hyphens using regular expression
@@ -107,9 +116,6 @@ if (userAcc && userAcc.acc_type === "admin") {
             resolve();
           });
           img.src = img.getAttribute("data-src");
-          // showElement("sub-cat-details-" + ind);
-          // showElement("sub-cat-price-" + ind);
-          // showElement(`cat-fruit-${ind}`);
         });
         loadImagePromises.push(promise);
       });
