@@ -13,6 +13,8 @@ if (userAcc && userAcc.acc_type === "admin") {
     // Perform actions here that you want to execute after the page is fully loaded,
     // including lazy-loaded images
 
+    // Check if the page has been loaded before
+    const isFirstLoad = JSON.parse(localStorage.getItem("isFruitFirstLoad"));
     document.getElementById("Top").style.visible = "visible";
     const { database, ref, get } = firebaseExports;
 
@@ -64,7 +66,7 @@ if (userAcc && userAcc.acc_type === "admin") {
         <div id="cat-${category}-${ind}" class="cat-${category}">
             <button class="col-12 btn btn-get-started cat-inp"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop-${ind}" aria-controls="offcanvasTop-${ind}">
                 <div class="sub-cat-title">
-                    <img class="lazy-image" data-src="${imageURL}" src="placeholder.jpg" alt="${name}" />
+                    <img class="lazy-image" data-src="${imageURL}" src="../../../img/icon/placeholder.png" alt="${name}" />
                     <div id="sub-cat-details-${ind}" class="sub-cat-details" style="display: none;">
                         <p class="sub-cat-name">${name}</p>
                         <p class="sub-cat-weight">Per ${weight}</p>
@@ -130,6 +132,7 @@ if (userAcc && userAcc.acc_type === "admin") {
     // Simulate data loading
     const simulateDataLoading = async () => {
       try {
+        if (!isFirstLoad) {
         console.log("entered inloading");
 
         document.getElementById("Top").insertAdjacentHTML(
@@ -164,6 +167,10 @@ if (userAcc && userAcc.acc_type === "admin") {
     </div> `
         );
         ShowProgress();
+      }else{
+        hideElement("loading-container"); // Hide the spinner container directly
+        showElement("Top"); // Show the main content
+      }
       } catch (error) {
         console.error("Erorr SPinning: ==== ", error);
         return false;
@@ -177,6 +184,8 @@ if (userAcc && userAcc.acc_type === "admin") {
     console.log("Loadingggggggggggg");
     simulateDataLoading()
       .then(() => {
+        // Spinner Show  only first load
+        localStorage.setItem("isFruitFirstLoad", "true"); // Mark the page as loaded
         console.log("Display Pageeeeeeeeeee");
         showElement("Top");
         hideElement("loading-container");
@@ -212,20 +221,20 @@ if (userAcc && userAcc.acc_type === "admin") {
                   ele.itemContent
                 );
 
-                const lazyImages = document.querySelectorAll(".lazy-image");
-                const loadImagePromises = [];
-
+                if(isFirstLoad === "true") {  
+                  const lazyImages = document.querySelectorAll(".lazy-image");
+                  const loadImagePromises = [];
                 lazyImages.forEach((img) => {
                   const promise = new Promise((resolve) => {
                     img.addEventListener("load", () => {
                       resolve();
                     });
                     img.src = img.getAttribute("data-src");
+                    showElement("sub-cat-details-" + ind);
+                    showElement("sub-cat-price-" + ind);
+                    showElement(`cat-fruit-${ind}`);
                   });
 
-                  showElement("sub-cat-details-" + ind);
-                  showElement("sub-cat-price-" + ind);
-                  showElement(`cat-fruit-${ind}`);
 
                   loadImagePromises.push(promise);
                 });
@@ -237,7 +246,8 @@ if (userAcc && userAcc.acc_type === "admin") {
                       showElement("header");
                       showElement("cat-section");
                       showElement("footer");
-                      hideElement("loading");
+                      // Conditionally show or hide the spinner based on isFirstLoad flag
+                      isFirstLoad === "true" ? hideElement("loading-container") : showElement("loading-container");                 
                     }, 2000);
                     // You can execute the rest of your code that depends on the loaded images here
                     // For example, showing some content or displaying a loading spinner
@@ -248,6 +258,27 @@ if (userAcc && userAcc.acc_type === "admin") {
                   .catch((error) => {
                     console.error("An error occurred:", error);
                   });
+                }else{
+                  console.log("Show 2nd LOAD");
+                  const lazyImages = document.querySelectorAll(".lazy-image");
+                  const loadImagePromises = [];
+                lazyImages.forEach((img) => {
+                  // const promise = new Promise((resolve) => {
+                    img.addEventListener("load", () => {
+                      // resolve();
+                    });
+                    img.src = img.getAttribute("data-src");
+                    showElement("sub-cat-details-" + ind);
+                    showElement("sub-cat-price-" + ind);
+                    showElement(`cat-fruit-${ind}`);
+                  });
+
+                      hideElement("loader");
+                      showElement("header");
+                      showElement("cat-section");
+                      showElement("footer");
+                }
+
               });
             }
             // Process the retrieved data
