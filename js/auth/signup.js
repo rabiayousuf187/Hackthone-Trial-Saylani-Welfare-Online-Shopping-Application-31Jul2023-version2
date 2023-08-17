@@ -78,11 +78,13 @@ if (userAcc === null || userAcc === undefined) {
     if (fullname.trim() === "") {
       showError(document.getElementById("fullname"), "fullname is required.");
     } else if (!fullnameRegex.test(fullname.trim())) {
-      showError(document.getElementById("fullname"), "Invalid fullname format.");
+      console.log("Invalid: Contains only letters and spaces.");
+      showError(document.getElementById("fullname"), "Invalid: Contains only letters and spaces.");
     } else {
+      console.log("Valid: Contains only letters and spaces.");
       clearError(document.getElementById("fullname"));
     }
-
+  
     // Validate username
     if (username.trim() === "") {
       showError(document.getElementById("username"), "Username is required.");
@@ -133,18 +135,6 @@ if (userAcc === null || userAcc === undefined) {
     } else {
       acc_type = "user";
     }
-
-    // if (acc_type) {
-    //     console.log("Selected Account Type:", acc_type.value);
-    //     clearError(document.getElementById("radio_acc_type"));
-    //     acc_type = acc_type.value;
-    // } else {
-    //     console.log("Please select a Account Type.");
-    //     showError(
-    //         document.getElementById("radio_acc_type"),
-    //         "Account Type is required."
-    //     );
-    // }
 
     console.log(
       "!document.querySelector.error ==== ",
