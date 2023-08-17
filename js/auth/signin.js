@@ -7,11 +7,13 @@ let localStExpCase = () => {
   localStorage.removeItem("userAcc");
 };
 
-userAcc === null || userAcc === undefined ? localStExpCase() : (userAcc = JSON.parse(userAcc));
+userAcc === null || userAcc === undefined
+  ? localStExpCase()
+  : (userAcc = JSON.parse(userAcc));
 
-if (userAcc === null || userAcc === undefined ) {
+if (userAcc === null || userAcc === undefined) {
   console.log("Signin Page");
-  document.getElementById('Top').style.display = 'block';
+  document.getElementById("Top").style.display = "block";
 
   // Use the Firebase Configuration functions
   const { auth, signInWithEmailAndPassword, database, ref, get } =
@@ -47,6 +49,21 @@ if (userAcc === null || userAcc === undefined ) {
       return false;
     }
   }
+
+  // Get Category Data for admin
+  let getAllItemData = async () => {
+    try {
+      const snapshot = await get(ref(database, `categories/`));
+      // Data snapshot contains the data at the specified location
+      let itemsData = snapshot.val();
+      console.log("Retrieved data:", itemsData);
+      itemsData = Object.values(itemsData);
+      return itemsData;
+    } catch (error) {
+      console.error("Error getting data:", error);
+      return false;
+    }
+  };
 
   // Function to display error message for an input field
   function showError(inputElement, errorMessage) {
@@ -134,7 +151,6 @@ if (userAcc === null || userAcc === undefined ) {
                 console.log("User Data", userData);
                 console.log("User Data ACCType", userData.acc_type);
                 if (userData.acc_type === "user") {
-                  
                   alert(
                     "User logged in Successfully!\nYou are redirected to User Purchase Corner"
                   );
@@ -142,9 +158,19 @@ if (userAcc === null || userAcc === undefined ) {
                   localStorage.setItem("userAcc", JSON.stringify(userAcc));
                   window.location.href = "../purchase/purchase.html";
                 } else if (userData.acc_type === "admin") {
-
                   console.log("User Data ACCType", userAcc);
                   localStorage.setItem("userAcc", JSON.stringify(userAcc));
+                  getAllItemData().then((category) => {
+                    console.log("Retrieved data:", category);
+                    localStorage.setItem(
+                      "category",
+                      JSON.stringify(Object.values(category))
+                    );
+                    localStorage.setItem("isAdminFirstLoad", "true");
+                    console.log(
+                      "Category Data successfully Stored in local Storage"
+                    );
+                  });
                   window.location.href = "../admin/admin.html";
                   alert(
                     "User logged in Successfully!\nYou are redirected to Admin Corner"
