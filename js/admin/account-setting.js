@@ -57,6 +57,74 @@ if (userAcc && userAcc.acc_type === "admin") {
     }
   };
 
+  const container = document.getElementById("content-category");
+  let addElement = (
+      ind,
+      category,
+      imageURL,
+    ) => {
+
+      let link = replaceSpacesWithHyphens(category);
+      const itemHTML = `
+      <div class="cat-${ind} cat-style">
+                          <button id="${link}-btn" name="${category}" value="submit" class="btn btn-get-started cat-inp"
+                              onclick="openpage('./category/${link}.html', '${category} Page')">
+                              <img class="lazy-image" src="../../img/icon/placeholder.png" alt="${category}" data-src="${imageURL}"/>
+                              <p id="${link}">${category}</p>
+                          </button>
+                      </div>`;
+
+      container.insertAdjacentHTML("afterbegin", itemHTML);
+    };
+    
+    const itemsData = JSON.parse(localStorage.getItem("category"));
+  itemsData.forEach((ele, ind) => {
+      console.log("Each Item ==== :", ele);
+      console.log( "Each Item ==== :",ele.categoryName,ele.imageUrl);
+
+      // Call the function to add a fruit item
+      // name, weight, price, imageURL
+      addElement(
+        ind,
+        ele.categoryName,
+        ele.imageUrl
+      );
+
+      // if(!isFirstLoad) {  
+        const lazyImages = document.querySelectorAll(".lazy-image");
+        const loadImagePromises = [];
+      lazyImages.forEach((img) => {
+        const promise = new Promise((resolve) => {
+          img.addEventListener("load", () => {
+            resolve();
+          });
+          img.src = img.getAttribute("data-src");
+          // showElement("sub-cat-details-" + ind);
+          // showElement("sub-cat-price-" + ind);
+          // showElement(`cat-fruit-${ind}`);
+        });
+        loadImagePromises.push(promise);
+      });
+      Promise.all(loadImagePromises)
+        .then(() => {
+          console.log("All lazy-loaded images are loaded.");
+          setTimeout(() => {
+            console.log("Page Completely Loaded");
+            showElement("header");
+            showElement("cat-section");
+            showElement("footer");
+            
+          }, 3000);
+           
+          
+        })
+        .catch((error) => {
+          console.error("An error occurred:", error);
+        });
+
+    });
+
+
   let current_page = document.getElementById("acc-setting");
   console.log("current_page color change", current_page);
   current_page.querySelector("img").style.filter =
