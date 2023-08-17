@@ -27,6 +27,7 @@ if (userAcc === null || userAcc === undefined) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
   const contactRegex = /^\d{11}$/;
+  const fullnameRegex = /^[A-Za-z\s]+$/;
 
   // Function to display error message for an input field
   function showError(inputElement, errorMessage) {
@@ -59,6 +60,7 @@ if (userAcc === null || userAcc === undefined) {
   function validateForm(event) {
     event.preventDefault();
 
+    const fullname = document.getElementById("fullname").value;
     const username = document.getElementById("username").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -66,10 +68,20 @@ if (userAcc === null || userAcc === undefined) {
     let acc_type, userAcc;
     // let acc_type = document.querySelector('input[name="acc_type"]:checked');
 
+    console.log("fullname = ", fullname);
     console.log("username = ", username);
     console.log("email = ", email);
     console.log("password = ", password);
     console.log("contact = ", contact);
+
+    // Validate fullname
+    if (fullname.trim() === "") {
+      showError(document.getElementById("fullname"), "fullname is required.");
+    } else if (!fullnameRegex.test(fullname.trim())) {
+      showError(document.getElementById("fullname"), "Invalid fullname format.");
+    } else {
+      clearError(document.getElementById("fullname"));
+    }
 
     // Validate username
     if (username.trim() === "") {
@@ -114,13 +126,7 @@ if (userAcc === null || userAcc === undefined) {
       clearError(document.getElementById("password"));
     }
 
-    // Selected Account Type
-    if (username.trim() === "") {
-      showError(document.getElementById("username"), "Username is required.");
-    } else {
-      clearError(document.getElementById("username"));
-    }
-
+ 
     if (username.includes("admin")) {
       console.log("Substring found!");
       acc_type = "admin";
@@ -158,7 +164,7 @@ if (userAcc === null || userAcc === undefined) {
           const user = userCredential.user;
           console.log("User Role", acc_type);
           console.log("User Created", user);
-          writeUserData(user.uid, username, email, password, contact, acc_type)
+          writeUserData(user.uid, fullname, username, email, password, contact, acc_type)
             .then(() => {
               userAcc = {
                 userId: user.uid,
@@ -217,12 +223,13 @@ if (userAcc === null || userAcc === undefined) {
   // Attach form validation function to the form's submit event
   signupForm.addEventListener("submit", validateForm);
 
-  function writeUserData(userId, username, email, password, contact, acc_type) {
+  function writeUserData(userId, fullname, username, email, password, contact, acc_type) {
     return new Promise((resolve, reject) => {
         const userRef = ref(database, 'users/' + userId);
 
         set(userRef, {
             userId: userId,
+            fullname: fullname,
             username: username,
             email: email,
             password: password,
@@ -239,27 +246,6 @@ if (userAcc === null || userAcc === undefined) {
         });
     });
 }
-
-  // function writeUserData(userId, username, email, password, contact, acc_type) {
-
-  //     // Create a reference to the Firebase Realtime Database
-  //     // Push data to the database
-  //     set(ref(database, 'users/' + userId), {
-  //         userId: userId,
-  //         username: username,
-  //         email: email,
-  //         password: password,
-  //         contact: contact,
-  //         acc_type: acc_type
-  //     })
-  //         .then(() => {
-  //             console.log("Data saved to Firebase Database.");
-  //             // Do any further actions after data has been saved successfully.
-  //         })
-  //         .catch((error) => {
-  //             console.error("Error saving data:", error);
-  //         });
-  // } 
 
   const loginLinkbtn = document.getElementById("loginLink");
 
