@@ -168,6 +168,7 @@ if (userAcc === null || userAcc === undefined) {
             .then(() => {
               userAcc = {
                 userId: user.uid,
+                fullname: fullname,
                 acc_type: acc_type,
               };
               localStorage.setItem("userAcc", JSON.stringify(userAcc));
