@@ -214,7 +214,7 @@ if (userAcc === null || userAcc === undefined) {
   // Attach form validation function to the form's submit event
   signupForm.addEventListener("submit", validateForm);
 
-  function writeUserData(userId, fullname, username, email, password, contact, acc_type) {
+  let writeUserData = (userId, fullname, username, email, password, contact, acc_type) => {
     return new Promise((resolve, reject) => {
         const userRef = ref(database, 'users/' + userId);
 
