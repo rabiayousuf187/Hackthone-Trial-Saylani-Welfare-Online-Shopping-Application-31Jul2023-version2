@@ -7,6 +7,7 @@ if (userAcc && userAcc.acc_type === "admin") {
   console.log("Add Item Page");
 
   document.getElementById("Top").style.display = "block";
+  document.getElementById("adminname").innerText = userAcc.fullname;
   // Use the Firebase Configuration functions
   const {
     auth,
