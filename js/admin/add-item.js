@@ -83,7 +83,7 @@ if (userAcc && userAcc.acc_type === "admin") {
   let home = document.getElementById("home");
   home.addEventListener("click", function (event) {
     event.preventDefault(); // Prevent the default link behavior
-    window.location.href = "./sale-product.html";
+    window.location.href = "./admin.html";
   });
 
   let acc_setting = document.getElementById("acc-setting");
