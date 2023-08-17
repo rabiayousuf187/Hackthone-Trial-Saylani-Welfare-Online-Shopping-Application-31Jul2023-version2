@@ -125,26 +125,24 @@ if (userAcc === null || userAcc === undefined ) {
             .then((userData) => {
               console.log("GET userData === , ", userData);
               if (userData) {
+                userAcc = {
+                  id: userid,
+                  fullname: userData.fullname,
+                  acc_type: userData.acc_type,
+                };
                 // Data exists for the user ID
                 console.log("User Data", userData);
                 console.log("User Data ACCType", userData.acc_type);
                 if (userData.acc_type === "user") {
+                  
                   alert(
                     "User logged in Successfully!\nYou are redirected to User Purchase Corner"
                   );
-                  userAcc = {
-                    id: userid,
-                    fullname: userData.fullname,
-                    acc_type: userData.acc_type,
-                  };
                   console.log("User Data ACCType", userAcc);
                   localStorage.setItem("userAcc", JSON.stringify(userAcc));
                   window.location.href = "../purchase/purchase.html";
                 } else if (userData.acc_type === "admin") {
-                  userAcc = {
-                    id: userid,
-                    acc_type: userData.acc_type,
-                  };
+
                   console.log("User Data ACCType", userAcc);
                   localStorage.setItem("userAcc", JSON.stringify(userAcc));
                   window.location.href = "../admin/admin.html";
