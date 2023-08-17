@@ -37,7 +37,7 @@ if (userAcc && userAcc.acc_type === "admin") {
   addClickListener("add-item", "./add-item.html");
 
   // Function to display error message for an input field
-  function showError(inputElement, errorMessage) {
+  let showError = (inputElement, errorMessage) => {
     const errorElement = document.getElementById(inputElement.id + "Error");
     errorElement.textContent = errorMessage;
 
@@ -51,7 +51,7 @@ if (userAcc && userAcc.acc_type === "admin") {
   }
 
   // Function to clear error message for an input field
-  function clearError(inputElement) {
+  let clearError = (inputElement) => {
     const errorElement = document.getElementById(inputElement.id + "Error");
     errorElement.textContent = "";
 
@@ -69,7 +69,6 @@ if (userAcc && userAcc.acc_type === "admin") {
   let validateForm = (event) => {
     event.preventDefault();
 
-    let acc_type;
     const fullnameRegex = /^[A-Za-z\s]+$/;
 
     const fullname = document.getElementById("fullname").value;
@@ -145,6 +144,167 @@ if (userAcc && userAcc.acc_type === "admin") {
         });
     });
   };
+
+
+//   Add Categories
+const addCatBtn = document.getElementById("add-cat-form");
+
+  // Function to validate the form on submission
+  let validateAddCat = (event) => {
+    event.preventDefault();
+
+    const fileimg = document.getElementById("itemimg").files[0];
+    const categoryname = document.getElementById("categoryname").value;
+    const categorynameRegex = /^[A-Za-z\s]+$/;
+    
+    console.log("categoryname = ", categoryname);
+    console.log("fileimg = ", fileimg);
+
+
+    // File Img Valid
+    if (fileimg) {
+      // Validate image type
+      if (!fileimg.type.startsWith("image/")) {
+        console.log("Please select a valid image fileimg.");
+        // alert("Please select a valid image fileimg.");
+        return;
+      }
+
+      // Validate image size (in bytes)
+      const maxSize = 5 * 1024 * 1024; // 5 MB
+      if (fileimg.size > maxSize) {
+        console.log(
+          "Selected image is too large. Please choose a smaller image."
+        );
+        // alert("Selected image is too large. Please choose a smaller image.");
+        return;
+      }
+
+      // Now you can proceed with uploading the image or other actions
+      console.log("Image is valid:", fileimg.name, fileimg.type, fileimg.size);
+      // Your upload logic here
+      clearError(document.getElementById("itemimg"));
+    } else {
+      // alert("Please select an image file.");
+      console.log("Please select an image file.");
+      showError(document.getElementById("itemimg"), "Image File is required.");
+    }
+
+    // Validate fullname
+    if (categoryname.trim() === "") {
+      showError(document.getElementById("categoryname"), "categoryname is required.");
+    } else if (!categorynameRegex.test(categoryname.trim())) {
+      console.log("Invalid: Contains only letters and spaces.");
+      showError(
+        document.getElementById("categoryname"),
+        "Invalid: Contains only letters and spaces."
+      );
+    } else {
+      console.log("Valid: Contains only letters and spaces.");
+      clearError(document.getElementById("categoryname"));
+    }
+
+     console.log(
+      "!document.querySelector.error ==== ",
+      !document.querySelector(".error")
+    );
+
+    if (!document.querySelector(".error")) {
+      // Submit the form or do any other required action here
+      console.log("Form submitted successfully!");
+      console.log(
+        "Data before write === ",
+        categoryname
+      );
+
+      if (!fileimg || !categoryname) {
+        alert("Refill Form for all Feilds\nSome Feilds are undefined.");
+        console.log("Refill Form for all Feilds\nSome Feilds are undefined.");
+      } else {
+        console.log("All feilds are well defined.");
+        // Store Img to Firebase Storage
+        saveImg(fileimg, categoryname)
+          .then((downloadURL) => {
+            console.log("GET downloadURL === , ", downloadURL);
+            if (downloadURL) {
+              console.log(
+                "Data before write === ",
+                downloadURL,
+                categoryname
+              );
+              writeItemData(downloadURL,categoryname)
+                .then(() => {
+                  document.getElementById("categoryname").value = "";
+                  document.getElementById("itemimg").value = null; // Clear file input
+
+                  window.location.href = `../admin/admin.html`;
+                })
+                .catch((error) => {
+                  console.error("Error Adding Item data:", error);
+                });
+            } else {
+              console.log("No DownloadURL RX.");
+            }
+          })
+          .catch((error) => {
+            // Handle any errors that may occur during the data retrieval
+            console.error("Error:", error);
+          });
+      }
+    }
+  }
+
+  let saveImg = (file, categoryname) => {
+    return new Promise((resolve, reject) => {
+      const imageRef = storageRef(
+        storage,
+        `categories/${categoryname}/${file.name}`
+      );
+
+      uploadBytes(imageRef, file)
+        .then((snapshot) => {
+          console.log("Cat-Image uploaded successfully");
+
+          // Get the download URL
+          return getDownloadURL(snapshot.ref);
+        })
+        .then((downloadURL) => {
+          console.log("Cat-Img File available at", downloadURL);
+          resolve(downloadURL); // Resolve the promise with the download URL
+        })
+        .catch((error) => {
+          console.error("Error uploading Cat-Image:", error);
+          reject(error); // Reject the promise with the error
+        });
+    });
+  };
+
+  let writeItemData = (
+    downloadURL,
+    categoryname
+  ) => {
+    return new Promise((resolve, reject) => {
+      // Create a reference to the Firebase Realtime Database
+      // Push data to the database
+      set(ref(database, `categories/${categoryname}/`), {
+        categoryName: categoryname,
+        imageUrl: downloadURL, // Store the image URL here
+      })
+        .then(() => {
+          alert("Cat-Data saved to Firebase Database. with Img");
+          console.log("Cat-Data saved to Firebase Database. with Img");
+          resolve(); // Resolve the promise to indicate success
+        })
+        .catch((error) => {
+          alert("Error saving Cat-data:", error);
+          console.error("Error saving Cat-data:", error);
+          reject(error); // Reject the promise with the error
+        });
+    });
+  }
+
+  // Attach form validation function to the form's submit event
+  addCatBtn.addEventListener("submit", validateAddCat);
 
   var logoutbtn = document.getElementById("logout");
 
