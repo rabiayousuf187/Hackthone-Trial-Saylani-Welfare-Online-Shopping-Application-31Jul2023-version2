@@ -15,23 +15,31 @@ if (userAcc && userAcc.acc_type === 'admin') {
     
     // Check if the page has been loaded before
     // const isFirstLoad = JSON.parse(localStorage.getItem("isAdminFirstLoad"));
+    
 
+  let replaceSpacesWithHyphens = (text) => {
+    // Replace spaces with hyphens using regular expression
+    text=text.trim(text);
+    return text.replace(/\s+/g, '-');
+  }
     const container = document.getElementById("content-category");
     let addElement = (
         ind,
         category,
         imageURL,
       ) => {
+
+        let link = replaceSpacesWithHyphens(category);
         const itemHTML = `
         <div class="cat-${ind} cat-style">
-                            <button id="${category}-btn" name="${category}" value="submit" class="btn btn-get-started cat-inp"
-                                onclick="openpage('./category/${category}.html', 'Fruit Page')">
-                                <img class="lazy-image" src="" alt="${category}" data-src="${imageURL}"/>
-                                <p id="${category}">${category}</p>
+                            <button id="${link}-btn" name="${category}" value="submit" class="btn btn-get-started cat-inp"
+                                onclick="openpage('./category/${link}.html', '${category} Page')">
+                                <img class="lazy-image" src="../../img/icon/placeholder.png" alt="${category}" data-src="${imageURL}"/>
+                                <p id="${link}">${category}</p>
                             </button>
                         </div>`;
   
-        container.insertAdjacentHTML("beforeend", itemHTML);
+        container.insertAdjacentHTML("afterbegin", itemHTML);
       };
       const itemsData = JSON.parse(localStorage.getItem("category"));
     itemsData.forEach((ele, ind) => {

@@ -41,6 +41,22 @@ if (userAcc && userAcc.acc_type === "admin") {
     }
   }
 
+  
+  // Get Category Data for admin
+  let getAllItemData = async () => {
+    try {
+      const snapshot = await get(ref(database, `categories/`));
+      // Data snapshot contains the data at the specified location
+      let itemsData = snapshot.val();
+      console.log("Retrieved data:", itemsData);
+      itemsData = Object.values(itemsData);
+      return itemsData;
+    } catch (error) {
+      console.error("Error getting data:", error);
+      return false;
+    }
+  };
+
   let current_page = document.getElementById("acc-setting");
   console.log("current_page color change", current_page);
   current_page.querySelector("img").style.filter =
@@ -126,6 +142,7 @@ if (userAcc && userAcc.acc_type === "admin") {
             };
             localStorage.setItem("userAcc", JSON.stringify(userAcc));
                 alert("You are redirected to Admin Main Page");
+                
                 window.location.href = "../admin/admin.html";
             
             })
@@ -257,9 +274,24 @@ if (userAcc && userAcc.acc_type === "admin") {
                 .then(() => {
                   document.getElementById("categoryname").value = "";
                   document.getElementById("itemimg").value = null; // Clear file input
-
-                  window.location.href = `../admin/admin.html`;
-                })
+                  getAllItemData()
+                  .then((category) => {
+                    console.log("Retrieved data:", category);
+                    localStorage.setItem(
+                      "category",
+                      JSON.stringify(Object.values(category))
+                    );
+                    localStorage.setItem("isAdminFirstLoad", "true");
+                    console.log(
+                      "Category Data successfully Stored in local Storage"
+                    );
+                    window.location.href = `../admin/admin.html`;
+                  }).catch((error)=>{
+                    
+                  alert("Error stored item in local SSSSST:", error);
+                  console.error("Error stored item in local SSSSST:", error);
+                  })
+                 })
                 .catch((error) => {
                   console.error("Error Adding Item data:", error);
                 });
