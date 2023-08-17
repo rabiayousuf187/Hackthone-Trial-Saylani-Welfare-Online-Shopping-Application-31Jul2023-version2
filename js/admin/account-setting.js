@@ -146,7 +146,7 @@ if (userAcc && userAcc.acc_type === "admin") {
 
   let updateFullName = (userData, newfullname) => {
     const {acc_type,contact,email,password,userId,username, fullname} = userData;
-
+ 
     return new Promise((resolve, reject) => {
       const userRef = ref(database, "users/" + userId);
       // Update specific fields within the path
