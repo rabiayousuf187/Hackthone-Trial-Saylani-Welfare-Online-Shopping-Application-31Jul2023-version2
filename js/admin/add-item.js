@@ -19,6 +19,14 @@ if (userAcc && userAcc.acc_type === "admin") {
     getDownloadURL,
   } = firebaseExports;
 
+  const addClickListener = (elementId, destination) => {
+    const element = document.getElementById(elementId);
+    element.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.location.href = destination;
+    });
+  };
+
   let saveImg = (file, itemname, selectedCategory) => {
     return new Promise((resolve, reject) => {
       const imageRef = storageRef(
@@ -44,14 +52,14 @@ if (userAcc && userAcc.acc_type === "admin") {
     });
   };
 
-  function writeItemData(
+  let writeItemData = (
     downloadURL,
     itemname,
     selectedCategory,
     itemcontent,
     unitname,
     unitprice
-  ) {
+  ) => {
     return new Promise((resolve, reject) => {
       // Create a reference to the Firebase Realtime Database
       // Push data to the database
@@ -73,32 +81,20 @@ if (userAcc && userAcc.acc_type === "admin") {
         });
     });
   }
+  
   let current_page = document.getElementById("add-item");
   // console.log("current_page color change", current_page);
   current_page.querySelector("i").style.color = "#61B846";
   current_page.querySelector("p").style.color = "#61B846";
 
-  let home = document.getElementById("home");
-  home.addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent the default link behavior
-    window.location.href = "./admin.html";
-  });
-
-  let acc_setting = document.getElementById("acc-setting");
-  acc_setting.addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent the default link behavior
-    window.location.href = "./account-setting.html";
-  });
-  let order = document.getElementById("order");
-  order.addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent the default link behavior
-    window.location.href = "./order.html";
-  });
+  addClickListener = ('home' , './admin.html')  
+  addClickListener = ('acc-setting' , './account-setting.html')  
+  addClickListener = ('order' , '../order.html')  
 
   const addProductionbtn = document.getElementById("add-production");
 
   // Function to display error message for an input field
-  function showError(inputElement, errorMessage) {
+  let showError = (inputElement, errorMessage) => {
     const errorElement = document.getElementById(inputElement.id + "Error");
     errorElement.textContent = errorMessage;
 
@@ -112,7 +108,7 @@ if (userAcc && userAcc.acc_type === "admin") {
   }
 
   // Function to clear error message for an input field
-  function clearError(inputElement) {
+  let clearError = (inputElement) => {
     const errorElement = document.getElementById(inputElement.id + "Error");
     errorElement.textContent = "";
 
