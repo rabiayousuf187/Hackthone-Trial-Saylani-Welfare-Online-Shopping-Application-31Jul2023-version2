@@ -36,26 +36,6 @@ if (userAcc === null || userAcc === undefined ) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-  // Function to get data from Firebase Realtime Database using user ID
-  // function getDataByUserId(userId) {
-  //     ref('users/' + userId);
-  //     dbRef.child("users").child(userId).get().then((snapshot) => {
-  //         const userData = snapshot.val();
-
-  //         if (userData) {
-  //           // Data exists for the user ID
-  //           console.log(userData);
-  //           return userData;
-  //         } else {
-  //           // Data doesn't exist for the user ID
-  //           console.log('User ID not found in the database.');
-  //           return false;
-  //         }
-  //     }).catch((error) => {
-  //         console.error(error);
-  //     });
-  // }
-
   async function getDataByUserId(userId) {
     try {
       const snapshot = await get(ref(database, "users/" + userId));
@@ -126,18 +106,6 @@ if (userAcc === null || userAcc === undefined ) {
       clearError(document.getElementById("password"));
     }
 
-    // if (acc_type) {
-    //   console.log("Selected Account Type:", acc_type.value);
-    //   clearError(document.getElementById("radio_acc_type"));
-    //   acc_type = acc_type.value;
-    // } else {
-    //   console.log("Please select a Account Type.");
-    //   showError(
-    //     document.getElementById("radio_acc_type"),
-    //     "Account Type is required."
-    //   );
-    // }
-
     console.log(
       "!document.querySelector.error ==== ",
       document.querySelector("#signup-form")
@@ -166,6 +134,7 @@ if (userAcc === null || userAcc === undefined ) {
                   );
                   userAcc = {
                     id: userid,
+                    fullname: userData.fullname,
                     acc_type: userData.acc_type,
                   };
                   console.log("User Data ACCType", userAcc);
