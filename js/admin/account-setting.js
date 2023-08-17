@@ -56,7 +56,15 @@ if (userAcc && userAcc.acc_type === "admin") {
       return false;
     }
   };
-
+  const showElement = (elementId, display = "block") => {
+    document.getElementById(elementId).style.display = display;
+  };
+  
+  let replaceSpacesWithHyphens = (text) => {
+    // Replace spaces with hyphens using regular expression
+    text=text.trim(text);
+    return text.replace(/\s+/g, '-');
+  } 
   const container = document.getElementById("content-category");
   let addElement = (
       ind,
@@ -76,7 +84,7 @@ if (userAcc && userAcc.acc_type === "admin") {
 
       container.insertAdjacentHTML("afterbegin", itemHTML);
     };
-    
+
     const itemsData = JSON.parse(localStorage.getItem("category"));
   itemsData.forEach((ele, ind) => {
       console.log("Each Item ==== :", ele);

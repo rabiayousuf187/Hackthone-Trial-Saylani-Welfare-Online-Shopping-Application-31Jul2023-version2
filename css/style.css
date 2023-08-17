@@ -412,6 +412,7 @@ button#forgotPass,
 .sale .container,
 .footer .container {
     width: 60%;
+    margin: 0 auto;
 }
 
 header.main-header {
@@ -472,7 +473,7 @@ sale a:hover,
 }
 
 .sale-content-inner .content-heading {
-    padding: 5px 25px;
+    padding: 5px 35px;
     text-align: center;
 }
 
@@ -924,8 +925,10 @@ button#add-cat {
 }
 .acc-settin-content .content.show-all-cat {
     height: 500px;
-    overflow: scroll;
-    width: 660px;
+    overflow: auto;
+    width: 100%;
+    /* margin: 0 auto; */
+    padding: 0px 30px;
 }
 .acc-settin-content .cat-style {
     margin: 10px 0px;
