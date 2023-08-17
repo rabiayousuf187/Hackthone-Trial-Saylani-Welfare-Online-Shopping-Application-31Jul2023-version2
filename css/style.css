@@ -509,6 +509,7 @@ sale a:hover,
 
 .sale .cat-inp p {
     margin: 0;
+    text-transform: capitalize;
 }
 
 .sale .content-category {
