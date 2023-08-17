@@ -10,8 +10,6 @@ if (userAcc && userAcc.acc_type === "admin") {
   document.getElementById("adminname").innerText = userAcc.fullname;
   // Use the Firebase Configuration functions
   const {
-    auth,
-    createUserWithEmailAndPassword,
     database,
     ref,
     set,
@@ -240,23 +238,44 @@ if (userAcc && userAcc.acc_type === "admin") {
         unitprice
       );
 
-      if (!fileimg || !itemname || !selectedCategory || !itemcontent || !unitname || !unitprice) {
-        alert("Refill Form for all Feilds\nSome Feilds are undefined.")
+      if (
+        !fileimg ||
+        !itemname ||
+        !selectedCategory ||
+        !itemcontent ||
+        !unitname ||
+        !unitprice
+      ) {
+        alert("Refill Form for all Feilds\nSome Feilds are undefined.");
         console.log("Refill Form for all Feilds\nSome Feilds are undefined.");
-      }
-      else {
-
+      } else {
         console.log("All feilds are well defined.");
         // Store Img to Firebase Storage
         saveImg(fileimg, itemname, selectedCategory)
           .then((downloadURL) => {
             console.log("GET downloadURL === , ", downloadURL);
             if (downloadURL) {
-              console.log("Data before write === ", downloadURL, itemname, selectedCategory, itemcontent, unitname, unitprice);
-              writeItemData(downloadURL, itemname, selectedCategory, itemcontent, unitname, unitprice)
+              console.log(
+                "Data before write === ",
+                downloadURL,
+                itemname,
+                selectedCategory,
+                itemcontent,
+                unitname,
+                unitprice
+              );
+              writeItemData(
+                downloadURL,
+                itemname,
+                selectedCategory,
+                itemcontent,
+                unitname,
+                unitprice
+              )
                 .then(() => {
                   document.getElementById("itemname").value = "";
-                  document.getElementById("itemcategory").value = "Select Category";
+                  document.getElementById("itemcategory").value =
+                    "Select Category";
                   document.getElementById("itemcontent").value = "";
                   document.getElementById("unitname").value = "";
                   document.getElementById("unitprice").value = "";
@@ -267,8 +286,7 @@ if (userAcc && userAcc.acc_type === "admin") {
                 .catch((error) => {
                   console.error("Error Adding Item data:", error);
                 });
-            }
-            else {
+            } else {
               console.log("No DownloadURL RX.");
             }
           })
