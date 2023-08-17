@@ -16,6 +16,7 @@ if (userAcc && userAcc.acc_type === "admin") {
     // Check if the page has been loaded before
     const isFirstLoad = JSON.parse(localStorage.getItem("isFruitFirstLoad"));
     document.getElementById("Top").style.visible = "visible";
+    document.getElementById("adminname").innerText = userAcc.fullname;
     const { database, ref, get } = firebaseExports;
 
     const showElement = (elementId, display = "block") => {
@@ -221,7 +222,7 @@ if (userAcc && userAcc.acc_type === "admin") {
                   ele.itemContent
                 );
 
-                if(isFirstLoad === "true") {  
+                if(!isFirstLoad) {  
                   const lazyImages = document.querySelectorAll(".lazy-image");
                   const loadImagePromises = [];
                 lazyImages.forEach((img) => {
@@ -234,8 +235,6 @@ if (userAcc && userAcc.acc_type === "admin") {
                     showElement("sub-cat-price-" + ind);
                     showElement(`cat-fruit-${ind}`);
                   });
-
-
                   loadImagePromises.push(promise);
                 });
                 Promise.all(loadImagePromises)
@@ -246,9 +245,11 @@ if (userAcc && userAcc.acc_type === "admin") {
                       showElement("header");
                       showElement("cat-section");
                       showElement("footer");
+                      console.log("Hide Progress")
+                      hideElement("loading-container") ;  
                       // Conditionally show or hide the spinner based on isFirstLoad flag
-                      isFirstLoad === "true" ? hideElement("loading-container") : showElement("loading-container");                 
-                    }, 2000);
+                      // isFirstLoad === "true" ? showElement("loading-container") :                
+                    }, 3000);
                     // You can execute the rest of your code that depends on the loaded images here
                     // For example, showing some content or displaying a loading spinner
                   })
@@ -261,7 +262,7 @@ if (userAcc && userAcc.acc_type === "admin") {
                 }else{
                   console.log("Show 2nd LOAD");
                   const lazyImages = document.querySelectorAll(".lazy-image");
-                  const loadImagePromises = [];
+                  // const loadImagePromises = [];
                 lazyImages.forEach((img) => {
                   // const promise = new Promise((resolve) => {
                     img.addEventListener("load", () => {
@@ -273,7 +274,7 @@ if (userAcc && userAcc.acc_type === "admin") {
                     showElement(`cat-fruit-${ind}`);
                   });
 
-                      hideElement("loader");
+                      hideElement("loading-container");
                       showElement("header");
                       showElement("cat-section");
                       showElement("footer");
