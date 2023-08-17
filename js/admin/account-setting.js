@@ -36,33 +36,54 @@ if (userAcc && userAcc.acc_type === "admin") {
   addClickListener("home", "./admin.html");
   addClickListener("add-item", "./add-item.html");
 
+  // Function to display error message for an input field
+  function showError(inputElement, errorMessage) {
+    const errorElement = document.getElementById(inputElement.id + "Error");
+    errorElement.textContent = errorMessage;
 
-// Update FullName
-const updatefname = document.getElementById("update-fullname");
+    // Add the .error class to the input element
+    errorElement.classList.add("error");
+    console.log(
+      " inputElement.classList.add('error') = ",
+      errorElement,
+      errorElement.classList.add("error")
+    );
+  }
+
+  // Function to clear error message for an input field
+  function clearError(inputElement) {
+    const errorElement = document.getElementById(inputElement.id + "Error");
+    errorElement.textContent = "";
+
+    // Remove the .error class from the input element
+    errorElement.classList.remove("error");
+    console.log(
+      "inputElement.classList.remove('error'); = ",
+      errorElement.classList.remove("error")
+    );
+  }
+
+  // Update FullName
+  const updatefname = document.getElementById("update-fullname");
   // Function to validate the form on submission
-  function validateForm(event) {
+  let validateForm = (event) => {
     event.preventDefault();
 
-    const fullname = document.getElementById("fullname").value;
-    const username = document.getElementById("username").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const contact = document.getElementById("contact").value;
-    let acc_type, userAcc;
-    // let acc_type = document.querySelector('input[name="acc_type"]:checked');
+    let acc_type;
+    const fullnameRegex = /^[A-Za-z\s]+$/;
 
+    const fullname = document.getElementById("fullname").value;
     console.log("fullname = ", fullname);
-    console.log("username = ", username);
-    console.log("email = ", email);
-    console.log("password = ", password);
-    console.log("contact = ", contact);
 
     // Validate fullname
     if (fullname.trim() === "") {
       showError(document.getElementById("fullname"), "fullname is required.");
     } else if (!fullnameRegex.test(fullname.trim())) {
       console.log("Invalid: Contains only letters and spaces.");
-      showError(document.getElementById("fullname"), "Invalid: Contains only letters and spaces.");
+      showError(
+        document.getElementById("fullname"),
+        "Invalid: Contains only letters and spaces."
+      );
     } else {
       console.log("Valid: Contains only letters and spaces.");
       clearError(document.getElementById("fullname"));
@@ -77,49 +98,53 @@ const updatefname = document.getElementById("update-fullname");
       !document.querySelector(".error")
     );
     if (!document.querySelector(".error")) {
-      // Submit the form or do any other required action here
       console.log("Form submitted successfully!");
-      // Call the function to create a user with Firebase Authentication
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log("User Role", acc_type);
-          console.log("User Created", user);
-          writeUserData(user.uid, fullname, username, email, password, contact, acc_type)
-            .then(() => {
-              userAcc = {
-                userId: user.uid,
-                fullname: fullname,
-                acc_type: acc_type,
-              };
-              localStorage.setItem("userAcc", JSON.stringify(userAcc));
 
-              if (acc_type === "user") {
-                alert("You are redirected to User Purchase Corner");
-                window.location.href = "../purchase/purchase.html";
-              } else if (acc_type === "admin") {
-                console.log("User Data ACCType", acc_type);
-                alert("You are redirected to Admin Corner");
-                window.location.href = "../admin/admin.html";
-              } else {
-                alert("Invalid Credential!");
-              }
-            })
-            .catch((error) => {
-              console.error("Error writing user data:", error);
-            });
+      updateFullName(userAcc.id, fullname)
+        .then(() => {
+          userAcc = {
+            userId: userAcc.id,
+            fullname: fullname,
+            acc_type: userAcc.acc_type,
+          };
+          localStorage.setItem("userAcc", JSON.stringify(userAcc));
+
+          if (userAcc.acc_type === "admin") {
+            console.log("User Data ACCType", userAcc.acc_type);
+            alert("You are redirected to Admin Main Page");
+            window.location.href = "../admin/admin.html";
+          } else {
+            alert("Invalid Credential!");
+          }
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(error, error.message, error.code);
+          console.error("Error Update Full Name data:", error);
         });
     }
-  }
+  };
 
   // Attach form validation function to the form's submit event
   updatefname.addEventListener("click", validateForm);
+
+  let updateFullName = (userId, fullname) => {
+    return new Promise((resolve, reject) => {
+      const userRef = ref(database, "users/" + userId);
+      // Update specific fields within the path
+      set(userRef, {
+        fullname: fullname,
+      })
+        .then(() => {
+          alert("Full Name Successfully updated to Firebase");
+          console.log("Full Name Successfully updated to Firebase");
+          resolve(); // Resolve the promise to indicate success
+        })
+        .catch((error) => {
+          alert("Error update Full Name data:", error);
+          console.error("Error update Full Name data:", error);
+          reject(error); // Reject the promise with the error
+        });
+    });
+  };
 
   var logoutbtn = document.getElementById("logout");
 
