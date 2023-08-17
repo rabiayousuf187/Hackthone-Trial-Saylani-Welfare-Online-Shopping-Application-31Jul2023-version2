@@ -1,4 +1,4 @@
-import { isAuth } from "../auth/auth.js";
+import { isAuth, logout } from "../auth/auth.js";
 import firebaseExports from "../config/firebase-config.js";
 let userAcc = isAuth();
 console.log("userAcc get via is Auth()", userAcc);
@@ -6,6 +6,7 @@ console.log("userAcc get via is Auth()", userAcc);
 if (userAcc && userAcc.acc_type === "admin") {
   console.log("Admin Account Setting Page");
 
+  let userData;
   document.getElementById("Top").style.display = "block";
   //   document.getElementById("adminname").innerText = userAcc.fullname;
   // Use the Firebase Configuration functions
@@ -13,6 +14,7 @@ if (userAcc && userAcc.acc_type === "admin") {
     database,
     ref,
     set,
+    get,
     storage,
     storageRef,
     uploadBytes,
@@ -26,6 +28,18 @@ if (userAcc && userAcc.acc_type === "admin") {
       window.location.href = destination;
     });
   };
+
+  async function getDataByUserId(userId) {
+    try {
+      const snapshot = await get(ref(database, "users/" + userId));
+      // Data snapshot contains the data at the specified location
+      userData = snapshot.val();
+      return userData;
+    } catch (error) {
+      console.error("Error getting data:", error);
+      return false;
+    }
+  }
 
   let current_page = document.getElementById("acc-setting");
   console.log("current_page color change", current_page);
@@ -48,7 +62,7 @@ if (userAcc && userAcc.acc_type === "admin") {
       errorElement,
       errorElement.classList.add("error")
     );
-  }
+  };
 
   // Function to clear error message for an input field
   let clearError = (inputElement) => {
@@ -61,7 +75,7 @@ if (userAcc && userAcc.acc_type === "admin") {
       "inputElement.classList.remove('error'); = ",
       errorElement.classList.remove("error")
     );
-  }
+  };
 
   // Update FullName
   const updatefname = document.getElementById("update-fullname");
@@ -99,39 +113,52 @@ if (userAcc && userAcc.acc_type === "admin") {
     if (!document.querySelector(".error")) {
       console.log("Form submitted successfully!");
 
-      updateFullName(userAcc.id, fullname)
-        .then(() => {
-          userAcc = {
-            userId: userAcc.id,
-            fullname: fullname,
-            acc_type: userAcc.acc_type,
-          };
-          localStorage.setItem("userAcc", JSON.stringify(userAcc));
-
-          if (userAcc.acc_type === "admin") {
-            console.log("User Data ACCType", userAcc.acc_type);
-            alert("You are redirected to Admin Main Page");
-            window.location.href = "../admin/admin.html";
-          } else {
-            alert("Invalid Credential!");
-          }
+      getDataByUserId(userAcc.id)
+        .then((userData) => {
+          console.log("GET userData === , ", userData);
+        //   update User Full Name
+            updateFullName(userData, fullname)
+            .then(() => {
+            userAcc = {
+                id: userAcc.id,
+                fullname: fullname,
+                acc_type: userAcc.acc_type,
+            };
+            localStorage.setItem("userAcc", JSON.stringify(userAcc));
+                alert("You are redirected to Admin Main Page");
+                window.location.href = "../admin/admin.html";
+            
+            })
+            .catch((error) => {
+            console.error("Error Update Full Name data:", error);
+            });
         })
         .catch((error) => {
-          console.error("Error Update Full Name data:", error);
+          // Handle any errors that may occur during the data retrieval
+          console.error("Error:", error);
         });
+      
     }
   };
 
   // Attach form validation function to the form's submit event
   updatefname.addEventListener("click", validateForm);
 
-  let updateFullName = (userId, fullname) => {
+  let updateFullName = (userData, newfullname) => {
+    const {acc_type,contact,email,password,userId,username, fullname} = userData;
+
     return new Promise((resolve, reject) => {
       const userRef = ref(database, "users/" + userId);
       // Update specific fields within the path
       set(userRef, {
-        fullname: fullname,
-      })
+            userId: userId,
+            fullname: newfullname,
+            username: username,
+            email: email,
+            password: password,
+            contact: contact,
+            acc_type: acc_type
+        })
         .then(() => {
           alert("Full Name Successfully updated to Firebase");
           console.log("Full Name Successfully updated to Firebase");
@@ -145,9 +172,8 @@ if (userAcc && userAcc.acc_type === "admin") {
     });
   };
 
-
-//   Add Categories
-const addCatBtn = document.getElementById("add-cat-form");
+  //   Add Categories
+  const addCatBtn = document.getElementById("add-cat-form");
 
   // Function to validate the form on submission
   let validateAddCat = (event) => {
@@ -156,10 +182,9 @@ const addCatBtn = document.getElementById("add-cat-form");
     const fileimg = document.getElementById("itemimg").files[0];
     const categoryname = document.getElementById("categoryname").value;
     const categorynameRegex = /^[A-Za-z\s]+$/;
-    
+
     console.log("categoryname = ", categoryname);
     console.log("fileimg = ", fileimg);
-
 
     // File Img Valid
     if (fileimg) {
@@ -192,7 +217,10 @@ const addCatBtn = document.getElementById("add-cat-form");
 
     // Validate fullname
     if (categoryname.trim() === "") {
-      showError(document.getElementById("categoryname"), "categoryname is required.");
+      showError(
+        document.getElementById("categoryname"),
+        "categoryname is required."
+      );
     } else if (!categorynameRegex.test(categoryname.trim())) {
       console.log("Invalid: Contains only letters and spaces.");
       showError(
@@ -204,7 +232,7 @@ const addCatBtn = document.getElementById("add-cat-form");
       clearError(document.getElementById("categoryname"));
     }
 
-     console.log(
+    console.log(
       "!document.querySelector.error ==== ",
       !document.querySelector(".error")
     );
@@ -212,10 +240,7 @@ const addCatBtn = document.getElementById("add-cat-form");
     if (!document.querySelector(".error")) {
       // Submit the form or do any other required action here
       console.log("Form submitted successfully!");
-      console.log(
-        "Data before write === ",
-        categoryname
-      );
+      console.log("Data before write === ", categoryname);
 
       if (!fileimg || !categoryname) {
         alert("Refill Form for all Feilds\nSome Feilds are undefined.");
@@ -227,12 +252,8 @@ const addCatBtn = document.getElementById("add-cat-form");
           .then((downloadURL) => {
             console.log("GET downloadURL === , ", downloadURL);
             if (downloadURL) {
-              console.log(
-                "Data before write === ",
-                downloadURL,
-                categoryname
-              );
-              writeItemData(downloadURL,categoryname)
+              console.log("Data before write === ", downloadURL, categoryname);
+              writeItemData(downloadURL, categoryname)
                 .then(() => {
                   document.getElementById("categoryname").value = "";
                   document.getElementById("itemimg").value = null; // Clear file input
@@ -252,7 +273,7 @@ const addCatBtn = document.getElementById("add-cat-form");
           });
       }
     }
-  }
+  };
 
   let saveImg = (file, categoryname) => {
     return new Promise((resolve, reject) => {
@@ -279,10 +300,7 @@ const addCatBtn = document.getElementById("add-cat-form");
     });
   };
 
-  let writeItemData = (
-    downloadURL,
-    categoryname
-  ) => {
+  let writeItemData = (downloadURL, categoryname) => {
     return new Promise((resolve, reject) => {
       // Create a reference to the Firebase Realtime Database
       // Push data to the database
@@ -301,7 +319,7 @@ const addCatBtn = document.getElementById("add-cat-form");
           reject(error); // Reject the promise with the error
         });
     });
-  }
+  };
 
   // Attach form validation function to the form's submit event
   addCatBtn.addEventListener("submit", validateAddCat);
