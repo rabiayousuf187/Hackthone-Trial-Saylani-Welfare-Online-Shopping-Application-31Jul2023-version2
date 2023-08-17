@@ -178,7 +178,7 @@ if (userAcc && userAcc.acc_type === "admin") {
       }
     };
 
-    const loadingContainer = document.getElementById("loading-container");
+    // const loadingContainer = document.getElementById("loading-container");
     showElement("loading-container", "flex");
     // Show loading spinner while data is being loaded
 
@@ -189,8 +189,6 @@ if (userAcc && userAcc.acc_type === "admin") {
         localStorage.setItem("isFruitFirstLoad", "true"); // Mark the page as loaded
         console.log("Display Pageeeeeeeeeee");
         showElement("Top");
-        hideElement("loading-container");
-        // Hide loading spinner once data is loaded
 
         getAllItemData()
           .then((itemsData) => {
@@ -201,14 +199,7 @@ if (userAcc && userAcc.acc_type === "admin") {
               console.log("updated into Array ====:", itemsData);
               itemsData.forEach((ele, ind) => {
                 console.log("Each Item ==== :", ele);
-                console.log(
-                  "Each Item ==== :",
-                  ele.itemCategory,
-                  ele.itemName,
-                  ele.unitName,
-                  ele.unitPrice,
-                  ele.imageUrl
-                );
+                console.log( "Each Item ==== :",ele.itemCategory,ele.itemName,ele.unitName,ele.unitPrice,ele.imageUrl);
 
                 // Call the function to add a fruit item
                 // name, weight, price, imageURL
@@ -246,35 +237,37 @@ if (userAcc && userAcc.acc_type === "admin") {
                       showElement("cat-section");
                       showElement("footer");
                       console.log("Hide Progress")
+                      console.log("HIDEEEEEEE ===== loader ", document.getElementById("loading-container"));
+                      hideElement("loading") ;  
                       hideElement("loading-container") ;  
                       // Conditionally show or hide the spinner based on isFirstLoad flag
                       // isFirstLoad === "true" ? showElement("loading-container") :                
                     }, 3000);
-                    // You can execute the rest of your code that depends on the loaded images here
-                    // For example, showing some content or displaying a loading spinner
+                    // console.log("HIDEEEEEEE ===== loader ", document.getElementById("loading-container"));
+                    // hideElement("loading") ;  
+                    // hideElement("loading-container") ;  
+                    
                   })
-                  //   .then(()=>{
-
-                  //   })
                   .catch((error) => {
                     console.error("An error occurred:", error);
                   });
                 }else{
                   console.log("Show 2nd LOAD");
+                  
+                  hideElement("loading-container");
                   const lazyImages = document.querySelectorAll(".lazy-image");
                   // const loadImagePromises = [];
                 lazyImages.forEach((img) => {
                   // const promise = new Promise((resolve) => {
-                    img.addEventListener("load", () => {
-                      // resolve();
-                    });
+                    // img.addEventListener("load", () => {
+                    //   // resolve();
+                    // });
                     img.src = img.getAttribute("data-src");
                     showElement("sub-cat-details-" + ind);
                     showElement("sub-cat-price-" + ind);
                     showElement(`cat-fruit-${ind}`);
                   });
 
-                      hideElement("loading-container");
                       showElement("header");
                       showElement("cat-section");
                       showElement("footer");
