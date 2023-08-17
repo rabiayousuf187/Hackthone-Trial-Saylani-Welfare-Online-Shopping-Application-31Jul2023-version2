@@ -80,16 +80,16 @@ if (userAcc && userAcc.acc_type === "admin") {
           reject(error); // Reject the promise with the error
         });
     });
-  }
+  };
 
   let current_page = document.getElementById("add-item");
   // console.log("current_page color change", current_page);
   current_page.querySelector("i").style.color = "#61B846";
   current_page.querySelector("p").style.color = "#61B846";
 
-  addClickListener('home' , './admin.html');
-  addClickListener('acc-setting' , './account-setting.html'); 
-  addClickListener('order' , '../order.html')  
+  addClickListener("home", "./admin.html");
+  addClickListener("acc-setting", "./account-setting.html");
+  addClickListener("order", "../order.html");
 
   const addProductionbtn = document.getElementById("add-production");
 
@@ -105,7 +105,7 @@ if (userAcc && userAcc.acc_type === "admin") {
       errorElement,
       errorElement.classList.add("error")
     );
-  }
+  };
 
   // Function to clear error message for an input field
   let clearError = (inputElement) => {
@@ -118,7 +118,7 @@ if (userAcc && userAcc.acc_type === "admin") {
       "inputElement.classList.remove('error'); = ",
       errorElement.classList.remove("error")
     );
-  }
+  };
   let itemCategorySelect = document.getElementById("itemcategory");
   let selectedCategory;
   // Adding the event listener for the itemCategorySelect
@@ -139,6 +139,69 @@ if (userAcc && userAcc.acc_type === "admin") {
     }
   });
   // Function to validate the form on submission
+  const showElement = (elementId, display = "block") => {
+    document.getElementById(elementId).style.display = display;
+  };
+
+  // Open page
+  let openpage = (redirectPage, pagename) => {
+    setTimeout(() => {
+      alert("Redirtected to " + pagename);
+      window.location.href = redirectPage;
+    }, 800);
+  };
+
+  let replaceSpacesWithHyphens = (text) => {
+    // Replace spaces with hyphens using regular expression
+    text = text.trim(text);
+    return text.replace(/\s+/g, "-");
+  };
+  const container = document.getElementById("itemcategory");
+  let addElement = (ind, category, imageURL) => {
+    let link = replaceSpacesWithHyphens(category);
+    const itemHTML = `
+      <option value="${link}"><img class="lazy-image" src="../../img/icon/placeholder.png" alt="${category}" data-src="${imageURL}"/>${category}</option>`;
+
+    container.insertAdjacentHTML("afterbegin", itemHTML);
+  };
+
+  const itemsData = JSON.parse(localStorage.getItem("category"));
+  container.insertAdjacentHTML("beforeend", `<option selected>Select Category</option>`);
+  itemsData.forEach((ele, ind) => {
+    console.log("Each Item ==== :", ele);
+    console.log("Each Item ==== :", ele.categoryName, ele.imageUrl);
+
+    // Call the function to add a fruit item
+    // name, weight, price, imageURL
+    addElement(ind, ele.categoryName, ele.imageUrl);
+
+    // if(!isFirstLoad) {
+    const lazyImages = document.querySelectorAll(".lazy-image");
+    const loadImagePromises = [];
+    lazyImages.forEach((img) => {
+      const promise = new Promise((resolve) => {
+        img.addEventListener("load", () => {
+          resolve();
+        });
+        img.src = img.getAttribute("data-src");
+      });
+      loadImagePromises.push(promise);
+    });
+    Promise.all(loadImagePromises)
+      .then(() => {
+        console.log("All lazy-loaded images are loaded.");
+        setTimeout(() => {
+          console.log("Page Completely Loaded");
+          showElement("header");
+          showElement("cat-section");
+          showElement("footer");
+        }, 3000);
+      })
+      .catch((error) => {
+        console.error("An error occurred:", error);
+      });
+  });
+
   function validateForm(event) {
     event.preventDefault();
 
