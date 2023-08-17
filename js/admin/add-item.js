@@ -81,15 +81,15 @@ if (userAcc && userAcc.acc_type === "admin") {
         });
     });
   }
-  
+
   let current_page = document.getElementById("add-item");
   // console.log("current_page color change", current_page);
   current_page.querySelector("i").style.color = "#61B846";
   current_page.querySelector("p").style.color = "#61B846";
 
-  addClickListener = ('home' , './admin.html')  
-  addClickListener = ('acc-setting' , './account-setting.html')  
-  addClickListener = ('order' , '../order.html')  
+  addClickListener('home' , './admin.html');
+  addClickListener('acc-setting' , './account-setting.html'); 
+  addClickListener('order' , '../order.html')  
 
   const addProductionbtn = document.getElementById("add-production");
 
