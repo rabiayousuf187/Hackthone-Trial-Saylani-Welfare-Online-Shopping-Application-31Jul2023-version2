@@ -437,7 +437,9 @@ button#forgotPass,
 
 /* ****************** Sales Page ******************** */
 .sale .container,
-.footer .container {
+.footer .container,
+.purchase .container
+ {
     width: 60%;
     margin: 0 auto;
 }
@@ -1070,12 +1072,22 @@ button#add-cat {
     /* border: 2px solid red; */
     /* border: none; */
 }
+.product-body .sub-heading{
+    
+padding: 30px 10px 15px;
+}
+.product-body .sub-heading h3 {
+    color: #000;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0;
+}
 .product-body .uk-panel
 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: ;
+    /* height: ; */
 }
 .product-body .uk-panel img{
     width: 150px;
