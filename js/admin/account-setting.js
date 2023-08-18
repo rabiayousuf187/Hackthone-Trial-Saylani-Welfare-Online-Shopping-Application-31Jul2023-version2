@@ -29,6 +29,8 @@ if (userAcc && userAcc.acc_type === "admin") {
     });
   };
 
+
+
   async function getDataByUserId(userId) {
     try {
       const snapshot = await get(ref(database, "users/" + userId));
@@ -41,7 +43,7 @@ if (userAcc && userAcc.acc_type === "admin") {
     }
   }
 
-  
+
   // Get Category Data for admin
   let getAllItemData = async () => {
     try {
@@ -60,15 +62,7 @@ if (userAcc && userAcc.acc_type === "admin") {
     document.getElementById(elementId).style.display = display;
   };
 
-   // Open page
-   let openpage = (redirectPage, pagename) => {
-    setTimeout(() => {
-        alert("Redirtected to " + pagename);
-        window.location.href = redirectPage;
 
-    }, 800);
-}
-  
   let replaceSpacesWithHyphens = (text) => {
     // Replace spaces with hyphens using regular expression
     text=text.trim(text);

@@ -960,7 +960,10 @@ button#add-cat {
 }
 
 .offcanvas-body {
+    width: 80%;
+    padding: 5vw;
     background: #00ffb103;
+    margin: 0 auto;
 }
 /* *************    End Admin: Sub Category   *************** */
 
