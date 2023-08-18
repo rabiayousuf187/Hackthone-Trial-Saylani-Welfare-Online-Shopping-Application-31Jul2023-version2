@@ -1019,6 +1019,10 @@ button#add-cat {
 
 /* *************    End Admin: Sub Category   *************** */
 /* *************    User: Purchase   *************** */
+#header.purch-main-header {
+    margin: 25px 0px;
+    border: none;
+}
 .purch-main-header .carousel-item {
     overflow: hidden !important;
 }
@@ -1027,8 +1031,8 @@ button#add-cat {
     height: fit-content;
 }
 
-.purch-main-header .carousel-inner {
-    height: 472px;
+.purch-main-header header.main-header {
+    padding: 35px 9px;
 }
 
 .product-body input#search {
