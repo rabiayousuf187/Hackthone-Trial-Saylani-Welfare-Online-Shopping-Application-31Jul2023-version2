@@ -1066,5 +1066,15 @@ button#add-cat {
     /* border: 2px solid red; */
     /* border: none; */
 }
+.product-body .uk-panel
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: ;
+}
+.product-body .uk-panel img{
+    width: 150px;
+}
 
 /* *************    End User: Purchase   *************** */
