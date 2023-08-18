@@ -8,6 +8,7 @@ if (userAcc && userAcc.acc_type === 'admin') {
     // localStorage.setItem("isAdminFirstLoad", "true"); // Mark the page as loadedd
     console.log("Admin.Page");
     document.getElementById('Top').style.display = 'block';
+  document.getElementById("adminname").innerText = userAcc.fullname;
     
     const showElement = (elementId, display = "block") => {
         document.getElementById(elementId).style.display = display;
