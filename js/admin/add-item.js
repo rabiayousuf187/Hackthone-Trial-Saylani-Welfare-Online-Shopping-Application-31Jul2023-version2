@@ -19,6 +19,7 @@ if (userAcc && userAcc.acc_type === "admin") {
     getDownloadURL,
   } = firebaseExports;
 
+  let file;
   const addClickListener = (elementId, destination) => {
     const element = document.getElementById(elementId);
     element.addEventListener("click", (event) => {
@@ -119,8 +120,116 @@ if (userAcc && userAcc.acc_type === "admin") {
       errorElement.classList.remove("error")
     );
   };
+
+  let fileimg = document.getElementById("itemimg");
+  let itemname = document.getElementById("itemname")
   let itemCategorySelect = document.getElementById("itemcategory");
-  let selectedCategory;
+  let selectedCategory = itemCategorySelect.value
+  let itemcontent = document.getElementById("itemcontent")
+  let unitname = document.getElementById("unitname")
+  let unitprice = document.getElementById("unitprice")
+
+
+  function validateItemImg() {
+    // Perform validation logic for item name
+    console.log("fileimg.file[0]; ===== ", fileimg.files[0]);
+    file = fileimg.files[0];
+    if (file) {
+      // Validate image type
+      if (!file.type.startsWith("image/")) {
+        console.log("Please select a valid image fileimg.");
+        // alert("Please select a valid image fileimg.");
+        return;
+      }
+
+      // Validate image size (in bytes)
+      const maxSize = 5 * 1024 * 1024; // 5 MB
+      if (file.size > maxSize) {
+        console.log(
+          "Selected image is too large. Please choose a smaller image."
+        );
+        // alert("Selected image is too large. Please choose a smaller image.");
+        return;
+      }
+
+      // Now you can proceed with uploading the image or other actions
+      console.log("Image is valid:", file.name, file.type, file.size);
+      // Your upload logic here
+      clearError(document.getElementById("itemimg"));
+    } else {
+      // alert("Please select an image file.");
+      console.log("Please select an image file.");
+      showError(document.getElementById("itemimg"), "Image File is required.");
+    }
+    
+  }
+
+  // Validation functions
+  function validateItemName() {
+     // Dropdown Valid
+     itemname = itemname.value;
+    // Valid content
+    if (itemname.trim() === "") {
+      showError(
+        document.getElementById("itemname"),
+        "Item content is required."
+      );
+    } else {
+      clearError(document.getElementById("itemcontent"));
+    }
+  }
+
+  function validateItemContent() {
+    // Perform validation logic for item content
+        // Valid content
+     itemcontent = itemcontent.value;
+        if (itemcontent.trim() === "") {
+          showError(
+            document.getElementById("itemcontent"),
+            "Item content is required."
+          );
+        } else {
+          clearError(document.getElementById("itemcontent"));
+        }
+  }
+
+  function validateUnitName() {
+    // Perform validation logic for unit name
+     // Valid Unit
+     
+     unitname = unitname.value;
+     if (unitname.trim() === "") {
+      showError(document.getElementById("unitname"), "Item Unit is required.");
+    } else {
+      clearError(document.getElementById("unitname"));
+    }
+  }
+
+  function validateUnitPrice() {
+    // Perform validation logic for unit price
+    
+    unitprice = unitprice.value;
+    // Valid Price
+    if (unitprice.trim() === "") {
+      showError(
+        document.getElementById("unitprice"),
+        "Item Price is required."
+      );
+    } else {
+      clearError(document.getElementById("unitprice"));
+    }
+
+  }
+
+
+  // Add an event listener for each input field
+  fileimg.addEventListener("change", validateItemImg);
+  itemname.addEventListener("change", validateItemName);
+  itemcontent.addEventListener("change", validateItemContent);
+  unitname.addEventListener("change", validateUnitName);
+  unitprice.addEventListener("change", validateUnitPrice);
+
+  
   // Adding the event listener for the itemCategorySelect
   itemCategorySelect.addEventListener("change", function () {
     selectedCategory = itemCategorySelect.value; // Corrected variable name
@@ -151,22 +260,33 @@ if (userAcc && userAcc.acc_type === "admin") {
     }, 800);
   };
 
+
   let replaceSpacesWithHyphens = (text) => {
     // Replace spaces with hyphens using regular expression
     text = text.trim(text);
     return text.replace(/\s+/g, "-");
   };
+  function capitalizeWords(str) {
+    return str.replace(/\b\w/g, function (match) {
+      return match.toUpperCase();
+    });
+  }
+
   const container = document.getElementById("itemcategory");
+  container.insertAdjacentHTML("beforeend", `<option selected value="Select Category">Select Category</option>`);
   let addElement = (ind, category, imageURL) => {
     let link = replaceSpacesWithHyphens(category);
-    const itemHTML = `
-      <option value="${link}"><img class="lazy-image" src="../../img/icon/placeholder.png" alt="${category}" data-src="${imageURL}"/>${category}</option>`;
+    category = capitalizeWords(category);
 
-    container.insertAdjacentHTML("afterbegin", itemHTML);
+    const itemHTML = `
+      <option value="${link}">${category}</option>`;
+
+    container.insertAdjacentHTML("beforeend", itemHTML);
   };
 
   const itemsData = JSON.parse(localStorage.getItem("category"));
-  container.insertAdjacentHTML("beforeend", `<option selected>Select Category</option>`);
+
+  console.log("container ===== ", container)
   itemsData.forEach((ele, ind) => {
     console.log("Each Item ==== :", ele);
     console.log("Each Item ==== :", ele.categoryName, ele.imageUrl);
@@ -205,16 +325,31 @@ if (userAcc && userAcc.acc_type === "admin") {
   function validateForm(event) {
     event.preventDefault();
 
-    const fileimg = document.getElementById("itemimg").files[0];
-    const itemname = document.getElementById("itemname").value;
-    // const itemCategorySelect = document.getElementById("itemcategory");
-    const itemcontent = document.getElementById("itemcontent").value;
-    const unitname = document.getElementById("unitname").value;
-    const unitprice = document.getElementById("unitprice").value;
+    let fileimg = document.getElementById("itemimg").files[0];
+    let itemname = document.getElementById("itemname").value;
+    let itemCategorySelect = document.getElementById("itemcategory");
+    let selectedCategory = itemCategorySelect.value;
+    let itemcontent = document.getElementById("itemcontent").value;
+    let unitname = document.getElementById("unitname").value;
+    let unitprice = document.getElementById("unitprice").value;
+
+    
     let acc_type, userAcc;
     // let acc_type = document.querySelector('input[name="acc_type"]:checked');
 
     console.log("fileimg = ", fileimg);
+
+    if (selectedCategory === "Select Category" || selectedCategory === "") {
+      // Handle case when the default "Select Category" is chosen or if the value is empty
+      console.log("No category selected");
+      showError(
+        document.getElementById("itemcategory"),
+        "Item Category is required."
+      );
+    } else {
+      console.log("Selected Category:", selectedCategory);
+      clearError(document.getElementById("itemcategory"));
+    }
 
     // File Img Valid
     if (fileimg) {
