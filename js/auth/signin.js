@@ -150,6 +150,17 @@ if (userAcc === null || userAcc === undefined) {
                 // Data exists for the user ID
                 console.log("User Data", userData);
                 console.log("User Data ACCType", userData.acc_type);
+                getAllItemData().then((category) => {
+                  console.log("Retrieved data:", category);
+                  localStorage.setItem(
+                    "category",
+                    JSON.stringify(Object.values(category))
+                  );
+                  localStorage.setItem("isAdminFirstLoad", "true");
+                  console.log(
+                    "Category Data successfully Stored in local Storage"
+                  );
+                });
                 if (userData.acc_type === "user") {
                   alert(
                     "User logged in Successfully!\nYou are redirected to User Purchase Corner"
@@ -160,17 +171,7 @@ if (userAcc === null || userAcc === undefined) {
                 } else if (userData.acc_type === "admin") {
                   console.log("User Data ACCType", userAcc);
                   localStorage.setItem("userAcc", JSON.stringify(userAcc));
-                  getAllItemData().then((category) => {
-                    console.log("Retrieved data:", category);
-                    localStorage.setItem(
-                      "category",
-                      JSON.stringify(Object.values(category))
-                    );
-                    localStorage.setItem("isAdminFirstLoad", "true");
-                    console.log(
-                      "Category Data successfully Stored in local Storage"
-                    );
-                  });
+                  
                   window.location.href = "../admin/admin.html";
                   alert(
                     "User logged in Successfully!\nYou are redirected to Admin Corner"
