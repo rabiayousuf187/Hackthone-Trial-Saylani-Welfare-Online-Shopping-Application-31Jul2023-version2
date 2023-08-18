@@ -8,7 +8,7 @@ if (userAcc && userAcc.acc_type === 'user') {
     // localStorage.setItem("isAdminFirstLoad", "true"); // Mark the page as loadedd
     console.log("User Purchase.Page");
     document.getElementById('Top').style.display = 'block';
-  document.getElementById("adminname").innerText = userAcc.fullname;
+  // document.getElementById("adminname").innerText = userAcc.fullname;
     
     const showElement = (elementId, display = "block") => {
         document.getElementById(elementId).style.display = display;
@@ -23,7 +23,19 @@ if (userAcc && userAcc.acc_type === 'user') {
     text=text.trim(text);
     return text.replace(/\s+/g, '-');
   }
-    const container = document.getElementById("content-category");
+  let capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, function (match) {
+      return match.toUpperCase();
+    });
+  }
+
+  
+  function handleButtonClick (category){
+    console.log("Switch category ====", category); // This will log the value of the clicked category
+    // You can perform any other actions you need here
+  }
+
+    const container = document.getElementById("prod-cat-slider");
     let addElement = (
         ind,
         category,
@@ -31,19 +43,32 @@ if (userAcc && userAcc.acc_type === 'user') {
       ) => {
 
         let link = replaceSpacesWithHyphens(category);
+        category = capitalizeWords(category);
         const itemHTML = `
-        <div class="cat-${ind} cat-style">
-                            <button id="${link}-btn" name="${category}" value="submit" class="btn btn-get-started cat-inp"
-                                onclick="openpage('./category/${link}.html', '${category} Page')">
-                                <img class="lazy-image" src="../../img/icon/placeholder.png" alt="${category}" data-src="${imageURL}"/>
-                                <p id="${link}">${category}</p>
-                            </button>
-                        </div>`;
+        <li ><button role="button" href="#" id=${link} style="border:none;">
+            <div class="uk-panel uk-card-default col-div" >
+            <div class="img-div">
+                <img id=${link} class="lazy-image" src="../../img/icon/placeholder.png" alt="${category}" data-src="${imageURL}" width="400" height="600" alt="">
+                
+                </div>
+                <div class="uk-card-body">
+                    <h3 class="uk-card-title">${category}</h3>
+                </div>
+            </div>
+            </button>
+        </li>`;
   
         container.insertAdjacentHTML("afterbegin", itemHTML);
       };
+      container.addEventListener("click", function(event) {
+        console.log("Button pressed", event, event.target.tagName, event.target.getAttribute("id"))
+        if (event.target.tagName === "IMG") {
+            const link = event.target.getAttribute("id");
+            handleButtonClick(link);
+        }
+    });
       const itemsData = JSON.parse(localStorage.getItem("category"));
-    itemsData.forEach((ele, ind) => {
+       itemsData.forEach((ele, ind) => {
         console.log("Each Item ==== :", ele);
         console.log( "Each Item ==== :",ele.categoryName,ele.imageUrl);
 
@@ -89,6 +114,7 @@ if (userAcc && userAcc.acc_type === 'user') {
 
       });
 
+      
     let current_page = document.getElementById("home");
     console.log("current_page color change", current_page);
     current_page.querySelector('img').style.filter = 'invert(62%) sepia(112%) saturate(349%) hue-rotate(61deg) brightness(56%) contrast(168%)';
@@ -100,11 +126,6 @@ if (userAcc && userAcc.acc_type === 'user') {
         window.location.href = "./add-item.html"
     });
 
-    let order = document.getElementById("order");
-    order.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        window.location.href = "./order.html"
-    });
 
     let acc_setting = document.getElementById("acc-setting");
     acc_setting.addEventListener('click', function (event) {

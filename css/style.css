@@ -1049,7 +1049,6 @@ button#add-cat {
 .product-body span#basic-addon1 {
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
-
     background: #e2e2e2;
     border: 2px solid gray;
     border-right: none;
@@ -1082,15 +1081,42 @@ padding: 30px 10px 15px;
     font-weight: 700;
     margin: 0;
 }
+.product-body .uk-grid>* {
+    padding: 0px 10px 0px 15px;
+}
 .product-body .uk-panel
 {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* height: ; */
+    flex-direction: column;
+    box-shadow: none;
 }
-.product-body .uk-panel img{
+.product-body .uk-panel img {
+    height: 100px;
+    border: 2px solid #61b846;
+    width: 100px;
+    border-radius: 20px;
+    padding: 15px;
+}
+.product-body .col-div .img-div{
     width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.product-body .col-div:hover img {
+    box-shadow: 5px 3px 5px 2px #61b8466e !important;
+    /* border: 2px solid red; */
+    /* border: none; */
+}
+.product-body .uk-card-body {
+    padding: 10px 10px;
+}
+.product-body .uk-panel h3 {
+    font-size: 18px;
+    color: #61b846;
 }
 
 /* *************    End User: Purchase   *************** */
