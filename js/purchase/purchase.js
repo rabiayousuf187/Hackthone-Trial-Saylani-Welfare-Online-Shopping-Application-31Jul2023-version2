@@ -1,22 +1,106 @@
-import { isAuth } from "../auth/auth.js";
+import { isAuth, logout } from "../auth/auth.js";
+import firebaseExports from "../config/firebase-config.js";
 let userAcc = isAuth();
 console.log("userAcc get via is Auth()", userAcc);
 
+if (userAcc && userAcc.acc_type === "user") {
+  console.log("Admin Account Setting Page");
 
-if (userAcc && userAcc.acc_type === 'user') {
-    
-    // localStorage.setItem("isAdminFirstLoad", "true"); // Mark the page as loadedd
-    console.log("User Purchase.Page");
-    document.getElementById('Top').style.display = 'block';
-  // document.getElementById("adminname").innerText = userAcc.fullname;
-    
+  let userData;
+  document.getElementById("Top").style.display = "block";
+  //   document.getElementById("adminname").innerText = userAcc.fullname;
+  // Use the Firebase Configuration functions
+  const {
+    database,
+    ref,
+    set,
+    get,
+    storage,
+    storageRef,
+    uploadBytes,
+    getDownloadURL,
+  } = firebaseExports;
     const showElement = (elementId, display = "block") => {
         document.getElementById(elementId).style.display = display;
       };
     
     // Check if the page has been loaded before
-    // const isFirstLoad = JSON.parse(localStorage.getItem("isAdminFirstLoad"));
-    
+    const isFirstLoad = JSON.parse(localStorage.getItem("isUserFirstLoad"));
+    // 
+    window.addEventListener("load", ()=>{
+
+      getAllItemData(`items/fruit/`)
+          .then((itemsData) => {
+            if (!itemsData) {
+              console.log("Data is null");
+            } else {
+              // Here you can continue with rendering your data or performing other tasks
+              console.log("updated into Array ====:", itemsData);
+
+              const container = document.getElementById("show-item-inner");
+
+              itemsData.forEach((ele, ind) => {
+                console.log("Each Item ==== :", ele);
+                console.log( "Each Item ==== :",ele.itemCategory,ele.itemName,ele.unitName,ele.unitPrice,ele.imageUrl);
+
+                // Call the function to add a fruit item
+                // name, weight, price, imageURL
+                showItem(
+                  container,
+                  ind,
+                  ele.itemCategory,
+                  ele.itemName,
+                  ele.unitName,
+                  ele.unitPrice,
+                  ele.imageUrl,
+                  ele.itemContent
+                );
+
+                  const lazyImages = document.querySelectorAll(".lazy-image");
+                  const loadImagePromises = [];
+                lazyImages.forEach((img) => {
+                  const promise = new Promise((resolve) => {
+                    img.addEventListener("load", () => {
+                      resolve();
+                    });
+                    img.src = img.getAttribute("data-src");
+                    showElement("sub-cat-details-" + ind);
+                    showElement("sub-cat-price-" + ind);
+                    showElement(`cat-fruit-${ind}`);
+                  });
+                  loadImagePromises.push(promise);
+                });
+                Promise.all(loadImagePromises)
+                  .then(() => {
+                    console.log("All lazy-loaded images are loaded.");
+                                         
+                  })
+                  .catch((error) => {
+                    console.error("An error occurred:", error);
+                  });
+
+              });
+            }
+            // Process the retrieved data
+          })
+
+          .catch((error) => {
+            console.error("Error fetching Items Data:", error);
+          });
+    });
+    let getAllItemData = async (url) => {
+      try {
+        let snapshot = await get(ref(database, url));
+        // Data snapshot contains the data at the specified location
+        let itemsData = snapshot.val();
+        console.log("Retrieved data:", itemsData);
+        itemsData = Object.values(itemsData);
+        return itemsData;
+      } catch (error) {
+        console.error("Error getting data:", error);
+        return false;
+      }
+    };
 
   let replaceSpacesWithHyphens = (text) => {
     // Replace spaces with hyphens using regular expression
@@ -29,10 +113,108 @@ if (userAcc && userAcc.acc_type === 'user') {
     });
   }
 
+
   
-  function handleButtonClick (category){
-    console.log("Switch category ====", category); // This will log the value of the clicked category
-    // You can perform any other actions you need here
+  let showItem = (
+    container,
+    ind,
+    category,
+    name,
+    weight,
+    price,
+    imageURL,
+    description
+  ) => {
+    category = capitalizeWords(category);
+      let link = replaceSpacesWithHyphens(category);
+    const itemHTML = `
+    <div id="cat-${category}-${ind}" class="cat-row">
+                            <div class="col-12 cat-item">
+                                <div class="sub-cat-title">
+                                    <img src="../../img/icons/placeholder.png" alt="${category}" data-src="${imageURL}" class="lazy-image"/>
+                                    <div id="sub-cat-details-${ind}" class="sub-cat-details">
+                                        <p class="sub-cat-name" style="font-size: x-large;
+                                        font-weight: 600;">${name}</p>
+                                        <p class="sub-cat-name">${description}</p>
+                                    </div>
+                                    <div class="item-weight-price">
+                                      <div class="amount">
+                                        <p id="sub-cat-price-${ind}" class="sub-cat-price">Rs.<span id='price'>${price}</span></p>
+                                        
+                                        <p id="sub-cat-weight-${ind}" class="sub-cat-price">- Per <span id='price'>${weight}</span></p>
+                                        </div>
+                                        <button class="col-2 btn btn-get-started cat-inp" id="${link}" ><i class="bi bi-plus-lg"></i></button>
+                                    </div>
+                                    </div>
+                                    </div>
+                            </div>
+                        </div>`;
+
+          container.insertAdjacentHTML("beforeend", itemHTML);
+        };
+
+        
+        function handleButtonClick (category){
+          console.log("Switch category ====", category); // This will log the value of the clicked category
+          if(is)
+          getAllItemData(`items/${category}/`)
+          .then((itemsData) => {
+            if (!itemsData) {
+              console.log("Data is null");
+            } else {
+              // Here you can continue with rendering your data or performing other tasks
+              console.log("updated into Array ====:", itemsData);
+
+              const container = document.getElementById("show-item-inner");
+
+              itemsData.forEach((ele, ind) => {
+                console.log("Each Item ==== :", ele);
+                console.log( "Each Item ==== :",ele.itemCategory,ele.itemName,ele.unitName,ele.unitPrice,ele.imageUrl);
+
+                // Call the function to add a fruit item
+                // name, weight, price, imageURL
+                showItem(
+                  container,
+                  ind,
+                  ele.itemCategory,
+                  ele.itemName,
+                  ele.unitName,
+                  ele.unitPrice,
+                  ele.imageUrl,
+                  ele.itemContent
+                );
+
+                  const lazyImages = document.querySelectorAll(".lazy-image");
+                  const loadImagePromises = [];
+                lazyImages.forEach((img) => {
+                  const promise = new Promise((resolve) => {
+                    img.addEventListener("load", () => {
+                      resolve();
+                    });
+                    img.src = img.getAttribute("data-src");
+                    showElement("sub-cat-details-" + ind);
+                    showElement("sub-cat-price-" + ind);
+                    showElement(`cat-fruit-${ind}`);
+                  });
+                  loadImagePromises.push(promise);
+                });
+                Promise.all(loadImagePromises)
+                  .then(() => {
+                    console.log("All lazy-loaded images are loaded.");
+                                         
+                  })
+                  .catch((error) => {
+                    console.error("An error occurred:", error);
+                  });
+
+              });
+            }
+            // Process the retrieved data
+          })
+
+          .catch((error) => {
+            console.error("Error fetching Items Data:", error);
+          });
   }
 
     const container = document.getElementById("prod-cat-slider");
@@ -64,6 +246,7 @@ if (userAcc && userAcc.acc_type === 'user') {
         console.log("Button pressed", event, event.target.tagName, event.target.getAttribute("id"))
         if (event.target.tagName === "IMG") {
             const link = event.target.getAttribute("id");
+            console.log("Show Items of ====", link);
             handleButtonClick(link);
         }
     });

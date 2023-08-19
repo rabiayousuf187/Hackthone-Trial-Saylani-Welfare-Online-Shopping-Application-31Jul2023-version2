@@ -68,17 +68,24 @@ if (userAcc && userAcc.acc_type === "admin") {
     text=text.trim(text);
     return text.replace(/\s+/g, '-');
   } 
+  let capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, function (match) {
+      return match.toUpperCase();
+    });
+  }
+
   const container = document.getElementById("content-category");
   let addElement = (
       ind,
       category,
       imageURL,
     ) => {
-
+      
+      category = capitalizeWords(category);
       let link = replaceSpacesWithHyphens(category);
       const itemHTML = `
       <div class="cat-${ind} cat-style">
-                          <button id="${link}-btn" name="${category}" value="submit" class="btn btn-get-started cat-inp"
+                          <button id="${link}-btn" name="${link}" value="submit" class="btn btn-get-started cat-inp"
                               onclick="openpage('./category/${link}.html', '${category} Page')">
                               <img class="lazy-image" src="../../img/icon/placeholder.png" alt="${category}" data-src="${imageURL}"/>
                               <p id="${link}">${category}</p>

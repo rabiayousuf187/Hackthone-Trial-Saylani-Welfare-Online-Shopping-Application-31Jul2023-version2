@@ -690,6 +690,12 @@ section.sale-product-content {
 section.footer {
     /* margin: 0px 0px 60px; */
     padding: 15px 40px 50px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    padding: 20px;
 }
 
 footer.footer-menu {
@@ -1118,5 +1124,60 @@ padding: 30px 10px 15px;
     font-size: 18px;
     color: #61b846;
 }
+.show-item-inner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+    
+.show-item-inner .sub-cat-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.show-item-inner img {
+    width: 140px;
+    height: fit-content;
+}
+.show-item-inner .sub-cat-title .btn-get-started {
+    width: 66px;
+    height: 59px;
+    
+    box-shadow: 2px 3px 6px 1px #8abca3;
+}
+
+.item-weight-price {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 14%;
+    /* background: yellowgreen; */
+    align-items: center;
+}
+
+.sub-cat-details {
+    text-align: justify;
+    flex-basis: 60%;
+}
+
+.show-item-inner .cat-row {
+    margin: 20px 10px;
+}
+.show-item-inner .sub-cat-price {
+    font-weight: bold;
+}
+.show-item-inner .amount {
+    display: inline-flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: end;
+}
+
+.show-item-inner p {
+    margin-bottom: 0.5px;
+}
+
+p.sub-cat-name {font-size: 16px;}
+
 
 /* *************    End User: Purchase   *************** */

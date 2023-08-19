@@ -156,10 +156,7 @@ if (userAcc === null || userAcc === undefined) {
                     "category",
                     JSON.stringify(Object.values(category))
                   );
-                  localStorage.setItem("isAdminFirstLoad", "true");
-                  console.log(
-                    "Category Data successfully Stored in local Storage"
-                  );
+                  
                 });
                 if (userData.acc_type === "user") {
                   alert(
@@ -167,11 +164,18 @@ if (userAcc === null || userAcc === undefined) {
                   );
                   console.log("User Data ACCType", userAcc);
                   localStorage.setItem("userAcc", JSON.stringify(userAcc));
+                  localStorage.setItem("isUserFirstLoad", "true");
+                  console.log(
+                    "Category Data successfully Stored in local Storage"
+                  );
                   window.location.href = "../purchase/purchase.html";
                 } else if (userData.acc_type === "admin") {
                   console.log("User Data ACCType", userAcc);
                   localStorage.setItem("userAcc", JSON.stringify(userAcc));
-                  
+                  localStorage.setItem("isAdminFirstLoad", "true");
+                  console.log(
+                    "Category Data successfully Stored in local Storage"
+                  );
                   window.location.href = "../admin/admin.html";
                   alert(
                     "User logged in Successfully!\nYou are redirected to Admin Corner"
