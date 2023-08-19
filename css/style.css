@@ -726,7 +726,6 @@ footer.footer-menu {
     text-decoration: none;
     font-size: 18px;
     color: #6D6E71;
-    ;
     font-weight: 600;
     text-align: center;
 }
@@ -758,7 +757,7 @@ footer.footer-menu {
 .footer-content:focus a p,
 .footer-content:visited a p {
     color: #61B846;
-    ;
+    text-decoration: none !important;
 }
 .footer-content:hover a i,
 .footer-content:active a i,
@@ -769,7 +768,7 @@ footer.footer-menu {
 .footer-content:focus a p,
 .footer-content:visited a p {
     color: #61B846;
-    ;
+    text-decoration: none !important;
 }
 .footer-content:hover a img,
 .footer-content:active a img,
@@ -887,6 +886,7 @@ footer.footer-menu {
     filter: invert(62%) sepia(100%) saturate(349%) hue-rotate(61deg) brightness(56%) contrast(168%);
     background: #2b75142b;
     border-radius: 4px;
+    text-decoration: none !important;
 }
 
 .add-item .error {
@@ -1308,6 +1308,10 @@ p.sub-cat-name {font-size: 16px;}
         margin: 15px 0px;
     }
     i.bi.bi-cart-fill {
-        font-size: 45px;
+        font-size: 40px;
+    }
+    .uk-link-toggle:hover .uk-link, .uk-link:hover, a:hover {
+        color: #61B846;
+        text-decoration: none;
     }
 /* *************    End User: Purchase   *************** */

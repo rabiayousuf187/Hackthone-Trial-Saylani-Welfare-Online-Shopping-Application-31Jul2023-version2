@@ -5,15 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SWOSWA</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="icon" type="image/png" href="../../img/Logo.png">
 
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/css/uikit.min.css" />
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <!-- External CSS Style Sheet -->
     <link href="../../css/style.css" rel="stylesheet" />
 </head>
@@ -41,7 +41,7 @@
                     <h2 class="text-center main-sub-heading">DISCOUNT STORE</h2>
                 </div>
                 <div class="icons">
-                    <a class="footer-text" href="#" id="cart" style="position: relative;" onclick="openpage('./shop-cart.html' , 'Shop Cart')">
+                    <a class="footer-text" href="#" style="position: relative;" onclick="openpage('./shop-cart.html' , 'Shop Cart')">
                         <img src="../../img/icon/Cart-icon.png" alt="admin"
                             style="width: 35px;margin-left: 10px;margin-right: 10px;"/>
                             <span class="badge rounded-pill bg-danger" style="    width: 45px;
@@ -148,9 +148,7 @@
                 </div>
                 <div class="footer-content">
                     <a class="footer-text" href="#" id="cart">
-                        <!-- <i class="bi bi-plus-circle-fill"></i> -->
-                        <i class="bi bi-cart-fill"></i>
-                        <!-- <img src="../../img/icon/add-item.png" alt="home" /> -->
+                        <i class="bi bi-cart-fill" ></i>
                         <p style="margin-top: -8px;">Cart</p>
                     </a>
                 </div>
@@ -164,7 +162,7 @@
         </div>
     </section>
 
-    <script type="module" src="../../js/auth/auth.js"></script>
+    <!-- <script type="module" src="../../js/auth/auth.js"></script> -->
     <script type="module" src="../../js/purchase/purchase.js"></script>
 
     <!-- External JS Script -->
