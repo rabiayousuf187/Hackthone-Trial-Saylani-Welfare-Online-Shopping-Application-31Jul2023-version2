@@ -10,13 +10,13 @@ if (userAcc && userAcc.acc_type === "user") {
 
   let count_item = localStorage.getItem("quantity");
     count_item = count_item === null ? count_item === null : count_item = JSON.parse(count_item);
-    if(count_item === null ){
-      document.getElementById('count-item').style.display = 'none';
-      quantity = 0;
-    }else{
-      document.getElementById('count-item').style.display = 'block';
+    // if(count_item === null ){
+    //   document.getElementById('count-item').style.display = 'none';
+    //   quantity = 0;
+    // }else{
+    //   document.getElementById('count-item').style.display = 'block';
 
-    }
+    // }
 
   let count = () =>{
     if(quantity>0){
@@ -27,7 +27,7 @@ if (userAcc && userAcc.acc_type === "user") {
     }
   }
   document.getElementById("Top").style.display = "block";
-  //   document.getElementById("adminname").innerText = userAcc.fullname;
+    document.getElementById("adminname").innerText = userAcc.fullname;
   // Use the Firebase Configuration functions
   const {
     database,

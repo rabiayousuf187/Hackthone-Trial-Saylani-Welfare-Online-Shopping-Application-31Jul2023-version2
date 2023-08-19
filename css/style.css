@@ -2,7 +2,9 @@
     margin: 0px;
     padding: 0px;
 }
-
+h3{
+    margin: 0;
+}
 .auth {
     display: none;
 }
@@ -1189,4 +1191,24 @@ p.sub-cat-name {font-size: 16px;}
     border-radius: 15px;
 }
 
+/* *************    End User: Purchase   *************** */
+/* *************    User: Shop-cart   *************** */
+.shop-cart .account-title {
+    text-align: center;
+}
+
+.shop-cart .main-page-content .main-sub-heading {
+    font-size: 55px;
+    font-weight: 100;
+    padding: 40px 0px;
+}
+.shop-cart .main-page-content .main-heading {
+    font-size: 45px;
+    font-weight: 500;
+}
+.shop-cart .icons {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 /* *************    End User: Purchase   *************** */
