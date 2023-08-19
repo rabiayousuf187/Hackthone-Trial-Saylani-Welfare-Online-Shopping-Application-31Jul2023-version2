@@ -757,7 +757,17 @@ footer.footer-menu {
     color: #61B846;
     ;
 }
-
+.footer-content:hover a i,
+.footer-content:active a i,
+.footer-content:focus a i,
+.footer-content:visited a i,
+.footer-content:hover a p,
+.footer-content:active a p,
+.footer-content:focus a p,
+.footer-content:visited a p {
+    color: #61B846;
+    ;
+}
 .footer-content:hover a img,
 .footer-content:active a img,
 .footer-content:visited a img,

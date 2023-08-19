@@ -527,10 +527,10 @@ if (userAcc && userAcc.acc_type === "user") {
     "invert(62%) sepia(112%) saturate(349%) hue-rotate(61deg) brightness(56%) contrast(168%)";
   current_page.querySelector("p").style.color = "#61B846";
 
-  let add_item = document.getElementById("add-item");
+  let add_item = document.getElementById("cart");
   add_item.addEventListener("click", function (event) {
     event.preventDefault(); // Prevent the default link behavior
-    window.location.href = "./add-item.html";
+    window.location.href = "./shop-cart.html";
   });
 
   let acc_setting = document.getElementById("acc-setting");
