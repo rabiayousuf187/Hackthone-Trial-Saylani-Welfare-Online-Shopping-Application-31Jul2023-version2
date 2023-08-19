@@ -406,7 +406,7 @@ if (userAcc && userAcc.acc_type === "user") {
     window.location.href = "./account-setting.html";
   });
 
-  const placeorder = document.getElementById("signup-form");
+  const placeorder = document.getElementById("placeorder");
 
   // Regular expressions for validation
   // Email Regex: It should not start or end with whitespace.
@@ -450,17 +450,16 @@ if (userAcc && userAcc.acc_type === "user") {
     event.preventDefault();
 
     const fullname = document.getElementById("fullname").value;
-    const username = document.getElementById("username").value;
+    const address = document.getElementById("address").value;
     const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
     const contact = document.getElementById("contact").value;
     let acc_type, userAcc;
     // let acc_type = document.querySelector('input[name="acc_type"]:checked');
 
     console.log("fullname = ", fullname);
-    console.log("username = ", username);
+    console.log("address = ", address);
     console.log("email = ", email);
-    console.log("password = ", password);
+    // console.log("password = ", password);
     console.log("contact = ", contact);
 
     // Validate fullname
@@ -475,10 +474,10 @@ if (userAcc && userAcc.acc_type === "user") {
     }
   
     // Validate username
-    if (username.trim() === "") {
-      showError(document.getElementById("username"), "Username is required.");
+    if (address.trim() === "") {
+      showError(document.getElementById("address"), "address is required.");
     } else {
-      clearError(document.getElementById("username"));
+      clearError(document.getElementById("address"));
     }
 
     // Validate contact
@@ -505,25 +504,25 @@ if (userAcc && userAcc.acc_type === "user") {
       clearError(document.getElementById("email"));
     }
 
-    // Validate password
-    if (password.trim() === "") {
-      showError(document.getElementById("password"), "Password is required.");
-    } else if (!passwordRegex.test(password)) {
-      showError(
-        document.getElementById("password"),
-        "Password must be at least 8 characters long and contain at least one letter and one number."
-      );
-    } else {
-      clearError(document.getElementById("password"));
-    }
+    // // Validate password
+    // if (password.trim() === "") {
+    //   showError(document.getElementById("password"), "Password is required.");
+    // } else if (!passwordRegex.test(password)) {
+    //   showError(
+    //     document.getElementById("password"),
+    //     "Password must be at least 8 characters long and contain at least one letter and one number."
+    //   );
+    // } else {
+    //   clearError(document.getElementById("password"));
+    // }
 
  
-    if (username.includes("admin")) {
-      console.log("Substring found!");
-      acc_type = "admin";
-    } else {
-      acc_type = "user";
-    }
+    // if (username.includes("admin")) {
+    //   console.log("Substring found!");
+    //   acc_type = "admin";
+    // } else {
+    //   acc_type = "user";
+    // }
 
     console.log(
       "!document.querySelector.error ==== ",
@@ -537,84 +536,48 @@ if (userAcc && userAcc.acc_type === "user") {
       // Submit the form or do any other required action here
       console.log("Form submitted successfully!");
       // Call the function to create a user with Firebase Authentication
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log("User Role", acc_type);
-          console.log("User Created", user);
-          writeUserData(user.uid, fullname, username, email, password, contact, acc_type)
+      
+          writeUserData(user.uid, fullname, address, email, contact, a)
             .then(() => {
-              userAcc = {
-                userId: user.uid,
-                fullname: fullname,
-                acc_type: acc_type,
-              };
-              localStorage.setItem("userAcc", JSON.stringify(userAcc));
+              // userAcc = {
+              //   userId: user.uid,
+              //   fullname: fullname,
+              //   acc_type: acc_type,
+              // };
+              // // localStorage.setItem("userAcc", JSON.stringify(userAcc));
 
-              if (acc_type === "user") {
-                alert("You are redirected to User Purchase Corner");
-                window.location.href = "../purchase/purchase.html";
-              } else if (acc_type === "admin") {
-                console.log("User Data ACCType", acc_type);
-                alert("You are redirected to Admin Corner");
-                window.location.href = "../admin/admin.html";
-              } else {
-                alert("Invalid Credential!");
-              }
+              // if (acc_type === "user") {
+              //   alert("You are redirected to User Purchase Corner");
+              //   window.location.href = "../purchase/purchase.html";
+              // } else if (acc_type === "admin") {
+              //   console.log("User Data ACCType", acc_type);
+              //   alert("You are redirected to Admin Corner");
+              //   window.location.href = "../admin/admin.html";
+              // } else {
+              //   alert("Invalid Credential!");
+              // }
             })
             .catch((error) => {
               console.error("Error writing user data:", error);
             });
-
-          // // .then((writedb) => {
-          // userAcc = {
-          //   userId: user.uid,
-          //   acc_type: acc_type,
-          // };
-          // localStorage.setItem("userAcc", JSON.stringify(userAcc));
-          // alert("User Created Successfully! ");
-          // if (acc_type === "user") {
-          //   alert("You are redirected to User Purchase Corner");
-          //   window.location.href = "../purchase/purchase.html";
-          //   // openpage("sale/sale.html"); // Redirect to the sales page
-          // } else if (acc_type === "admin") {
-          //   console.log("User Data ACCType", acc_type);
-          //   window.location.href = "./admin/sale-product.html";
-          //   alert("You are redirected to Admin Corner");
-          //   // openpage("purchase/purchase.html"); // Redirect to the purchase page
-          // } else {
-          //   alert("Invalid Credential!");
-          // }
-          // })
-          // .catch((error) => {
-          //   // Handle any errors that may occur during the data retrieval
-          //   console.error("Error:", error);
-          // });
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(error, error.message, error.code);
-        });
     }
   }
 
   // Attach form validation function to the form's submit event
-  signupForm.addEventListener("submit", validateForm);
+  placeorder.addEventListener("click", validateForm);
 
-  let writeUserData = (userId, fullname, username, email, password, contact, acc_type) => {
+  let writeUserData = (userId, fullname, email, password, contact, ) => {
     return new Promise((resolve, reject) => {
-        const userRef = ref(database, 'users/' + userId);
+        const userRef = ref(database, 'order/' + userId);
 
         set(userRef, {
             userId: userId,
             fullname: fullname,
-            username: username,
+            address: address,
             email: email,
-            password: password,
+            // password: password,
             contact: contact,
-            acc_type: acc_type
+            // acc_type: acc_type
         })
         .then(() => {
             console.log("Data saved to Firebase Database.");
@@ -628,7 +591,7 @@ if (userAcc && userAcc.acc_type === "user") {
 }
 
 } else if (
-  (userAcc && userAcc.acc_type === "user") ||
+  (userAcc && userAcc.acc_type === "admin") ||
   userAcc === null ||
   userAcc === undefined
 ) {

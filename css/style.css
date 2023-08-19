@@ -1269,7 +1269,7 @@ p.sub-cat-name {font-size: 16px;}
       vertical-align: sub;
     }
     .shop-cart #cat-section{
-        padding: 300px 0px;
+        padding: 0px 0px;
     }
     .shop-cart .show-item{
         
@@ -1286,5 +1286,12 @@ p.sub-cat-name {font-size: 16px;}
     }
     .shop-cart p{
         margin: 0px;
+    }
+    .shop-cart .signup .form {
+        width: 100%;
+        padding: 0px 0px 10px;
+    }
+    .shop-cart .signup .form input {
+        margin: 15px 0px;
     }
 /* *************    End User: Purchase   *************** */
