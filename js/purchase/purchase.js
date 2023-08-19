@@ -5,23 +5,26 @@ console.log("userAcc get via is Auth()", userAcc);
 
 if (userAcc && userAcc.acc_type === "user") {
   console.log("Admin Account Setting Page");
-  let userData, selectedCategory, disableItem, quantity;
+  let userData, selectedCategory, disableItem, quantity = 0;
 
 
-  let count_item = localStorage.getItem("userAcc");
-    count_item = count_item === null ? count_item === "null" : count_item = JSON.parse(count_item);
-    if(count_item !== null ){
-      document.getElementById('count-item').style.display = 'block';
-    }else{
+  let count_item = localStorage.getItem("quantity");
+    count_item = count_item === null ? count_item === null : count_item = JSON.parse(count_item);
+    if(count_item === null ){
+      document.getElementById('count-item').style.display = 'none';
       quantity = 0;
+    }else{
+      document.getElementById('count-item').style.display = 'block';
+
     }
 
   let count = () =>{
-
     if(quantity>0){
       quantity++;
     console.log("count_item++ === ", quantity);
+    document.getElementById('count-item').innerHTML = quantity;
     localStorage("count_item" , JSON.stringify(quantity));
+    }
   }
   document.getElementById("Top").style.display = "block";
   //   document.getElementById("adminname").innerText = userAcc.fullname;
@@ -44,7 +47,7 @@ if (userAcc && userAcc.acc_type === "user") {
   const isFirstLoad = JSON.parse(localStorage.getItem("isUserFirstLoad"));
   //
   window.addEventListener("load", () => {
-    let getCartData = getAllItemData(`cart/${userAcc.id}/`);
+    // let getCartData = getAllItemData(`cart/${userAcc.id}/`);
 
     getAllItemData(`items/fruit/`)
       .then((itemsData) => {
@@ -258,6 +261,7 @@ if (userAcc && userAcc.acc_type === "user") {
             `cart/${userAcc.id}/${itemName}/`
           )
             .then(() => {
+              count();
               document.getElementById(`cat-${category}-${link}`).classList.add('disable');
               document.getElementById(`cat-${category}-${link}`).setAttribute('disabled' , true);
                 
@@ -353,13 +357,54 @@ if (userAcc && userAcc.acc_type === "user") {
         if (!itemsData) {
           console.log("Data is null");
         } else {
+          getSelectedItemData(`cart/${userAcc.id}/`)
+          .then((cartData) => {
+
           // Here you can continue with rendering your data or performing other tasks
           console.log("updated into Array ====:", itemsData);
           selectedCategory = "category";
           const container = document.getElementById("show-item-inner");
+          disableItem = Object.keys(cartData);
 
+          console.log("CART KEY ==== ", disableItem);
+         
+
+          console.log("disableItem ==== ", disableItem);
           itemsData.forEach((ele, ind) => {
-            console.log("Each Item ==== :", ele);
+            const matchExists = disableItem.some(
+              (item) => item.toLowerCase() === ele.itemName.toLowerCase()
+            );
+
+            if (matchExists) {
+              console.log(`${ele.itemName} found in the itemData.`);
+              // Call the function to add a fruit item
+              // name, weight, price, imageURL
+              showItem(
+                container,
+                ind,
+                ele.itemCategory,
+                ele.itemName,
+                ele.unitName,
+                ele.unitPrice,
+                ele.imageUrl,
+                ele.itemContent,
+                true
+              );
+            } else {
+              showItem(
+                container,
+                ind,
+                ele.itemCategory,
+                ele.itemName,
+                ele.unitName,
+                ele.unitPrice,
+                ele.imageUrl,
+                ele.itemContent,
+                false
+              );
+              console.log(`${ele.itemName} not found in the array.`);
+            }
+            // console.log("Each Item ==== :", ele);
             console.log(
               "Each Item ==== :",
               ele.itemCategory,
@@ -367,19 +412,6 @@ if (userAcc && userAcc.acc_type === "user") {
               ele.unitName,
               ele.unitPrice,
               ele.imageUrl
-            );
-
-            // Call the function to add a fruit item
-            // name, weight, price, imageURL
-            showItem(
-              container,
-              ind,
-              ele.itemCategory,
-              ele.itemName,
-              ele.unitName,
-              ele.unitPrice,
-              ele.imageUrl,
-              ele.itemContent
             );
 
             const lazyImages = document.querySelectorAll(".lazy-image");
@@ -390,9 +422,6 @@ if (userAcc && userAcc.acc_type === "user") {
                   resolve();
                 });
                 img.src = img.getAttribute("data-src");
-                showElement("sub-cat-details-" + ind);
-                showElement("sub-cat-price-" + ind);
-                showElement(`cat-fruit-${ind}`);
               });
               loadImagePromises.push(promise);
             });
@@ -405,7 +434,12 @@ if (userAcc && userAcc.acc_type === "user") {
               });
           });
 
-        }
+        })
+        .catch((error) => {
+          console.error("Error Get Cart Items Data:", error);
+        });
+      }
+        
         // Process the retrieved data
       })
 
