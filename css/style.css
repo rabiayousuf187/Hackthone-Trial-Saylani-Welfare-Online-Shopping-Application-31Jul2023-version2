@@ -1027,6 +1027,9 @@ button#add-cat {
 
 /* *************    End Admin: Sub Category   *************** */
 /* *************    User: Purchase   *************** */
+.show-item{
+    margin-bottom: 150px;
+}
 #header.purch-main-header {
     margin: 25px 0px;
     border: none;
@@ -1135,6 +1138,7 @@ padding: 30px 10px 15px;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 25px;
 }
 .show-item-inner img {
     width: 140px;
@@ -1143,7 +1147,6 @@ padding: 30px 10px 15px;
 .show-item-inner .sub-cat-title .btn-get-started {
     width: 66px;
     height: 59px;
-    
     box-shadow: 2px 3px 6px 1px #8abca3;
 }
 
@@ -1153,6 +1156,7 @@ padding: 30px 10px 15px;
     flex-basis: 14%;
     /* background: yellowgreen; */
     align-items: center;
+    margin: 0px 10px;
 }
 
 .sub-cat-details {
@@ -1179,5 +1183,10 @@ padding: 30px 10px 15px;
 
 p.sub-cat-name {font-size: 16px;}
 
+.disable{
+    border: 2px dashed red;
+    box-shadow: 6px 11px 6px #ff000085;
+    border-radius: 15px;
+}
 
 /* *************    End User: Purchase   *************** */

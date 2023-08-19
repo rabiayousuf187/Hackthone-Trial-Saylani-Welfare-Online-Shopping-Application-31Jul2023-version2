@@ -5,8 +5,24 @@ console.log("userAcc get via is Auth()", userAcc);
 
 if (userAcc && userAcc.acc_type === "user") {
   console.log("Admin Account Setting Page");
+  let userData, selectedCategory, disableItem, quantity;
 
-  let userData, selectedCategory;
+
+  let count_item = localStorage.getItem("userAcc");
+    count_item = count_item === null ? count_item === "null" : count_item = JSON.parse(count_item);
+    if(count_item !== null ){
+      document.getElementById('count-item').style.display = 'block';
+    }else{
+      quantity = 0;
+    }
+
+  let count = () =>{
+
+    if(quantity>0){
+      quantity++;
+    console.log("count_item++ === ", quantity);
+    localStorage("count_item" , JSON.stringify(quantity));
+  }
   document.getElementById("Top").style.display = "block";
   //   document.getElementById("adminname").innerText = userAcc.fullname;
   // Use the Firebase Configuration functions
@@ -28,6 +44,8 @@ if (userAcc && userAcc.acc_type === "user") {
   const isFirstLoad = JSON.parse(localStorage.getItem("isUserFirstLoad"));
   //
   window.addEventListener("load", () => {
+    let getCartData = getAllItemData(`cart/${userAcc.id}/`);
+
     getAllItemData(`items/fruit/`)
       .then((itemsData) => {
         if (!itemsData) {
@@ -36,6 +54,308 @@ if (userAcc && userAcc.acc_type === "user") {
           // Here you can continue with rendering your data or performing other tasks
           console.log("updated into Array ====:", itemsData);
           selectedCategory = "fruit";
+          const container = document.getElementById("show-item-inner");
+          getSelectedItemData(`cart/${userAcc.id}/`)
+            .then((cartData) => {
+              console.log(`GET CART DATA ==`, cartData);
+            disableItem = Object.keys(cartData);
+
+              console.log("CART KEY ==== ", disableItem);
+             
+
+              console.log("disableItem ==== ", disableItem);
+              itemsData.forEach((ele, ind) => {
+                const matchExists = disableItem.some(
+                  (item) => item.toLowerCase() === ele.itemName.toLowerCase()
+                );
+
+                if (matchExists) {
+                  console.log(`${ele.itemName} found in the itemData.`);
+                  // Call the function to add a fruit item
+                  // name, weight, price, imageURL
+                  showItem(
+                    container,
+                    ind,
+                    ele.itemCategory,
+                    ele.itemName,
+                    ele.unitName,
+                    ele.unitPrice,
+                    ele.imageUrl,
+                    ele.itemContent,
+                    true
+                  );
+                } else {
+                  showItem(
+                    container,
+                    ind,
+                    ele.itemCategory,
+                    ele.itemName,
+                    ele.unitName,
+                    ele.unitPrice,
+                    ele.imageUrl,
+                    ele.itemContent,
+                    false
+                  );
+                  console.log(`${ele.itemName} not found in the array.`);
+                }
+                // console.log("Each Item ==== :", ele);
+                console.log(
+                  "Each Item ==== :",
+                  ele.itemCategory,
+                  ele.itemName,
+                  ele.unitName,
+                  ele.unitPrice,
+                  ele.imageUrl
+                );
+
+                // const found = array.includes(searchString);
+
+                const lazyImages = document.querySelectorAll(".lazy-image");
+                const loadImagePromises = [];
+                lazyImages.forEach((img) => {
+                  const promise = new Promise((resolve) => {
+                    img.addEventListener("load", () => {
+                      resolve();
+                    });
+                    img.src = img.getAttribute("data-src");
+                  });
+                  loadImagePromises.push(promise);
+                });
+                Promise.all(loadImagePromises)
+                  .then(() => {
+                    console.log("All lazy-loaded images are loaded.");
+                  })
+                  .catch((error) => {
+                    console.error("An error occurred:", error);
+                  });
+              });
+
+              const inactive = document.querySelectorAll(".cat-row");
+            
+              inactive.forEach((div) => {
+                console.log("check DIv === ", div);
+              if (div.hasAttribute("disabled")) {
+                  div.classList.add("disable");
+                  console.log("disable DIv === ", div);
+                } 
+              });
+
+              
+          })
+            .catch((error) => {
+              console.error("Error Getting Cart Items Data:", error);
+            });
+
+          
+        }
+        // Process the retrieved data
+      })
+
+      .catch((error) => {
+        console.error("Error fetching Items Data:", error);
+      });
+  });
+
+  let getSelectedItemData = async (url) => {
+    try {
+      let snapshot = await get(ref(database, url));
+      // Data snapshot contains the data at the specified location
+      let itemsData = snapshot.val();
+      console.log("Retrieved data:", itemsData);
+      // itemsData = Object.values(itemsData);
+      return itemsData;
+    } catch (error) {
+      console.error("Error getting data:", error);
+      return false;
+    }
+  };
+
+  let getAllItemData = async (url) => {
+    try {
+      let snapshot = await get(ref(database, url));
+      // Data snapshot contains the data at the specified location
+      let itemsData = snapshot.val();
+      console.log("Retrieved data:", itemsData);
+      itemsData = Object.values(itemsData);
+      return itemsData;
+    } catch (error) {
+      console.error("Error getting data:", error);
+      return false;
+    }
+  };
+
+  let writeItemData = (
+    userId,
+    itemName,
+    itemCategory,
+    itemContent,
+    unitName,
+    unitPrice,
+    imageUrl,
+    url
+  ) => {
+    return new Promise((resolve, reject) => {
+      // Create a reference to the Firebase Realtime Database
+      // Push data to the database
+      set(ref(database, url), {
+        itemName: itemName,
+        itemCategory: itemCategory,
+        itemContent: itemContent,
+        unitName: unitName,
+        unitPrice: unitPrice,
+        imageUrl: imageUrl, // Store the image URL here
+      })
+        .then(() => {
+          // alert("Item ", itemName, "added to cart")
+          console.log("Item Added to  Cart Database. with Img");
+          resolve(); // Resolve the promise to indicate success
+        })
+        .catch((error) => {
+          console.error("Error saving data:", error);
+          reject(error); // Reject the promise with the error
+        });
+    });
+  };
+
+  let addCart = (category, link) => {
+    console.log(`Selected Category ${category}, Item ${link} saved into cart`);
+
+    getSelectedItemData(`items/${category}/${link}/`)
+      .then((itemsData) => {
+        if (!itemsData) {
+          console.log("Data is null");
+        } else {
+          // Here you can continue with rendering your data or performing other tasks
+
+          const {
+            itemName,
+            itemCategory,
+            itemContent,
+            unitName,
+            unitPrice,
+            imageUrl,
+          } = itemsData;
+
+          console.log(
+            "get selected Item Data ====:",
+            itemName,
+            itemCategory,
+            itemContent,
+            unitName,
+            unitPrice,
+            imageUrl
+          );
+          // console.log("get selected Item Data ====:", itemsData);
+
+          writeItemData(
+            userAcc.id,
+            itemName,
+            itemCategory,
+            itemContent,
+            unitName,
+            unitPrice,
+            imageUrl,
+            `cart/${userAcc.id}/${itemName}/`
+          )
+            .then(() => {
+              document.getElementById(`cat-${category}-${link}`).classList.add('disable');
+              document.getElementById(`cat-${category}-${link}`).setAttribute('disabled' , true);
+                
+            })
+            .catch((error) => {
+              console.error("Error Adding Item data:", error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting Item data:", error);
+      });
+  };
+  let replaceSpacesWithHyphens = (text) => {
+    // Replace spaces with hyphens using regular expression
+    text = text.trim().toLowerCase();
+    return text.replace(/\s+/g, "-");
+  };
+  let capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, function (match) {
+      return match.toUpperCase();
+    });
+  };
+
+  let showItem = (
+    container,
+    ind,
+    category,
+    name,
+    weight,
+    price,
+    imageURL,
+    description,
+    disabled
+  ) => {
+    category = capitalizeWords(category);
+    let link = replaceSpacesWithHyphens(category);
+    const itemHTML = `
+    <div id="cat-${link}-${name}" class="cat-row ${disableItem === true? "disable" : ""}"  disabled = ${disabled}>
+                            <div class="col-12 cat-item">
+                                <div class="sub-cat-title">
+                                    <img src="../../img/icons/placeholder.png" alt="${category}" data-src="${imageURL}" class="lazy-image"/>
+                                    <div id="sub-cat-details-${ind}" class="sub-cat-details">
+                                        <p class="sub-cat-name" style="font-size: x-large;
+                                        font-weight: 600;">${name}</p>
+                                        <p class="sub-cat-name">${description}</p>
+                                    </div>
+                                    <div class="item-weight-price">
+                                      <div class="amount">
+                                        <p id="sub-cat-price-${ind}" class="sub-cat-price">Rs.<span id='price'>${price}</span></p>
+                                        
+                                        <p id="sub-cat-weight-${ind}" class="sub-cat-price">- Per <span id='price'>${weight}</span></p>
+                                        </div>
+                                        <button class="col-2 btn btn-get-started cat-inp" id="${name}" disabled = ${disabled}><i class="bi bi-plus-lg"></i></button>
+                                    </div>
+                                    </div>
+                                    </div>
+                            </div>
+                        </div>`;
+
+    container.insertAdjacentHTML("beforeend", itemHTML);
+
+    container.addEventListener("click", function (event) {
+      let link;
+      console.log(
+        "Button pressed",
+        event,
+        event.target.querySelector("i"),
+        event.target.tagName
+      );
+      if (event.target.tagName === "BUTTON" && event.target.getAttribute("disabled") === false) {
+        link = event.target.getAttribute("id");
+        console.log("Show Items of ====", link, event.target.getAttribute("disabled"));
+        console.log("Button selected");
+      } else if (event.target.tagName === "I" && event.target.closest("BUTTON").getAttribute("disabled") === false ) {
+        console.log("Icon selected");
+        link = event.target.closest("BUTTON").getAttribute("id");
+      } else {
+        console.log("not a target element");
+      }
+
+      addCart(selectedCategory, link);
+    });
+    
+    
+  };
+
+  function handleButtonClick(category) {
+    console.log("Switch category ====", category); // This will log the value of the clicked category
+    // if (is)
+    getAllItemData(`items/${category}/`)
+      .then((itemsData) => {
+        if (!itemsData) {
+          console.log("Data is null");
+        } else {
+          // Here you can continue with rendering your data or performing other tasks
+          console.log("updated into Array ====:", itemsData);
+          selectedCategory = "category";
           const container = document.getElementById("show-item-inner");
 
           itemsData.forEach((ele, ind) => {
@@ -70,6 +390,9 @@ if (userAcc && userAcc.acc_type === "user") {
                   resolve();
                 });
                 img.src = img.getAttribute("data-src");
+                showElement("sub-cat-details-" + ind);
+                showElement("sub-cat-price-" + ind);
+                showElement(`cat-fruit-${ind}`);
               });
               loadImagePromises.push(promise);
             });
@@ -81,6 +404,7 @@ if (userAcc && userAcc.acc_type === "user") {
                 console.error("An error occurred:", error);
               });
           });
+
         }
         // Process the retrieved data
       })
@@ -88,240 +412,6 @@ if (userAcc && userAcc.acc_type === "user") {
       .catch((error) => {
         console.error("Error fetching Items Data:", error);
       });
-  });
-
-  let getSelectedItemData = async (url) => {
-    try {
-      let snapshot = await get(ref(database, url));
-      // Data snapshot contains the data at the specified location
-      let itemsData = snapshot.val();
-      console.log("Retrieved data:", itemsData);
-      // itemsData = Object.values(itemsData);
-      return itemsData;
-    } catch (error) {
-      console.error("Error getting data:", error);
-      return false;
-    }
-  };
-
-
-  let getAllItemData = async (url) => {
-    try {
-      let snapshot = await get(ref(database, url));
-      // Data snapshot contains the data at the specified location
-      let itemsData = snapshot.val();
-      console.log("Retrieved data:", itemsData);
-      itemsData = Object.values(itemsData);
-      return itemsData;
-    } catch (error) {
-      console.error("Error getting data:", error);
-      return false;
-    }
-  };
-
-  let writeItemData = (userId,
-    itemName,itemCategory,
-          itemContent,unitName,unitPrice,imageUrl, url
-  ) => {
-    
-
-    return new Promise((resolve, reject) => {
-      // Create a reference to the Firebase Realtime Database
-      // Push data to the database
-      set(ref(database, url), {
-        itemName: itemName,
-        itemCategory: itemCategory,
-        itemContent: itemContent,
-        unitName: unitName,
-        unitPrice: unitPrice,
-        imageUrl: imageUrl, // Store the image URL here
-      })
-        .then(() => {
-          // alert("Item ", itemName, "added to cart")
-          console.log("Item Added to  Cart Database. with Img");
-          resolve(); // Resolve the promise to indicate success
-        })
-        .catch((error) => {
-          console.error("Error saving data:", error);
-          reject(error); // Reject the promise with the error
-        });
-    });
-  };
-
-  
-
-  let addCart = (category , link) =>{
-    console.log(`Selected Category ${category}, Item ${link} saved into cart`);
-
-    getSelectedItemData(`items/${category}/${link}/`)
-    .then((itemsData) => {
-      if (!itemsData) {
-        console.log("Data is null");
-      } else {
-        // Here you can continue with rendering your data or performing other tasks
-
-        const {itemName,itemCategory,
-          itemContent,unitName,unitPrice,imageUrl} = itemsData;
-        
-        console.log("get selected Item Data ====:", itemName,itemCategory,
-        itemContent,unitName,unitPrice,imageUrl);
-        // console.log("get selected Item Data ====:", itemsData);
-        
-        writeItemData(userAcc.id , itemName,itemCategory,
-          itemContent,unitName,unitPrice,imageUrl , `cart/${userAcc.id }/${itemName}/`)
-        .then(() => {
-          document.getElementById(`cat-${category}-${link}`).style.display = "none";
-        })
-        .catch((error) => {
-          console.error("Error Adding Item data:", error);
-        });
-      }
-    })
-    .catch((error)=>{
-      console.error("Error getting Item data:", error);
-    })
-  }
-  let replaceSpacesWithHyphens = (text) => {
-    // Replace spaces with hyphens using regular expression
-    text = text.trim().toLowerCase();
-    return text.replace(/\s+/g, "-");
-  };
-  let capitalizeWords = (str) => {
-    return str.replace(/\b\w/g, function (match) {
-      return match.toUpperCase();
-    });
-  };
-
-  let showItem = (
-    container,
-    ind,
-    category,
-    name,
-    weight,
-    price,
-    imageURL,
-    description
-  ) => {
-    category = capitalizeWords(category);
-    let link = replaceSpacesWithHyphens(category);
-    const itemHTML = `
-    <div id="cat-${link}-${name}" class="cat-row">
-                            <div class="col-12 cat-item">
-                                <div class="sub-cat-title">
-                                    <img src="../../img/icons/placeholder.png" alt="${category}" data-src="${imageURL}" class="lazy-image"/>
-                                    <div id="sub-cat-details-${ind}" class="sub-cat-details">
-                                        <p class="sub-cat-name" style="font-size: x-large;
-                                        font-weight: 600;">${name}</p>
-                                        <p class="sub-cat-name">${description}</p>
-                                    </div>
-                                    <div class="item-weight-price">
-                                      <div class="amount">
-                                        <p id="sub-cat-price-${ind}" class="sub-cat-price">Rs.<span id='price'>${price}</span></p>
-                                        
-                                        <p id="sub-cat-weight-${ind}" class="sub-cat-price">- Per <span id='price'>${weight}</span></p>
-                                        </div>
-                                        <button class="col-2 btn btn-get-started cat-inp" id="${name}" ><i class="bi bi-plus-lg"></i></button>
-                                    </div>
-                                    </div>
-                                    </div>
-                            </div>
-                        </div>`;
-
-    container.insertAdjacentHTML("beforeend", itemHTML);
-    container.addEventListener("click", function (event) {
-      let link;
-      console.log(
-        "Button pressed",
-        event,
-        event.target.querySelector('i'),
-        event.target.tagName
-      );
-      if (event.target.tagName === "BUTTON" ) {
-        
-          link = event.target.getAttribute("id");
-          console.log("Show Items of ====", link);
-          console.log("Button selected");
-          
-        }else if(event.target.tagName === ('I'))
-        {
-        console.log("Icon selected");
-          link =  event.target.closest("BUTTON").getAttribute('id');
-        }
-        else{
-          console.log("not a target element")
-        }
-        
-        addCart(selectedCategory,link);
-      
-    });
-  };
-
-  function handleButtonClick(category) {
-    console.log("Switch category ====", category); // This will log the value of the clicked category
-    // if (is)
-      getAllItemData(`items/${category}/`)
-        .then((itemsData) => {
-          if (!itemsData) {
-            console.log("Data is null");
-          } else {
-            // Here you can continue with rendering your data or performing other tasks
-            console.log("updated into Array ====:", itemsData);
-            selectedCategory = "category";
-            const container = document.getElementById("show-item-inner");
-
-            itemsData.forEach((ele, ind) => {
-              console.log("Each Item ==== :", ele);
-              console.log(
-                "Each Item ==== :",
-                ele.itemCategory,
-                ele.itemName,
-                ele.unitName,
-                ele.unitPrice,
-                ele.imageUrl
-              );
-
-              // Call the function to add a fruit item
-              // name, weight, price, imageURL
-              showItem(
-                container,
-                ind,
-                ele.itemCategory,
-                ele.itemName,
-                ele.unitName,
-                ele.unitPrice,
-                ele.imageUrl,
-                ele.itemContent
-              );
-
-              const lazyImages = document.querySelectorAll(".lazy-image");
-              const loadImagePromises = [];
-              lazyImages.forEach((img) => {
-                const promise = new Promise((resolve) => {
-                  img.addEventListener("load", () => {
-                    resolve();
-                  });
-                  img.src = img.getAttribute("data-src");
-                  showElement("sub-cat-details-" + ind);
-                  showElement("sub-cat-price-" + ind);
-                  showElement(`cat-fruit-${ind}`);
-                });
-                loadImagePromises.push(promise);
-              });
-              Promise.all(loadImagePromises)
-                .then(() => {
-                  console.log("All lazy-loaded images are loaded.");
-                })
-                .catch((error) => {
-                  console.error("An error occurred:", error);
-                });
-            });
-          }
-          // Process the retrieved data
-        })
-
-        .catch((error) => {
-          console.error("Error fetching Items Data:", error);
-        });
   }
 
   const container = document.getElementById("prod-cat-slider");
