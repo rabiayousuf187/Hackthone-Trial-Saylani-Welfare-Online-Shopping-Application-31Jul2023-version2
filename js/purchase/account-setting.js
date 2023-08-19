@@ -4,7 +4,172 @@ let userAcc = isAuth();
 console.log("userAcc get via is Auth()", userAcc);
 
 if (userAcc && userAcc.acc_type === "user") {
-  console.log("Order Page");
+  console.log("Admin Account Setting Page");
+
+  let userData;
+  document.getElementById("Top").style.display = "block";
+    document.getElementById("adminname").innerText = userAcc.fullname;
+  // Use the Firebase Configuration functions
+  const {
+    database,
+    ref,
+    set,
+    get,
+    storage,
+    storageRef,
+    uploadBytes,
+    getDownloadURL,
+  } = firebaseExports;
+
+  const addClickListener = (elementId, destination) => {
+    const element = document.getElementById(elementId);
+    element.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.location.href = destination;
+    });
+  };
+
+
+
+  async function getDataByUserId(userId) {
+    try {
+      const snapshot = await get(ref(database, "users/" + userId));
+      // Data snapshot contains the data at the specified location
+      userData = snapshot.val();
+      return userData;
+    } catch (error) {
+      console.error("Error getting data:", error);
+      return false;
+    }
+  }
+
+  const showElement = (elementId, display = "block") => {
+    document.getElementById(elementId).style.display = display;
+  };
+
+  // Function to display error message for an input field
+  let showError = (inputElement, errorMessage) => {
+    const errorElement = document.getElementById(inputElement.id + "Error");
+    errorElement.textContent = errorMessage;
+
+    // Add the .error class to the input element
+    errorElement.classList.add("error");
+    console.log(
+      " inputElement.classList.add('error') = ",
+      errorElement,
+      errorElement.classList.add("error")
+    );
+  };
+
+  // Function to clear error message for an input field
+  let clearError = (inputElement) => {
+    const errorElement = document.getElementById(inputElement.id + "Error");
+    errorElement.textContent = "";
+
+    // Remove the .error class from the input element
+    errorElement.classList.remove("error");
+    console.log(
+      "inputElement.classList.remove('error'); = ",
+      errorElement.classList.remove("error")
+    );
+  };
+
+  // Update FullName
+  const updatefname = document.getElementById("update-fullname");
+  // Function to validate the form on submission
+  let validateForm = (event) => {
+    event.preventDefault();
+
+    const fullnameRegex = /^[A-Za-z\s]+$/;
+
+    const fullname = document.getElementById("fullname").value;
+    console.log("fullname = ", fullname);
+
+    // Validate fullname
+    if (fullname.trim() === "") {
+      showError(document.getElementById("fullname"), "fullname is required.");
+    } else if (!fullnameRegex.test(fullname.trim())) {
+      console.log("Invalid: Contains only letters and spaces.");
+      showError(
+        document.getElementById("fullname"),
+        "Invalid: Contains only letters and spaces."
+      );
+    } else {
+      console.log("Valid: Contains only letters and spaces.");
+      clearError(document.getElementById("fullname"));
+    }
+
+    console.log(
+      "!document.querySelector.error ==== ",
+      document.querySelector("#fullname-div")
+    );
+    console.log(
+      "!document.querySelector.error ==== ",
+      !document.querySelector(".error")
+    );
+    if (!document.querySelector(".error")) {
+      console.log("Form submitted successfully!");
+
+      getDataByUserId(userAcc.id)
+        .then((userData) => {
+          console.log("GET userData === , ", userData);
+        //   update User Full Name
+            updateFullName(userData, fullname)
+            .then(() => {
+            userAcc = {
+                id: userAcc.id,
+                fullname: fullname,
+                acc_type: userAcc.acc_type,
+            };
+            localStorage.setItem("userAcc", JSON.stringify(userAcc));
+                alert("You are redirected to Admin Main Page");
+                
+                window.location.href = "../admin/admin.html";
+            
+            })
+            .catch((error) => {
+            console.error("Error Update Full Name data:", error);
+            });
+        })
+        .catch((error) => {
+          // Handle any errors that may occur during the data retrieval
+          console.error("Error:", error);
+        });
+      
+    }
+  };
+
+  // Attach form validation function to the form's submit event
+  updatefname.addEventListener("click", validateForm);
+
+  let updateFullName = (userData, newfullname) => {
+    const {acc_type,contact,email,password,userId,username, fullname} = userData;
+ 
+    return new Promise((resolve, reject) => {
+      const userRef = ref(database, "users/" + userId);
+      // Update specific fields within the path
+      set(userRef, {
+            userId: userId,
+            fullname: newfullname,
+            username: username,
+            email: email,
+            password: password,
+            contact: contact,
+            acc_type: acc_type
+        })
+        .then(() => {
+          alert("Full Name Successfully updated to Firebase");
+          console.log("Full Name Successfully updated to Firebase");
+          resolve(); // Resolve the promise to indicate success
+        })
+        .catch((error) => {
+          alert("Error update Full Name data:", error);
+          console.error("Error update Full Name data:", error);
+          reject(error); // Reject the promise with the error
+        });
+    });
+  };
+
 
   let showItem = (
     container,
@@ -143,25 +308,11 @@ add_item.addEventListener('click', function(event) {
     window.location.href = "./add-item.html"
 });
 
-let acc_setting  = document.getElementById("acc-setting");
+let cart  = document.getElementById("cart");
 acc_setting.addEventListener('click', function(event) {
     event.preventDefault(); // Prevent the default link behavior
     window.location.href = "./account-setting.html"
 });
-
-// get data from dropdown
-    // var dropdownItems = document.querySelectorAll('.dropdown-item');
-    
-    // dropdownItems.forEach(function(item) {
-    //     item.addEventListener('click', function(event) {
-    //         event.preventDefault(); // Prevent the link from navigating
-            
-    //         var selectedValue = item.textContent.trim();
-    //         console.log('Selected category:', selectedValue);
-            
-    //         // You can perform additional actions with the selectedValue here
-    //     });
-    // });
 
     var logoutbtn = document.getElementById("logout");
 
