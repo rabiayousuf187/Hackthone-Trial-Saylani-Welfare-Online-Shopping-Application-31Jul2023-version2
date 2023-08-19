@@ -8,7 +8,7 @@ if (userAcc && userAcc.acc_type === "user") {
   let userData,
     selectedCategory,
     disableItem,
-    quantity = 0, total = 0;
+    quantity = 0, total = 0, confirmorder;
 
     // format number to pak rupee
     let rupee = new Intl.NumberFormat("en-IN", {
@@ -156,7 +156,7 @@ if (userAcc && userAcc.acc_type === "user") {
 
         const container = document.getElementById("show-item-inner");
         const quantity = 1;
-        
+        confirmorder = itemsData;
         itemsData.forEach((ele, ind) => {
                      
               const price = parseInt(ele.unitPrice);
@@ -167,14 +167,14 @@ if (userAcc && userAcc.acc_type === "user") {
               
               showItem(
                 container,
-            ind,
-            ele.itemCategory,
-            ele.itemName,
-            ele.unitName,
-            ele.unitPrice,
-            ele.imageUrl,
-            ele.itemContent,
-            false
+                ind,
+                ele.itemCategory,
+                ele.itemName,
+                ele.unitName,
+                ele.unitPrice,
+                ele.imageUrl,
+                ele.itemContent,
+                false
             );
             
           console.log(`${ele.itemName} not found in the array.`);
@@ -256,37 +256,31 @@ if (userAcc && userAcc.acc_type === "user") {
     });
   };
 
+  
+  let getSelectedItemData = async (url) => {
+    try {
+      let snapshot = await get(ref(database, url));
+      // Data snapshot contains the data at the specified location
+      let itemsData = snapshot.val();
+      console.log("Retrieved data:", itemsData);
+      itemsData = Object.values(itemsData);
+      return itemsData;
+    } catch (error) {
+      console.error("Error getting data:", error);
+      return false;
+    }
+  };
   let addCart = (category, link) => {
     console.log(`Selected Category ${category}, Item ${link} saved into cart`);
 
-    getSelectedItemData(`items/${category}/${link}/`)
+    getSelectedItemData(`cart/${userAcc.id}/`)
       .then((itemsData) => {
         if (!itemsData) {
           console.log("Data is null");
         } else {
           // Here you can continue with rendering your data or performing other tasks
-
-          const {
-            itemName,
-            itemCategory,
-            itemContent,
-            unitName,
-            unitPrice,
-            imageUrl,
-          } = itemsData;
-
-          console.log(
-            "get selected Item Data ====:",
-            itemName,
-            itemCategory,
-            itemContent,
-            unitName,
-            unitPrice,
-            imageUrl
-          );
-          // console.log("get selected Item Data ====:", itemsData);
-
-          
+          confirmorder = itemsData;
+          console.log("confirmorder === ", confirmorder)
         }
       })
       .catch((error) => {
@@ -367,9 +361,6 @@ if (userAcc && userAcc.acc_type === "user") {
           resolve();
         });
         img.src = img.getAttribute("data-src");
-        // showElement("sub-cat-details-" + ind);
-        // showElement("sub-cat-price-" + ind);
-        // showElement(`cat-fruit-${ind}`);
       });
       loadImagePromises.push(promise);
     });
@@ -378,9 +369,6 @@ if (userAcc && userAcc.acc_type === "user") {
         console.log("All lazy-loaded images are loaded.");
         setTimeout(() => {
           console.log("Page Completely Loaded");
-          showElement("header");
-          showElement("cat-section");
-          showElement("footer");
         }, 3000);
       })
       .catch((error) => {
@@ -504,26 +492,6 @@ if (userAcc && userAcc.acc_type === "user") {
       clearError(document.getElementById("email"));
     }
 
-    // // Validate password
-    // if (password.trim() === "") {
-    //   showError(document.getElementById("password"), "Password is required.");
-    // } else if (!passwordRegex.test(password)) {
-    //   showError(
-    //     document.getElementById("password"),
-    //     "Password must be at least 8 characters long and contain at least one letter and one number."
-    //   );
-    // } else {
-    //   clearError(document.getElementById("password"));
-    // }
-
- 
-    // if (username.includes("admin")) {
-    //   console.log("Substring found!");
-    //   acc_type = "admin";
-    // } else {
-    //   acc_type = "user";
-    // }
-
     console.log(
       "!document.querySelector.error ==== ",
       document.querySelector("#signup-form")
@@ -537,28 +505,13 @@ if (userAcc && userAcc.acc_type === "user") {
       console.log("Form submitted successfully!");
       // Call the function to create a user with Firebase Authentication
       
-          writeUserData(user.uid, fullname, address, email, contact, a)
+          writeUserData(user.uid, fullname, address, email, contact, confirmorder)
             .then(() => {
-              // userAcc = {
-              //   userId: user.uid,
-              //   fullname: fullname,
-              //   acc_type: acc_type,
-              // };
-              // // localStorage.setItem("userAcc", JSON.stringify(userAcc));
-
-              // if (acc_type === "user") {
-              //   alert("You are redirected to User Purchase Corner");
-              //   window.location.href = "../purchase/purchase.html";
-              // } else if (acc_type === "admin") {
-              //   console.log("User Data ACCType", acc_type);
-              //   alert("You are redirected to Admin Corner");
-              //   window.location.href = "../admin/admin.html";
-              // } else {
-              //   alert("Invalid Credential!");
-              // }
+              console.log("Order Placed.")
+              // window.location.href = "./order.html"
             })
             .catch((error) => {
-              console.error("Error writing user data:", error);
+              console.error("Error writing placed order data:", error);
             });
     }
   }
@@ -566,7 +519,7 @@ if (userAcc && userAcc.acc_type === "user") {
   // Attach form validation function to the form's submit event
   placeorder.addEventListener("click", validateForm);
 
-  let writeUserData = (userId, fullname, email, password, contact, ) => {
+  let writeUserData = (userId, fullname, email, password, contact, confirmorder) => {
     return new Promise((resolve, reject) => {
         const userRef = ref(database, 'order/' + userId);
 
@@ -575,16 +528,15 @@ if (userAcc && userAcc.acc_type === "user") {
             fullname: fullname,
             address: address,
             email: email,
-            // password: password,
             contact: contact,
-            // acc_type: acc_type
+            confirmorder: confirmorder
         })
         .then(() => {
-            console.log("Data saved to Firebase Database.");
+            console.log("Order saved to Firebase Database.");
             resolve(); // Resolve the promise to indicate success
         })
         .catch((error) => {
-            console.error("Error saving data:", error);
+            console.error("Error Order saving data:", error);
             reject(error); // Reject the promise with the error
         });
     });
@@ -595,7 +547,7 @@ if (userAcc && userAcc.acc_type === "user") {
   userAcc === null ||
   userAcc === undefined
 ) {
-  console.log("User is Auth but role is not Admin");
+  console.log("User is Auth but role is not User");
   window.location.href = "../auth/signin.html";
 } else {
   console.log("Unauth User Access!");
