@@ -2,6 +2,9 @@
     margin: 0px;
     padding: 0px;
 }
+a{
+    text-decoration: none;
+}
 h3{
     margin: 0;
 }
@@ -1303,5 +1306,8 @@ p.sub-cat-name {font-size: 16px;}
     }
     .shop-cart .signup .form input {
         margin: 15px 0px;
+    }
+    i.bi.bi-cart-fill {
+        font-size: 45px;
     }
 /* *************    End User: Purchase   *************** */
