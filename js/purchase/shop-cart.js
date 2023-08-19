@@ -5,29 +5,33 @@ console.log("userAcc get via is Auth()", userAcc);
 
 if (userAcc && userAcc.acc_type === "user") {
   console.log("Admin Account Setting Page");
-  let userData, selectedCategory, disableItem, quantity = 0;
+  let userData,
+    selectedCategory,
+    disableItem,
+    quantity = 0, total = 0;
 
+    // format number to pak rupee
+    let rupee = new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "PKR", // Use 'PKR' for Pakistani Rupee
+    });
 
   let count_item = localStorage.getItem("quantity");
-    count_item = count_item === null ? count_item === null : count_item = JSON.parse(count_item);
-    // if(count_item === null ){
-    //   document.getElementById('count-item').style.display = 'none';
-    //   quantity = 0;
-    // }else{
-    //   document.getElementById('count-item').style.display = 'block';
+  count_item =
+    count_item === null
+      ? count_item === null
+      : (count_item = JSON.parse(count_item));
 
-    // }
-
-  let count = () =>{
-    if(quantity>0){
+  let count = () => {
+    if (quantity > 0) {
       quantity++;
-    console.log("count_item++ === ", quantity);
-    document.getElementById('count-item').innerHTML = quantity;
-    localStorage("count_item" , JSON.stringify(quantity));
+      console.log("count_item++ === ", quantity);
+      document.getElementById("count-item").innerHTML = quantity;
+      localStorage("count_item", JSON.stringify(quantity));
     }
-  }
+  };
   document.getElementById("Top").style.display = "block";
-    document.getElementById("adminname").innerText = userAcc.fullname;
+  document.getElementById("adminname").innerText = userAcc.fullname;
   // Use the Firebase Configuration functions
   const {
     database,
@@ -45,133 +49,165 @@ if (userAcc && userAcc.acc_type === "user") {
 
   // Check if the page has been loaded before
   const isFirstLoad = JSON.parse(localStorage.getItem("isUserFirstLoad"));
-  //
-  window.addEventListener("load", () => {
-    // let getCartData = getAllItemData(`cart/${userAcc.id}/`);
 
-    getAllItemData(`items/fruit/`)
+  let showItem = (
+    container,
+    ind,
+    category,
+    name,
+    weight,
+    price,
+    imageURL,
+    description,
+    disabled
+  ) => {
+    category = capitalizeWords(category);
+    let link = replaceSpacesWithHyphens(category);
+    
+    const itemHTML = `
+    <div id="cat-${link}-${name}" class="cat-row ${
+      disableItem === true ? "disable" : ""
+    }"  disabled = ${disabled}>
+        <div class="col-12 cat-item">
+            <div class="sub-cat-title">
+                <img src="${imageURL}" alt="${category}" data-src="${imageURL}" class="lazy-image"/>
+                <div id="sub-cat-details-${ind}" class="sub-cat-details">
+                    <p class="sub-cat-name" style="font-size: x-large;
+                    font-weight: 600;">${name}</p> 
+                </div>
+                <div class="quantity-controls">
+                    <button class="decrease">-</button>
+                    <input type="number" class="quantity" value="1" min="1">
+                    <button class="increase" id= 'increase'>+</button>
+                </div>
+                <div id="sub-cat-details-${ind}" class="sub-cat-details">
+                    <p class="sub-cat-name" id ="price" style="font-size: x-large;
+                font-weight: 600;">${rupee.format(price)}</p>
+                </div>
+                <div class="item-delete">
+                    <a class="col-2 btn btn-get-started" id="${name}" disabled = ${disabled}><i class="bi bi-trash3-fill"></i></a>
+                </div>
+                </div>
+                </div>
+        </div>
+    </div>`;
+
+    container.insertAdjacentHTML("beforeend", itemHTML);
+    // let updatePrice = (priceElement, quantity) => {
+    //     const unitPrice = priceElement.getAttribute("price");
+    //     console.log("unitPrice === ", unitPrice);
+    //     console.log("unitPrice === ", unitPrice);
+    //     const totalPrice = unitPrice * quantity;
+
+    //     const rupeeFormatter = new Intl.NumberFormat('en-IN', {
+    //       style: 'currency',
+    //       currency: 'PKR',
+    //     });
+
+    //     priceElement.textContent = rupeeFormatter.format(totalPrice);
+    //   }
+
+    const productContainers = document.querySelector(".sub-cat-title");
+    const increase = document
+      .querySelector(".quantity-controls")
+      .querySelector(".increase");
+    increase.addEventListener("click", (event) => {
+      const container = increase.closest(".cat-row");
+      const quantityInput = event.target.querySelector(".quantity");
+
+      quantityInput.value = parseInt(quantityInput.value) + 1;
+      console.log("quantityInput.value === ", quantityInput.value);
+
+      // Now you can update the price based on the new quantity
+      // updatePrice(priceElement, parseInt(quantityInput.value));
+    });
+    // productContainers.addEventListener("click", (event) => {
+    //     const increaseButton = event.target.closest(".increase");
+
+    //   });
+  };
+
+    
+  let handleButtonClick = (category) => {
+    console.log("Switch category ====", category); // This will log the value of the clicked category
+    // if (is)
+    getAllItemData(`items/${category}/`)
       .then((itemsData) => {
         if (!itemsData) {
           console.log("Data is null");
         } else {
-          // Here you can continue with rendering your data or performing other tasks
-          console.log("updated into Array ====:", itemsData);
-          selectedCategory = "fruit";
-          const container = document.getElementById("show-item-inner");
-          getSelectedItemData(`cart/${userAcc.id}/`)
-            .then((cartData) => {
-              console.log(`GET CART DATA ==`, cartData);
-            disableItem = Object.keys(cartData);
-
-              console.log("CART KEY ==== ", disableItem);
-             
-
-              console.log("disableItem ==== ", disableItem);
-              itemsData.forEach((ele, ind) => {
-                const matchExists = disableItem.some(
-                  (item) => item.toLowerCase() === ele.itemName.toLowerCase()
-                );
-
-                if (matchExists) {
-                  console.log(`${ele.itemName} found in the itemData.`);
-                  // Call the function to add a fruit item
-                  // name, weight, price, imageURL
-                  showItem(
-                    container,
-                    ind,
-                    ele.itemCategory,
-                    ele.itemName,
-                    ele.unitName,
-                    ele.unitPrice,
-                    ele.imageUrl,
-                    ele.itemContent,
-                    true
-                  );
-                } else {
-                  showItem(
-                    container,
-                    ind,
-                    ele.itemCategory,
-                    ele.itemName,
-                    ele.unitName,
-                    ele.unitPrice,
-                    ele.imageUrl,
-                    ele.itemContent,
-                    false
-                  );
-                  console.log(`${ele.itemName} not found in the array.`);
-                }
-                // console.log("Each Item ==== :", ele);
-                console.log(
-                  "Each Item ==== :",
-                  ele.itemCategory,
-                  ele.itemName,
-                  ele.unitName,
-                  ele.unitPrice,
-                  ele.imageUrl
-                );
-
-                // const found = array.includes(searchString);
-
-                const lazyImages = document.querySelectorAll(".lazy-image");
-                const loadImagePromises = [];
-                lazyImages.forEach((img) => {
-                  const promise = new Promise((resolve) => {
-                    img.addEventListener("load", () => {
-                      resolve();
-                    });
-                    img.src = img.getAttribute("data-src");
-                  });
-                  loadImagePromises.push(promise);
-                });
-                Promise.all(loadImagePromises)
-                  .then(() => {
-                    console.log("All lazy-loaded images are loaded.");
-                  })
-                  .catch((error) => {
-                    console.error("An error occurred:", error);
-                  });
-              });
-
-              const inactive = document.querySelectorAll(".cat-row");
-            
-              inactive.forEach((div) => {
-                console.log("check DIv === ", div);
-              if (div.hasAttribute("disabled")) {
-                  div.classList.add("disable");
-                  console.log("disable DIv === ", div);
-                } 
-              });
-
-              
-          })
-            .catch((error) => {
-              console.error("Error Getting Cart Items Data:", error);
-            });
-
-          
+          window.location.href = "./purchase.html";
+          alert("Redirected to Purchase Corner");
         }
+
         // Process the retrieved data
       })
 
       .catch((error) => {
         console.error("Error fetching Items Data:", error);
       });
-  });
+  }
 
-  let getSelectedItemData = async (url) => {
-    try {
-      let snapshot = await get(ref(database, url));
-      // Data snapshot contains the data at the specified location
-      let itemsData = snapshot.val();
-      console.log("Retrieved data:", itemsData);
-      // itemsData = Object.values(itemsData);
-      return itemsData;
-    } catch (error) {
-      console.error("Error getting data:", error);
-      return false;
-    }
-  };
+  window.addEventListener("load", () => {
+    getAllItemData(`cart/${userAcc.id}/`)
+      .then((itemsData) => {
+        // console.log(`GET CART DATA ==`, cartData);
+        // disableItem = Object.keys(cartData);
+
+        const container = document.getElementById("show-item-inner");
+        const quantity = 1;
+        
+        itemsData.forEach((ele, ind) => {
+                     
+              const price = parseInt(ele.unitPrice);
+              // const totalElement = input.closest(".cat-row").querySelector(".total-price");
+          
+              total += price * quantity;
+              console.log("price ==== ", price)
+              
+              showItem(
+                container,
+            ind,
+            ele.itemCategory,
+            ele.itemName,
+            ele.unitName,
+            ele.unitPrice,
+            ele.imageUrl,
+            ele.itemContent,
+            false
+            );
+            
+          console.log(`${ele.itemName} not found in the array.`);
+        });
+        console.log("Total Price ==== ", total)
+        document.getElementById('finalPrice').innerHTML = rupee.format(total);
+
+        
+        const lazyImages = document.querySelectorAll(".lazy-image");
+        const loadImagePromises = [];
+        lazyImages.forEach((img) => {
+          //   const promise = new Promise((resolve) => {
+          img.addEventListener("load", () => {
+            //   resolve();
+            // });
+            img.src = img.getAttribute("data-src");
+          });
+          //   loadImagePromises.push(promise);
+        });
+        // Promise.all(loadImagePromises)
+        //   .then(() => {
+        //     console.log("All lazy-loaded images are loaded.");
+        //   })
+        //   .catch((error) => {
+        //     console.error("An error occurred:", error);
+        //   });
+      })
+
+      .catch((error) => {
+        console.error("Error Getting Cart Items Data:", error);
+      });
+  });
+  // Process the retrieved data
 
   let getAllItemData = async (url) => {
     try {
@@ -262,9 +298,12 @@ if (userAcc && userAcc.acc_type === "user") {
           )
             .then(() => {
               count();
-              document.getElementById(`cat-${category}-${link}`).classList.add('disable');
-              document.getElementById(`cat-${category}-${link}`).setAttribute('disabled' , true);
-                
+              document
+                .getElementById(`cat-${category}-${link}`)
+                .classList.add("disable");
+              document
+                .getElementById(`cat-${category}-${link}`)
+                .setAttribute("disabled", true);
             })
             .catch((error) => {
               console.error("Error Adding Item data:", error);
@@ -274,6 +313,17 @@ if (userAcc && userAcc.acc_type === "user") {
       .catch((error) => {
         console.error("Error getting Item data:", error);
       });
+  };
+
+  // Function to update the displayed price based on quantity
+  let updatePrice = (priceElement, quantity) => {
+    const unitPrice = parseFloat(priceElement.getAttribute("data-price")); // Get the unit price from data attribute
+    const totalPrice = unitPrice * quantity;
+    const rupeeFormatter = new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "PKR", // Use 'PKR' for Pakistani Rupee
+    });
+    priceElement.textContent = rupeeFormatter.format(totalPrice); // Update the displayed price
   };
   let replaceSpacesWithHyphens = (text) => {
     // Replace spaces with hyphens using regular expression
@@ -285,168 +335,6 @@ if (userAcc && userAcc.acc_type === "user") {
       return match.toUpperCase();
     });
   };
-
-  let showItem = (
-    container,
-    ind,
-    category,
-    name,
-    weight,
-    price,
-    imageURL,
-    description,
-    disabled
-  ) => {
-    category = capitalizeWords(category);
-    let link = replaceSpacesWithHyphens(category);
-    const itemHTML = `
-    <div id="cat-${link}-${name}" class="cat-row ${disableItem === true? "disable" : ""}"  disabled = ${disabled}>
-                            <div class="col-12 cat-item">
-                                <div class="sub-cat-title">
-                                    <img src="../../img/icons/placeholder.png" alt="${category}" data-src="${imageURL}" class="lazy-image"/>
-                                    <div id="sub-cat-details-${ind}" class="sub-cat-details">
-                                        <p class="sub-cat-name" style="font-size: x-large;
-                                        font-weight: 600;">${name}</p>
-                                        <p class="sub-cat-name">${description}</p>
-                                    </div>
-                                    <div class="item-weight-price">
-                                      <div class="amount">
-                                        <p id="sub-cat-price-${ind}" class="sub-cat-price">Rs.<span id='price'>${price}</span></p>
-                                        
-                                        <p id="sub-cat-weight-${ind}" class="sub-cat-price">- Per <span id='price'>${weight}</span></p>
-                                        </div>
-                                        <button class="col-2 btn btn-get-started cat-inp" id="${name}" disabled = ${disabled}><i class="bi bi-plus-lg"></i></button>
-                                    </div>
-                                    </div>
-                                    </div>
-                            </div>
-                        </div>`;
-
-    container.insertAdjacentHTML("beforeend", itemHTML);
-
-    container.addEventListener("click", function (event) {
-      let link;
-      console.log(
-        "Button pressed",
-        event,
-        event.target.querySelector("i"),
-        event.target.tagName
-      );
-      if (event.target.tagName === "BUTTON" && event.target.getAttribute("disabled") === false) {
-        link = event.target.getAttribute("id");
-        console.log("Show Items of ====", link, event.target.getAttribute("disabled"));
-        console.log("Button selected");
-      } else if (event.target.tagName === "I" && event.target.closest("BUTTON").getAttribute("disabled") === false ) {
-        console.log("Icon selected");
-        link = event.target.closest("BUTTON").getAttribute("id");
-      } else {
-        console.log("not a target element");
-      }
-
-      addCart(selectedCategory, link);
-    });
-    
-    
-  };
-
-  function handleButtonClick(category) {
-    console.log("Switch category ====", category); // This will log the value of the clicked category
-    // if (is)
-    getAllItemData(`items/${category}/`)
-      .then((itemsData) => {
-        if (!itemsData) {
-          console.log("Data is null");
-        } else {
-          getSelectedItemData(`cart/${userAcc.id}/`)
-          .then((cartData) => {
-
-          // Here you can continue with rendering your data or performing other tasks
-          console.log("updated into Array ====:", itemsData);
-          selectedCategory = "category";
-          const container = document.getElementById("show-item-inner");
-          disableItem = Object.keys(cartData);
-
-          console.log("CART KEY ==== ", disableItem);
-         
-
-          console.log("disableItem ==== ", disableItem);
-          itemsData.forEach((ele, ind) => {
-            const matchExists = disableItem.some(
-              (item) => item.toLowerCase() === ele.itemName.toLowerCase()
-            );
-
-            if (matchExists) {
-              console.log(`${ele.itemName} found in the itemData.`);
-              // Call the function to add a fruit item
-              // name, weight, price, imageURL
-              showItem(
-                container,
-                ind,
-                ele.itemCategory,
-                ele.itemName,
-                ele.unitName,
-                ele.unitPrice,
-                ele.imageUrl,
-                ele.itemContent,
-                true
-              );
-            } else {
-              showItem(
-                container,
-                ind,
-                ele.itemCategory,
-                ele.itemName,
-                ele.unitName,
-                ele.unitPrice,
-                ele.imageUrl,
-                ele.itemContent,
-                false
-              );
-              console.log(`${ele.itemName} not found in the array.`);
-            }
-            // console.log("Each Item ==== :", ele);
-            console.log(
-              "Each Item ==== :",
-              ele.itemCategory,
-              ele.itemName,
-              ele.unitName,
-              ele.unitPrice,
-              ele.imageUrl
-            );
-
-            const lazyImages = document.querySelectorAll(".lazy-image");
-            const loadImagePromises = [];
-            lazyImages.forEach((img) => {
-              const promise = new Promise((resolve) => {
-                img.addEventListener("load", () => {
-                  resolve();
-                });
-                img.src = img.getAttribute("data-src");
-              });
-              loadImagePromises.push(promise);
-            });
-            Promise.all(loadImagePromises)
-              .then(() => {
-                console.log("All lazy-loaded images are loaded.");
-              })
-              .catch((error) => {
-                console.error("An error occurred:", error);
-              });
-          });
-
-        })
-        .catch((error) => {
-          console.error("Error Get Cart Items Data:", error);
-        });
-      }
-        
-        // Process the retrieved data
-      })
-
-      .catch((error) => {
-        console.error("Error fetching Items Data:", error);
-      });
-  }
 
   const container = document.getElementById("prod-cat-slider");
   let addElement = (ind, category, imageURL) => {
