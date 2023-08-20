@@ -343,49 +343,48 @@ if (userAcc && userAcc.acc_type === "user") {
       handleButtonClick(link);
     }
   });
-  const itemsData = JSON.parse(localStorage.getItem("category"));
-  itemsData.forEach((ele, ind) => {
-    console.log("Each Item ==== :", ele);
-    console.log("Each Item ==== :", ele.categoryName, ele.imageUrl);
+  // const itemsData = JSON.parse(localStorage.getItem("category"));
+  // itemsData.forEach((ele, ind) => {
+  //   console.log("Each Item ==== :", ele);
+  //   console.log("Each Item ==== :", ele.categoryName, ele.imageUrl);
 
-    // Call the function to add a fruit item
-    // name, weight, price, imageURL
-    addElement(ind, ele.categoryName, ele.imageUrl);
+  //   // Call the function to add a fruit item
+  //   // name, weight, price, imageURL
+  //   addElement(ind, ele.categoryName, ele.imageUrl);
 
-    // if(!isFirstLoad) {
-    const lazyImages = document.querySelectorAll(".lazy-image");
-    const loadImagePromises = [];
-    lazyImages.forEach((img) => {
-      const promise = new Promise((resolve) => {
-        img.addEventListener("load", () => {
-          resolve();
-        });
-        img.src = img.getAttribute("data-src");
-      });
-      loadImagePromises.push(promise);
-    });
-    Promise.all(loadImagePromises)
-      .then(() => {
-        console.log("All lazy-loaded images are loaded.");
-        setTimeout(() => {
-          console.log("Page Completely Loaded");
-        }, 3000);
-      })
-      .catch((error) => {
-        console.error("An error occurred:", error);
-      });
-  });
+  //   // if(!isFirstLoad) {
+  //   const lazyImages = document.querySelectorAll(".lazy-image");
+  //   const loadImagePromises = [];
+  //   lazyImages.forEach((img) => {
+  //     const promise = new Promise((resolve) => {
+  //       img.addEventListener("load", () => {
+  //         resolve();
+  //       });
+  //       img.src = img.getAttribute("data-src");
+  //     });
+  //     loadImagePromises.push(promise);
+  //   });
+  //   Promise.all(loadImagePromises)
+  //     .then(() => {
+  //       console.log("All lazy-loaded images are loaded.");
+  //       setTimeout(() => {
+  //         console.log("Page Completely Loaded");
+  //       }, 3000);
+  //     })
+  //     .catch((error) => {
+  //       console.error("An error occurred:", error);
+  //     });
+  // });
 
-  let current_page = document.getElementById("home");
+  let current_page = document.getElementById("cart");
   console.log("current_page color change", current_page);
-  current_page.querySelector("img").style.filter =
-    "invert(62%) sepia(112%) saturate(349%) hue-rotate(61deg) brightness(56%) contrast(168%)";
+  current_page.querySelector("i").style.color ="#61B846";
   current_page.querySelector("p").style.color = "#61B846";
 
-  let add_item = document.getElementById("add-item");
-  add_item.addEventListener("click", function (event) {
+  let home = document.getElementById("home");
+  home.addEventListener("click", function (event) {
     event.preventDefault(); // Prevent the default link behavior
-    window.location.href = "./add-item.html";
+    window.location.href = "./purchase.html";
   });
 
   let acc_setting = document.getElementById("acc-setting");
