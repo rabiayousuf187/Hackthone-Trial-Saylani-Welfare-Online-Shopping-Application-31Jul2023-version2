@@ -81,7 +81,7 @@ if (userAcc && userAcc.acc_type === "user") {
                     <button class="increase">+</button>
                 </div>
                 <div id="sub-cat-details-${ind}" class="sub-cat-details">
-                    <p class="sub-cat-name price-cell" id ="price-${ind}" style="font-size: x-large;
+                    <p class="sub-cat-name price-cell" id ="price" style="font-size: x-large;
                 font-weight: 600;">${price}</p><span><b>PKR. </b></span>
                 </div>
                 <div class="item-delete">
@@ -94,42 +94,59 @@ if (userAcc && userAcc.acc_type === "user") {
 
     container.insertAdjacentHTML("beforeend", itemHTML);
 
-    const quantityInputs = document.querySelectorAll(".quantity-input");
-    const priceCells = document.querySelectorAll(".price-cell");
-    const netTotalCell = document.getElementById("netTotal");
-    console.log("netTotalCell === ",netTotalCell);
+    // Get all the quantity input elements and add event listeners
+    const quantityInputs = document.querySelectorAll('.quantity-input');
+    quantityInputs.forEach(input => {
+        input.addEventListener('input', updateItemTotalAndOverallTotal);
+    });
 
-    function updateNetTotal() {
-      let total = 0;
-
-      for (let i = 0; i < priceCells.length; i++) {
-        const quantity = parseInt(quantityInputs[i].value);
-        console.log("quantity === ",typeof(quantity) , quantity)
-
-        const pricePerItem = Number(priceCells[i].textContent.replace(/\$/g, ''));
-        console.log("Price Per === ",pricePerItem, typeof(pricePerItem) , pricePerItem)
-
-        const itemTotal = quantity * pricePerItem;
-        console.log("itemTotal Per === ",typeof(itemTotal) , itemTotal)
-        total += itemTotal;
-      }
+    // Function to update an item's total price and overall total
+    function updateItemTotalAndOverallTotal(event) {
+      console.log("CHNAGE EVEMT === ",event);
       
-      netTotalCell.textContent = total.toFixed(2);
+      const quantityInput = event.target;
+      const itemDiv = quantityInput.closest('.cat-row');
+      let selectID = quantityInput.getAttribute('id');
+      const itemPrice = parseFloat(quantityInput.getAttribute('#price'));
+      const quantity = parseInt(quantityInput.value);
+      
+      let changeItem = JSON.parse(localStorage.getItem("cartData"));
+      console.log("changeItem === ",changeItem);
+
+      let selectPrice = changeItem[selectID].unitPrice;
+      console.log("selectPrice === ",selectPrice);
+
+      
+        console.log("selectID === ",selectID)
+        console.log("itemDiv === ",itemDiv)
+        console.log("itemDiv price === ",itemDiv.querySelector('#price').value);
+        console.log("event.target.getElementById('price'); === ", event.target.getAttribute('price'));
+        console.log("quantity === ",quantity)
+        console.log("itemPrice === ",itemPrice)
+        
+        if (isNaN(quantity) || quantity <= 0) {
+            return;
+        }
+        
+        const total = (selectPrice * quantity).toFixed(2);
+        itemDiv.querySelector('.price-cell').textContent = total;
+        
+        updateOverallTotal();
+    }
+
+    // Function to update the overall total
+    function updateOverallTotal() {
+        const totalPrices = document.querySelectorAll('.price-cell');
+        let overallTotal = 0;
+
+        totalPrices.forEach(totalPrice => {
+            overallTotal += parseFloat(totalPrice.textContent);
+        });
+
+        document.querySelector('#netTotal').textContent = overallTotal.toFixed(2);
     }
     
-    quantityInputs.forEach((input, index) => {
-      input.addEventListener("input", function (event) {
-      let ind = event.target.getAttribute('id');
-        const quantity = Number(input.value);
-        console.log("quantity Input Per === ",typeof(quantity) , quantity)
-        const pricePerItem = Number((document.getElementById(`price-${ind}`)).textContent.replace(/\$/g, ''));
-        // const pricePerItem = Number(priceCells[index].textContent.replace(/\$/g, ''));
-        const newPrice = quantity * pricePerItem;
-
-        priceCells[index].textContent = newPrice.toFixed(2);
-        updateNetTotal();
-      });
-    });
+    // ******************************************
   };
 
 
@@ -157,6 +174,10 @@ if (userAcc && userAcc.acc_type === "user") {
   window.addEventListener("load", () => {
     getAllItemData(`cart/${userAcc.id}/`)
       .then((itemsData) => {
+
+        
+        console.log("CART DATA SET TO local ST ==== ", localStorage.setItem("cartData" , JSON.stringify(itemsData)));
+
         // console.log(`GET CART DATA ==`, cartData);
         // disableItem = Object.keys(cartData);
 
@@ -185,8 +206,8 @@ if (userAcc && userAcc.acc_type === "user") {
             
           console.log(`${ele.itemName} not found in the array.`);
         });
-        console.log("Total Price ==== ", total)
-        document.getElementById('finalPrice').innerHTML = rupee.format(total);
+        // console.log("Total Price ==== ", total)
+        // document.getElementById('finalPrice').innerHTML = rupee.format(total);
 
         
         const lazyImages = document.querySelectorAll(".lazy-image");
