@@ -77,12 +77,12 @@ if (userAcc && userAcc.acc_type === "user") {
                 </div>
                 <div class="quantity-controls">
                     <button class="decrease">-</button>
-                    <input type="number" class="quantity" value="1" min="1">
-                    <button class="increase" id= 'increase'>+</button>
+                    <input type="number" class="quantity-input" value="1" min="1" style="width: 40px;" id="${ind}"/>
+                    <button class="increase">+</button>
                 </div>
                 <div id="sub-cat-details-${ind}" class="sub-cat-details">
-                    <p class="sub-cat-name" id ="price" style="font-size: x-large;
-                font-weight: 600;">${rupee.format(price)}</p>
+                    <p class="sub-cat-name price-cell" id ="price-${ind}" style="font-size: x-large;
+                font-weight: 600;">${price}</p><span><b>PKR. </b></span>
                 </div>
                 <div class="item-delete">
                     <a class="col-2 btn btn-get-started" id="${name}" disabled = ${disabled}><i class="bi bi-trash3-fill"></i></a>
@@ -93,39 +93,45 @@ if (userAcc && userAcc.acc_type === "user") {
     </div>`;
 
     container.insertAdjacentHTML("beforeend", itemHTML);
-    // let updatePrice = (priceElement, quantity) => {
-    //     const unitPrice = priceElement.getAttribute("price");
-    //     console.log("unitPrice === ", unitPrice);
-    //     console.log("unitPrice === ", unitPrice);
-    //     const totalPrice = unitPrice * quantity;
 
-    //     const rupeeFormatter = new Intl.NumberFormat('en-IN', {
-    //       style: 'currency',
-    //       currency: 'PKR',
-    //     });
+    const quantityInputs = document.querySelectorAll(".quantity-input");
+    const priceCells = document.querySelectorAll(".price-cell");
+    const netTotalCell = document.getElementById("netTotal");
+    console.log("netTotalCell === ",netTotalCell);
 
-    //     priceElement.textContent = rupeeFormatter.format(totalPrice);
-    //   }
+    function updateNetTotal() {
+      let total = 0;
 
-    const productContainers = document.querySelector(".sub-cat-title");
-    const increase = document
-      .querySelector(".quantity-controls")
-      .querySelector(".increase");
-    increase.addEventListener("click", (event) => {
-      const container = increase.closest(".cat-row");
-      const quantityInput = event.target.querySelector(".quantity");
+      for (let i = 0; i < priceCells.length; i++) {
+        const quantity = parseInt(quantityInputs[i].value);
+        console.log("quantity === ",typeof(quantity) , quantity)
 
-      quantityInput.value = parseInt(quantityInput.value) + 1;
-      console.log("quantityInput.value === ", quantityInput.value);
+        const pricePerItem = Number(priceCells[i].textContent.replace(/\$/g, ''));
+        console.log("Price Per === ",pricePerItem, typeof(pricePerItem) , pricePerItem)
 
-      // Now you can update the price based on the new quantity
-      // updatePrice(priceElement, parseInt(quantityInput.value));
+        const itemTotal = quantity * pricePerItem;
+        console.log("itemTotal Per === ",typeof(itemTotal) , itemTotal)
+        total += itemTotal;
+      }
+      
+      netTotalCell.textContent = total.toFixed(2);
+    }
+    
+    quantityInputs.forEach((input, index) => {
+      input.addEventListener("input", function (event) {
+      let ind = event.target.getAttribute('id');
+        const quantity = Number(input.value);
+        console.log("quantity Input Per === ",typeof(quantity) , quantity)
+        const pricePerItem = Number((document.getElementById(`price-${ind}`)).textContent.replace(/\$/g, ''));
+        // const pricePerItem = Number(priceCells[index].textContent.replace(/\$/g, ''));
+        const newPrice = quantity * pricePerItem;
+
+        priceCells[index].textContent = newPrice.toFixed(2);
+        updateNetTotal();
+      });
     });
-    // productContainers.addEventListener("click", (event) => {
-    //     const increaseButton = event.target.closest(".increase");
-
-    //   });
   };
+
 
     
   let handleButtonClick = (category) => {
