@@ -39,7 +39,6 @@ if (userAcc && userAcc.acc_type === "user") {
   addClickListener('cart' , "./shop-cart.html" );
 
 
-
   async function getDataByUserId(userId) {
     try {
       const snapshot = await get(ref(database, "users/" + userId));
@@ -133,7 +132,7 @@ if (userAcc && userAcc.acc_type === "user") {
             localStorage.setItem("userAcc", JSON.stringify(userAcc));
                 alert("You are redirected to Admin Main Page");
                 
-                window.location.href = "../admin/admin.html";
+                window.location.href = "../purchase/purchase.html";
             
             })
             .catch((error) => {
