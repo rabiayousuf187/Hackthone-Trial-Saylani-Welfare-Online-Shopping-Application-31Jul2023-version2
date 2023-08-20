@@ -147,9 +147,9 @@ if (userAcc && userAcc.acc_type === "user") {
 
     totalPrices.forEach(totalPrice => {
         overallTotal += parseFloat(totalPrice.textContent);
+        document.querySelector('#netTotal').textContent = overallTotal.toFixed(2);
     });
 
-    document.querySelector('#netTotal').textContent = overallTotal.toFixed(2);
 }
 
     
