@@ -491,44 +491,38 @@ if (userAcc && userAcc.acc_type === "user") {
       handleButtonClick(link);
     }
   });
-  // const itemsData = JSON.parse(localStorage.getItem("category"));
-  // itemsData.forEach((ele, ind) => {
-  //   console.log("Each Item ==== :", ele);
-  //   console.log("Each Item ==== :", ele.categoryName, ele.imageUrl);
+  const itemsData = JSON.parse(localStorage.getItem("category"));
+  itemsData.forEach((ele, ind) => {
+    console.log("Each Item ==== :", ele);
+    console.log("Each Item ==== :", ele.categoryName, ele.imageUrl);
 
-  //   // Call the function to add a fruit item
-  //   // name, weight, price, imageURL
-  //   addElement(ind, ele.categoryName, ele.imageUrl);
+    // Call the function to add a fruit item
+    // name, weight, price, imageURL
+    addElement(ind, ele.categoryName, ele.imageUrl);
 
-  //   // if(!isFirstLoad) {
-  //   const lazyImages = document.querySelectorAll(".lazy-image");
-  //   const loadImagePromises = [];
-  //   lazyImages.forEach((img) => {
-  //     const promise = new Promise((resolve) => {
-  //       img.addEventListener("load", () => {
-  //         resolve();
-  //       });
-  //       img.src = img.getAttribute("data-src");
-  //       // showElement("sub-cat-details-" + ind);
-  //       // showElement("sub-cat-price-" + ind);
-  //       // showElement(`cat-fruit-${ind}`);
-  //     });
-  //     loadImagePromises.push(promise);
-  //   });
-  //   Promise.all(loadImagePromises)
-  //     .then(() => {
-  //       console.log("All lazy-loaded images are loaded.");
-  //       setTimeout(() => {
-  //         console.log("Page Completely Loaded");
-  //         showElement("header");
-  //         showElement("cat-section");
-  //         showElement("footer");
-  //       }, 3000);
-  //     })
-  //     .catch((error) => {
-  //       console.error("An error occurred:", error);
-  //     });
-  // });
+    // if(!isFirstLoad) {
+    const lazyImages = document.querySelectorAll(".lazy-image");
+    const loadImagePromises = [];
+    lazyImages.forEach((img) => {
+      const promise = new Promise((resolve) => {
+        img.addEventListener("load", () => {
+          resolve();
+        });
+        img.src = img.getAttribute("data-src");
+      });
+      loadImagePromises.push(promise);
+    });
+    Promise.all(loadImagePromises)
+      .then(() => {
+        console.log("All lazy-loaded images are loaded.");
+        setTimeout(() => {
+          console.log("Page Completely Loaded");
+        }, 3000);
+      })
+      .catch((error) => {
+        console.error("An error occurred:", error);
+      });
+  });
 
   let current_page = document.querySelector('#home');
   console.log("current_page color change", current_page);
