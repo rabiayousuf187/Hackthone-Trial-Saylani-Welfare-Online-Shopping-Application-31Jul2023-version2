@@ -135,20 +135,21 @@ if (userAcc && userAcc.acc_type === "user") {
     }
 
     // Function to update the overall total
-    function updateOverallTotal() {
-        const totalPrices = document.querySelectorAll('.price-cell');
-        let overallTotal = 0;
-
-        totalPrices.forEach(totalPrice => {
-            overallTotal += parseFloat(totalPrice.textContent);
-        });
-
-        document.querySelector('#netTotal').textContent = overallTotal.toFixed(2);
-    }
+    updateOverallTotal();
     
     // ******************************************
   };
 
+  function updateOverallTotal() {
+    const totalPrices = document.querySelectorAll('.price-cell');
+    let overallTotal = 0;
+
+    totalPrices.forEach(totalPrice => {
+        overallTotal += parseFloat(totalPrice.textContent);
+    });
+
+    document.querySelector('#netTotal').textContent = overallTotal.toFixed(2);
+}
 
     
   let handleButtonClick = (category) => {
