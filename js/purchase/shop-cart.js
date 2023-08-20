@@ -145,11 +145,11 @@ if (userAcc && userAcc.acc_type === "user") {
     let overallTotal = 0;
 
     totalPrices.forEach(totalPrice => {
-        overallTotal += parseFloat(totalPrice.textContent);
+        overallTotal += Number(totalPrice.textContent);
     });
 
   }
-  document.querySelector('#netTotal').textContent = overallTotal.toFixed(2);
+  // document.querySelector('#netTotal').textContent = overallTotal.toFixed(2);
 
     
   let handleButtonClick = (category) => {
@@ -185,7 +185,15 @@ if (userAcc && userAcc.acc_type === "user") {
         const container = document.getElementById("show-item-inner");
         confirmorder = itemsData;
         
-    updateOverallTotal();
+        // const totalPrices = document.querySelectorAll('.price-cell');
+        let overallTotal = 0;
+
+        itemsData.forEach(ele => {
+            overallTotal += Number(ele.unitPrice);
+        });
+
+        
+        document.getElementById('netTotal').innerHTML = overallTotal;
         itemsData.forEach((ele, ind) => {
               showItem(
                 container,

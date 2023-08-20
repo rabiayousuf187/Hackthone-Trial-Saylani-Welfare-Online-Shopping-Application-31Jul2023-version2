@@ -1326,3 +1326,9 @@ p.sub-cat-name {font-size: 16px;}
     justify-content: space-between;
     font-size: smaller;
 }
+.innerTotal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 17px;
+}
