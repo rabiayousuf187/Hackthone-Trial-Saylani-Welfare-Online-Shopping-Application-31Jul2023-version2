@@ -8,7 +8,7 @@ if (userAcc && userAcc.acc_type === "user") {
 
   let userData;
   document.getElementById("Top").style.display = "block";
-    document.getElementById("adminname").innerText = userAcc.fullname;
+    // document.getElementById("adminname").innerText = userAcc.fullname;
   // Use the Firebase Configuration functions
   const {
     database,
@@ -36,7 +36,7 @@ if (userAcc && userAcc.acc_type === "user") {
   current_page.querySelector("p").style.color = "#61B846";
 
   addClickListener('home' , "./purchase.html" );
-  addClickListener('cart' , "./cart.html" );
+  addClickListener('cart' , "./shop-cart.html" );
 
 
 
@@ -233,56 +233,56 @@ if (userAcc && userAcc.acc_type === "user") {
 
     container.insertAdjacentHTML("beforeend", itemHTML);
   };
-  window.addEventListener("load", () => {
-    getAllItemData(`order/${userAcc.id}/`)
-      .then((order) => {
-        const { fullname,address,email,contact, itemData} = itemsData;
-        // console.log(`GET CART DATA ==`, cartData);
-        // disableItem = Object.keys(cartData);
+  // window.addEventListener("load", () => {
+  //   getAllItemData(`order/${userAcc.id}/`)
+  //     .then((order) => {
+  //       const { fullname,address,email,contact, itemData} = itemsData;
+  //       // console.log(`GET CART DATA ==`, cartData);
+  //       // disableItem = Object.keys(cartData);
 
-        const order = document.querySelector(".order-row");
+  //       const order = document.querySelector(".order-row");
         
-        const quantity = 1;
+  //       const quantity = 1;
         
-        userData.forEach((ele, ind) => {
+  //       userData.forEach((ele, ind) => {
                      
-            showItem(
-            container,
-            ind,
-            fullname,address,email,contact,status = pending
-            );
-            ele.itemData.forEach((ele, ind) => {
-                const itemHTML = `
-                <div class="order-row">
-                    <div class="cust-name">
-                        <h4>${fullname}</h4>
-                    </div>
-                    <div class="order-cust-status">
-                        <span id="status-time" class="status-time-status">Just Now - pending</span>
-                        <span id="cust-contact" class="cust-contact">${contact}</span>
-                    </div>
-                    <div class="order-item">
-                        <p id="order-list-item" class="order-list-item">${quantity} x ${ele.itemData.quantity}</p>
-                    </div>
-                    <div class="order-price">
-                        <span style="color: black;">Total</span>
-                        <span id="total-price" class="total-price">PKR. 185.00</span>
-                    </div>
+  //           showItem(
+  //           container,
+  //           ind,
+  //           fullname,address,email,contact,status = pending
+  //           );
+  //           ele.itemData.forEach((ele, ind) => {
+  //               const itemHTML = `
+  //               <div class="order-row">
+  //                   <div class="cust-name">
+  //                       <h4>${fullname}</h4>
+  //                   </div>
+  //                   <div class="order-cust-status">
+  //                       <span id="status-time" class="status-time-status">Just Now - pending</span>
+  //                       <span id="cust-contact" class="cust-contact">${contact}</span>
+  //                   </div>
+  //                   <div class="order-item">
+  //                       <p id="order-list-item" class="order-list-item">${quantity} x ${ele.itemData.quantity}</p>
+  //                   </div>
+  //                   <div class="order-price">
+  //                       <span style="color: black;">Total</span>
+  //                       <span id="total-price" class="total-price">PKR. 185.00</span>
+  //                   </div>
                     
-                </div>`;
-            });
+  //               </div>`;
+  //           });
 
             
-        //   console.log(`${ele.itemName} not found in the array.`);
-        });
-        container.insertAdjacentHTML("beforeend", order);
+  //       //   console.log(`${ele.itemName} not found in the array.`);
+  //       });
+  //       container.insertAdjacentHTML("beforeend", order);
        
-      })
+  //     })
 
-      .catch((error) => {
-        console.error("Error Getting Cart Items Data:", error);
-      });
-  });
+  //     .catch((error) => {
+  //       console.error("Error Getting Cart Items Data:", error);
+  //     });
+  // });
   // Process the retrieved data
 
   let getAllItemData = async (url) => {
