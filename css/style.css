@@ -701,6 +701,7 @@ section.footer {
     width: 100%;
     background-color: white;
     padding: 20px;
+    z-index: 122;
 }
 
 footer.footer-menu {
