@@ -90,7 +90,7 @@ if (userAcc && userAcc.acc_type === "admin") {
 
   addClickListener("home", "./admin.html");
   addClickListener("acc-setting", "./account-setting.html");
-  addClickListener("order", "../order.html");
+  addClickListener("order", "./order.html");
 
   const addProductionbtn = document.getElementById("add-production");
 
