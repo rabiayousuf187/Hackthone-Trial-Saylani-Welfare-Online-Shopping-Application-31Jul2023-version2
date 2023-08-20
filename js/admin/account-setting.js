@@ -3,7 +3,7 @@ import firebaseExports from "../config/firebase-config.js";
 let userAcc = isAuth();
 console.log("userAcc get via is Auth()", userAcc);
 
-if (userAcc && userAcc.acc_type === "user") {
+if (userAcc && userAcc.acc_type === "admin") {
   console.log("Admin Account Setting Page");
 
   let userData;
@@ -448,11 +448,11 @@ if (userAcc && userAcc.acc_type === "user") {
     }, 1000);
   });
 } else if (
-  (userAcc && userAcc.acc_type === "admin") ||
+  (userAcc && userAcc.acc_type === "user") ||
   userAcc === null ||
   userAcc === undefined
 ) {
-  console.log("User is Auth but role is not user");
+  console.log("User is Auth but role is not Admin");
   window.location.href = "../auth/signin.html";
 } else {
   console.log("Unauth User Access!");
