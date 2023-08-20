@@ -135,7 +135,7 @@ if (userAcc && userAcc.acc_type === "user") {
     }
 
     // Function to update the overall total
-    updateOverallTotal();
+    // updateOverallTotal();
     
     // ******************************************
   };
@@ -148,8 +148,8 @@ if (userAcc && userAcc.acc_type === "user") {
         overallTotal += parseFloat(totalPrice.textContent);
     });
 
-    document.querySelector('#netTotal').textContent = overallTotal.toFixed(2);
-}
+  }
+  document.querySelector('#netTotal').textContent = overallTotal.toFixed(2);
 
     
   let handleButtonClick = (category) => {
@@ -183,16 +183,10 @@ if (userAcc && userAcc.acc_type === "user") {
         // disableItem = Object.keys(cartData);
 
         const container = document.getElementById("show-item-inner");
-        const quantity = 1;
         confirmorder = itemsData;
+        
+    updateOverallTotal();
         itemsData.forEach((ele, ind) => {
-                     
-              const price = parseInt(ele.unitPrice);
-              // const totalElement = input.closest(".cat-row").querySelector(".total-price");
-          
-              total += price * quantity;
-              console.log("price ==== ", price)
-              
               showItem(
                 container,
                 ind,
@@ -222,13 +216,6 @@ if (userAcc && userAcc.acc_type === "user") {
           });
           //   loadImagePromises.push(promise);
         });
-        // Promise.all(loadImagePromises)
-        //   .then(() => {
-        //     console.log("All lazy-loaded images are loaded.");
-        //   })
-        //   .catch((error) => {
-        //     console.error("An error occurred:", error);
-        //   });
       })
 
       .catch((error) => {
