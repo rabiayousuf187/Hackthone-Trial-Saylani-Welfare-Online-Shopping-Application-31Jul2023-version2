@@ -1316,3 +1316,9 @@ p.sub-cat-name {font-size: 16px;}
         text-decoration: none;
     }
 /* *************    End User: Purchase   *************** */
+.acc-settin-content .order-cust-status {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: smaller;
+}
