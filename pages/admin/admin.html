@@ -11,14 +11,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="icon" type="image/png" href="../../img/Logo.png">
 
+    <!-- External JS Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+
+
+
     <!-- External CSS Style Sheet -->
     <link href="../../css/style.css" rel="stylesheet" />
 </head>
 <script>
     // Open page
-    let openpage = (getCategory , pagename) => {
+    let openpage = (getCategory, pagename) => {
         setTimeout(() => {
-            localStorage.setItem('getCategory' , getCategory)
+            localStorage.setItem('getCategory', getCategory)
             alert(`Redirtected to ${pagename} Page`);
             window.location.href = './category.html';
 
@@ -28,7 +35,10 @@
 </script>
 
 <body id="Top" class="auth">
-    <section id="header" class="signup sale">
+    <div id="loading-container">
+        <div class="loader" id="loader"></div>
+    </div>
+    <section id="header" class="signup sale auth">
         <div class="container">
             <header class="main-header">
                 <div class="main-page-content">
@@ -48,7 +58,7 @@
         </div>
     </section>
 
-    <section id="cat-section" class="signup sale sale-content" style="margin: 95px 0px; padding-bottom: 200px;">
+    <section id="cat-section" class="signup sale sale-content auth" style="margin: 95px 0px; padding-bottom: 200px;">
         <div class="container">
             <div class="sale-content-inner">
                 <div class="content-heading">
@@ -68,7 +78,7 @@
     </section>
 
 
-    <section id="footer" class="footer" style="margin: 18vh 10px 0px;">
+    <section id="footer" class="footer auth" style="margin: 18vh 10px 0px;">
         <div class="container">
             <footer class="footer-menu">
                 <div class="footer-content">
@@ -97,10 +107,14 @@
     <script type="module" src="../../js/auth/auth.js"></script>
     <script type="module" src="../../js/admin/admin.js"></script>
 
-    <!-- External JS Script -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"
+        integrity="sha256-a2yjHM4jnF9f54xUQakjZGaqYs/V1CYvWpoqZzC2/Bw=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+        integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
 
 
 </body>

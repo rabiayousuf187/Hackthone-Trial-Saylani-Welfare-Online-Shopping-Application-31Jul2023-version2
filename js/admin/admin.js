@@ -10,19 +10,94 @@ if (userAcc && userAcc.acc_type === 'admin') {
 
   window.addEventListener("load", function () {
 
-    const isFirstLoad = JSON.parse(localStorage.getItem("isFruitFirstLoad"));
-    document.getElementById('Top').style.display = 'block';
-    document.getElementById("adminname").innerText = userAcc.fullname;
-
+    const isFirstLoad = JSON.parse(localStorage.getItem("isAdminFirstLoad"));
+    console.log("isFirstLoad ==== ", isFirstLoad)
 
     const showElement = (elementId, display = "block") => {
       document.getElementById(elementId).style.display = display;
     };
 
-    // Check if the page has been loaded before
-    // const isFirstLoad = JSON.parse(localStorage.getItem("isAdminFirstLoad"));
+    const hideElement = (elementId) => { 
+      document.getElementById(elementId).style.display = "none";
+    };
 
 
+    function ShowProgress() {
+      setTimeout(function () {
+        console.log("Show Progress");
+        var loading = $(".loading");
+        loading.show();
+        $("#overlay").css({
+          display: "block",
+          opacity: 0.7,
+          width: $(document).width(),
+          height: $(document).height(),
+        });
+        $("body").css({
+          overflow: "hidden",
+        });
+        $("#loading")
+          .css({
+            display: "block",
+          })
+          .click(function () {
+            $(this).css("display", "none");
+            $("#screen").css("display", "none");
+          });
+      }, 100);
+      $("#main").dialog({
+        modal: true,
+      });
+    }
+    // Simulate data loading
+    const simulateDataLoading = async () => {
+      try {
+        if (isFirstLoad) {
+        console.log("entered inloading");
+
+        document.getElementById("Top").insertAdjacentHTML(
+          "afterbegin",
+          `<div id='loading' class="loading" align="center">
+        <div class="main">
+        <div class="small1 logo-loading">
+            <div class="main-page-content">
+            <h1 class="text-center mb-3 main-heading">SAYLANI WELFARE</h1>
+            <!-- Heading 2 -->
+            <h2 class="text-center main-sub-heading">ONLINE MARKET PLACE</h2>
+        </div>
+            </div>
+            <div class="small1">
+              <div class="small ball smallball1"></div>
+              <div class="small ball smallball2"></div>
+              <div class="small ball smallball3"></div>
+              <div class="small ball smallball4"></div>
+            </div>
+    
+            <div class="small2">
+              <div class="small ball smallball5"></div>
+              <div class="small ball smallball6"></div>
+              <div class="small ball smallball7"></div>
+              <div class="small ball smallball8"></div>
+            </div>
+    
+            <div class="bigcon">
+              <div class="big ball"></div>
+            </div>
+        </div>
+    </div> `
+        );
+        ShowProgress();
+      }else{
+        hideElement("loading-container"); // Hide the spinner container directly
+        showElement("Top"); // Show the main content
+      }
+      } catch (error) {
+        console.error("Erorr SPinning: ==== ", error);
+        return false;
+      }
+    };
+    
+    document.getElementById("adminname").innerText = userAcc.fullname;
     let replaceSpacesWithHyphens = (text) => {
       // Replace spaces with hyphens using regular expression
       text = text.trim(text);
@@ -47,6 +122,23 @@ if (userAcc && userAcc.acc_type === 'admin') {
 
       container.insertAdjacentHTML("afterbegin", itemHTML);
     };
+
+    console.log("Loadingggggggggggg");
+    simulateDataLoading()
+      .then(() => {
+        // Spinner Show  only first load
+        localStorage.setItem("isAdminFirstLoad", "false"); // Mark the page as loaded
+        console.log("Display Pageeeeeeeeeee");
+        showElement("Top");
+      })
+      .catch((error) => {
+        console.error("Error loading data:", error);
+        // loadingContainer.style.display = "none"; // Hide loading spinner in case of error
+      });
+
+    // console.log("2nd Load");
+  // });
+
     const itemsData = JSON.parse(localStorage.getItem("category"));
     itemsData.forEach((ele, ind) => {
       console.log("Each Item ==== :", ele);
