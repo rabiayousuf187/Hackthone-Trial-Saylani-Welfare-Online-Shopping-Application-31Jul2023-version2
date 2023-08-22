@@ -15,7 +15,15 @@ h3{
 .visible {
     visibility: hidden;
 }
-
+.alert.alert-danger {
+    height: 99.9vh;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 #header {
     border-bottom: 2px solid #D9D9D9;
 }

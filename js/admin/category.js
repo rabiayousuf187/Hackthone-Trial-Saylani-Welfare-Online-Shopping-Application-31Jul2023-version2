@@ -7,7 +7,7 @@ console.log("userAcc get via is Auth()", userAcc);
 if (userAcc && userAcc.acc_type === "admin") {
   let itemsData, getCategory = localStorage.getItem("getCategory");
   console.log("Admin-Home: Fruit Page");
-  getCategory === null ? getCategory = "fruit" : getCategory = getCategory;
+  getCategory === null || getCategory === undefined ? getCategory = "fruit" : getCategory = getCategory;
   console.log("getCategory ==== ", getCategory);
 
   window.addEventListener("load", function () {
@@ -48,9 +48,9 @@ if (userAcc && userAcc.acc_type === "admin") {
     });
 
     // Page Links
-    addClickListener("add-item", "../add-item.html");
-    addClickListener("acc-setting", "../account-setting.html");
-    addClickListener("order", "../order.html");
+    addClickListener("add-item", "./add-item.html");
+    addClickListener("acc-setting", "./account-setting.html");
+    addClickListener("order", ".order.html");
 
     // Create a function to generate and add a fruit item to the container
     // Assuming you have a container element with id "content-category"
@@ -93,7 +93,7 @@ if (userAcc && userAcc.acc_type === "admin") {
 
     let getAllItemData = async () => {
       try {
-        const snapshot = await get(ref(database, `items/fruit/`));
+        const snapshot = await get(ref(database, `items/${getCategory}/`));
         // Data snapshot contains the data at the specified location
         itemsData = snapshot.val();
         console.log("Retrieved data:", itemsData);
@@ -101,6 +101,7 @@ if (userAcc && userAcc.acc_type === "admin") {
         return itemsData;
       } catch (error) {
         console.error("Error getting data:", error);
+        this.document.getElementById('Top').innerHTML = `<div class="alert alert-danger" role="alert">Item Not Founds<a href="./admin.html" class="alert-link">Goto admin</a>.</div>`
         return false;
       }
     };
@@ -196,6 +197,8 @@ if (userAcc && userAcc.acc_type === "admin") {
           .then((itemsData) => {
             if (!itemsData) {
               console.log("Data is null");
+              document.getElementById
+              '<div class="alert alert-primary" role="alert">"Item Not Found"</div>'
             } else {
               // Here you can continue with rendering your data or performing other tasks
               console.log("updated into Array ====:", itemsData);
