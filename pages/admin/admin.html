@@ -16,10 +16,11 @@
 </head>
 <script>
     // Open page
-    let openpage = (redirectPage, pagename) => {
+    let openpage = (getCategory , pagename) => {
         setTimeout(() => {
-            alert("Redirtected to " + pagename);
-            window.location.href = redirectPage;
+            localStorage.setItem('getCategory' , getCategory)
+            alert("Redirtected to " + pagename , "Page");
+            window.location.href = './category.html';
 
         }, 800);
     }
