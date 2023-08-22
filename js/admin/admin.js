@@ -4,34 +4,39 @@ console.log("userAcc get via is Auth()", userAcc);
 
 
 if (userAcc && userAcc.acc_type === 'admin') {
-    
-    // localStorage.setItem("isAdminFirstLoad", "true"); // Mark the page as loadedd
-    console.log("Admin.Page");
+
+  // localStorage.setItem("isAdminFirstLoad", "true"); // Mark the page as loadedd
+  console.log("Admin.Page");
+
+  window.addEventListener("load", function () {
+
+    const isFirstLoad = JSON.parse(localStorage.getItem("isFruitFirstLoad"));
     document.getElementById('Top').style.display = 'block';
-  document.getElementById("adminname").innerText = userAcc.fullname;
-    
+    document.getElementById("adminname").innerText = userAcc.fullname;
+
+
     const showElement = (elementId, display = "block") => {
-        document.getElementById(elementId).style.display = display;
-      };
-    
+      document.getElementById(elementId).style.display = display;
+    };
+
     // Check if the page has been loaded before
     // const isFirstLoad = JSON.parse(localStorage.getItem("isAdminFirstLoad"));
-    
 
-  let replaceSpacesWithHyphens = (text) => {
-    // Replace spaces with hyphens using regular expression
-    text=text.trim(text);
-    return text.replace(/\s+/g, '-');
-  }
+
+    let replaceSpacesWithHyphens = (text) => {
+      // Replace spaces with hyphens using regular expression
+      text = text.trim(text);
+      return text.replace(/\s+/g, '-');
+    }
     const container = document.getElementById("content-category");
     let addElement = (
-        ind,
-        category,
-        imageURL,
-      ) => {
+      ind,
+      category,
+      imageURL,
+    ) => {
 
-        let link = replaceSpacesWithHyphens(category);
-        const itemHTML = `
+      let link = replaceSpacesWithHyphens(category);
+      const itemHTML = `
         <div class="cat-${ind} cat-style">
                             <button id="${link}-btn" name="${link}" value="submit" class="btn btn-get-started cat-inp"
                                 onclick="openpage('${link}' ,'${category}')">
@@ -39,55 +44,55 @@ if (userAcc && userAcc.acc_type === 'admin') {
                                 <p id="${link}">${category}</p>
                             </button>
                         </div>`;
-  
-        container.insertAdjacentHTML("afterbegin", itemHTML);
-      };
-      const itemsData = JSON.parse(localStorage.getItem("category"));
+
+      container.insertAdjacentHTML("afterbegin", itemHTML);
+    };
+    const itemsData = JSON.parse(localStorage.getItem("category"));
     itemsData.forEach((ele, ind) => {
-        console.log("Each Item ==== :", ele);
-        console.log( "Each Item ==== :",ele.categoryName,ele.imageUrl);
+      console.log("Each Item ==== :", ele);
+      console.log("Each Item ==== :", ele.categoryName, ele.imageUrl);
 
-        // Call the function to add a fruit item
-        // name, weight, price, imageURL
-        addElement(
-          ind,
-          ele.categoryName,
-          ele.imageUrl
-        );
+      // Call the function to add a fruit item
+      // name, weight, price, imageURL
+      addElement(
+        ind,
+        ele.categoryName,
+        ele.imageUrl
+      );
 
-        // if(!isFirstLoad) {  
-          const lazyImages = document.querySelectorAll(".lazy-image");
-          const loadImagePromises = [];
-        lazyImages.forEach((img) => {
-          const promise = new Promise((resolve) => {
-            img.addEventListener("load", () => {
-              resolve();
-            });
-            img.src = img.getAttribute("data-src");
-            // showElement("sub-cat-details-" + ind);
-            // showElement("sub-cat-price-" + ind);
-            // showElement(`cat-fruit-${ind}`);
+      // if(!isFirstLoad) {  
+      const lazyImages = document.querySelectorAll(".lazy-image");
+      const loadImagePromises = [];
+      lazyImages.forEach((img) => {
+        const promise = new Promise((resolve) => {
+          img.addEventListener("load", () => {
+            resolve();
           });
-          loadImagePromises.push(promise);
+          img.src = img.getAttribute("data-src");
+          // showElement("sub-cat-details-" + ind);
+          // showElement("sub-cat-price-" + ind);
+          // showElement(`cat-fruit-${ind}`);
         });
-        Promise.all(loadImagePromises)
-          .then(() => {
-            console.log("All lazy-loaded images are loaded.");
-            setTimeout(() => {
-              console.log("Page Completely Loaded");
-              showElement("header");
-              showElement("cat-section");
-              showElement("footer");
-              
-            }, 3000);
-             
-            
-          })
-          .catch((error) => {
-            console.error("An error occurred:", error);
-          });
-
+        loadImagePromises.push(promise);
       });
+      Promise.all(loadImagePromises)
+        .then(() => {
+          console.log("All lazy-loaded images are loaded.");
+          setTimeout(() => {
+            console.log("Page Completely Loaded");
+            showElement("header");
+            showElement("cat-section");
+            showElement("footer");
+
+          }, 3000);
+
+
+        })
+        .catch((error) => {
+          console.error("An error occurred:", error);
+        });
+
+    });
 
     let current_page = document.getElementById("home");
     console.log("current_page color change", current_page);
@@ -96,25 +101,25 @@ if (userAcc && userAcc.acc_type === 'admin') {
 
     let add_item = document.getElementById("add-item");
     add_item.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        window.location.href = "./add-item.html"
+      event.preventDefault(); // Prevent the default link behavior
+      window.location.href = "./add-item.html"
     });
 
 
     let acc_setting = document.getElementById("acc-setting");
     acc_setting.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        window.location.href = "./account-setting.html"
+      event.preventDefault(); // Prevent the default link behavior
+      window.location.href = "./account-setting.html"
     });
 
 
-
+  });
 }
 else if ((userAcc && userAcc.acc_type === 'user') || userAcc === null || userAcc === undefined) {
-    console.log("User is Auth but role is not Admin");
-    window.location.href = '../auth/signin.html';
+  console.log("User is Auth but role is not Admin");
+  window.location.href = '../auth/signin.html';
 }
 else {
-    console.log("Unauth User Access!");
-    window.location.href = '../auth/signin.html';
+  console.log("Unauth User Access!");
+  window.location.href = '../auth/signin.html';
 }

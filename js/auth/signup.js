@@ -164,10 +164,12 @@ if (userAcc === null || userAcc === undefined) {
               localStorage.setItem("userAcc", JSON.stringify(userAcc));
 
               if (acc_type === "user") {
+                localStorage.setItem("isUserFirstLoad", "true");
                 alert("You are redirected to User Purchase Corner");
                 window.location.href = "../purchase/purchase.html";
               } else if (acc_type === "admin") {
                 console.log("User Data ACCType", acc_type);
+                localStorage.setItem("isAdminFirstLoad", "true");
                 alert("You are redirected to Admin Corner");
                 window.location.href = "../admin/admin.html";
               } else {
