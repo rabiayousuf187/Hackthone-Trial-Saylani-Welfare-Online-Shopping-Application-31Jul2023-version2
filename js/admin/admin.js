@@ -17,7 +17,7 @@ if (userAcc && userAcc.acc_type === 'admin') {
       document.getElementById(elementId).style.display = display;
     };
 
-    const hideElement = (elementId) => { 
+    const hideElement = (elementId) => {
       document.getElementById(elementId).style.display = "none";
     };
 
@@ -53,11 +53,11 @@ if (userAcc && userAcc.acc_type === 'admin') {
     const simulateDataLoading = async () => {
       try {
         if (isFirstLoad) {
-        console.log("entered inloading");
+          console.log("entered inloading");
 
-        document.getElementById("Top").insertAdjacentHTML(
-          "afterbegin",
-          `<div id='loading' class="loading" align="center">
+          document.getElementById("Top").insertAdjacentHTML(
+            "afterbegin",
+            `<div id='loading' class="loading" align="center">
         <div class="main">
         <div class="small1 logo-loading">
             <div class="main-page-content">
@@ -85,18 +85,18 @@ if (userAcc && userAcc.acc_type === 'admin') {
             </div>
         </div>
     </div> `
-        );
-        ShowProgress();
-      }else{
-        hideElement("loading-container"); // Hide the spinner container directly
-        showElement("Top"); // Show the main content
-      }
+          );
+          ShowProgress();
+        } else {
+          hideElement("loading-container"); // Hide the spinner container directly
+          showElement("Top"); // Show the main content
+        }
       } catch (error) {
         console.error("Erorr SPinning: ==== ", error);
         return false;
       }
     };
-    
+
     document.getElementById("adminname").innerText = userAcc.fullname;
     let replaceSpacesWithHyphens = (text) => {
       // Replace spaces with hyphens using regular expression
@@ -127,9 +127,24 @@ if (userAcc && userAcc.acc_type === 'admin') {
     simulateDataLoading()
       .then(() => {
         // Spinner Show  only first load
-        localStorage.setItem("isAdminFirstLoad", "false"); // Mark the page as loaded
-        console.log("Display Pageeeeeeeeeee");
-        showElement("Top");
+
+        if (isFirstLoad) {
+          localStorage.setItem("isAdminFirstLoad", "false"); // Mark the page as loaded
+          console.log("Display Pageeeeeeeeeee");
+          showElement("Top");
+          console.log("Page Completely Loaded");
+          showElement("header");
+          showElement("cat-section");
+          showElement("footer");
+        } else {
+          console.log("Show 2nd LOAD");
+
+          hideElement("loading-container");
+          showElement("header");
+          showElement("cat-section");
+          showElement("footer");
+        }
+
       })
       .catch((error) => {
         console.error("Error loading data:", error);
@@ -137,7 +152,7 @@ if (userAcc && userAcc.acc_type === 'admin') {
       });
 
     // console.log("2nd Load");
-  // });
+    // });
 
     const itemsData = JSON.parse(localStorage.getItem("category"));
     itemsData.forEach((ele, ind) => {
