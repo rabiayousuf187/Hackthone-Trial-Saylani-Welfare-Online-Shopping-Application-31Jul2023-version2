@@ -6,8 +6,11 @@ console.log("userAcc get via is Auth()", userAcc);
 if (userAcc && userAcc.acc_type === "admin") {
   console.log("Admin Account Setting Page");
 
-  let userData;
+  let userData, getCategory = localStorage.getItem("getCategory");
   document.getElementById("Top").style.display = "block";
+
+  getCategory === null || getCategory === undefined ? getCategory = "fruit" : getCategory = getCategory;
+  console.log("getCategory ==== ", getCategory);
   //   document.getElementById("adminname").innerText = userAcc.fullname;
   // Use the Firebase Configuration functions
   const {
@@ -20,6 +23,7 @@ if (userAcc && userAcc.acc_type === "admin") {
     uploadBytes,
     getDownloadURL,
   } = firebaseExports;
+
 
   const addClickListener = (elementId, destination) => {
     const element = document.getElementById(elementId);
@@ -55,6 +59,7 @@ if (userAcc && userAcc.acc_type === "admin") {
       return itemsData;
     } catch (error) {
       console.error("Error getting data:", error);
+      this.document.getElementById('Top').innerHTML = `<div class="alert alert-danger" role="alert">Item Not Founds<a href="./admin.html" class="alert-link">Goto admin</a>.</div>`
       return false;
     }
   };
@@ -86,7 +91,7 @@ if (userAcc && userAcc.acc_type === "admin") {
       const itemHTML = `
       <div class="cat-${ind} cat-style">
                           <button id="${link}-btn" name="${link}" value="submit" class="btn btn-get-started cat-inp"
-                              onclick="openpage('./category/${link}.html', '${category} Page')">
+                              onclick="openpage('${link}', '${category}')">
                               <img class="lazy-image" src="../../img/icon/placeholder.png" alt="${category}" data-src="${imageURL}"/>
                               <p id="${link}">${category}</p>
                           </button>
@@ -368,7 +373,7 @@ if (userAcc && userAcc.acc_type === "admin") {
                     console.log(
                       "Category Data successfully Stored in local Storage"
                     );
-                    window.location.href = `../admin/admin.html`;
+                    window.location.href = `./admin/admin.html`;
                   }).catch((error)=>{
                     
                   alert("Error stored item in local SSSSST:", error);
