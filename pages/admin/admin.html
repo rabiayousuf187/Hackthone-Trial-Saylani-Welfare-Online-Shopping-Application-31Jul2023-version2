@@ -19,7 +19,7 @@
     let openpage = (getCategory , pagename) => {
         setTimeout(() => {
             localStorage.setItem('getCategory' , getCategory)
-            alert("Redirtected to " + pagename , "Page");
+            alert(`Redirtected to ${pagename} Page`);
             window.location.href = './category.html';
 
         }, 800);

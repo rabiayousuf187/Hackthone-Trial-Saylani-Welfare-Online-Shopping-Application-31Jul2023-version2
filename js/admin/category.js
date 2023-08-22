@@ -1,12 +1,14 @@
-import { isAuth } from "../../auth/auth.js";
-import firebaseExports from "../../config/firebase-config.js";
+import { isAuth } from "../auth/auth.js";
+import firebaseExports from "../config/firebase-config.js";
 
 let userAcc = isAuth();
 console.log("userAcc get via is Auth()", userAcc);
 
 if (userAcc && userAcc.acc_type === "admin") {
-  let itemsData;
+  let itemsData, getCategory;
   console.log("Admin-Home: Fruit Page");
+  getCategory === null ? getCategory === null : getCategory = JSON.parse(getCategory);
+  console.log("getCategory ==== ", getCategory);
 
   window.addEventListener("load", function () {
     console.log("Page Completely Loaded");
@@ -23,7 +25,7 @@ if (userAcc && userAcc.acc_type === "admin") {
       document.getElementById(elementId).style.display = display;
     };
 
-    const hideElement = (elementId) => {
+    const hideElement = (elementId) => { 
       document.getElementById(elementId).style.display = "none";
     };
 

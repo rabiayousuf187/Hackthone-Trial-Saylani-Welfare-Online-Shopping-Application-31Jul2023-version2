@@ -34,7 +34,7 @@ if (userAcc && userAcc.acc_type === 'admin') {
         const itemHTML = `
         <div class="cat-${ind} cat-style">
                             <button id="${link}-btn" name="${link}" value="submit" class="btn btn-get-started cat-inp"
-                                onclick="openpage('${link}' , ${category})">
+                                onclick="openpage('${link}' ,'${category}')">
                                 <img class="lazy-image" src="../../img/icon/placeholder.png" alt="${category}" data-src="${imageURL}"/>
                                 <p id="${link}">${category}</p>
                             </button>
