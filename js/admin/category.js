@@ -5,9 +5,9 @@ let userAcc = isAuth();
 console.log("userAcc get via is Auth()", userAcc);
 
 if (userAcc && userAcc.acc_type === "admin") {
-  let itemsData, getCategory;
+  let itemsData, getCategory = localStorage.getItem("getCategory");
   console.log("Admin-Home: Fruit Page");
-  getCategory === null ? getCategory === null : getCategory = JSON.parse(getCategory);
+  getCategory === null ? getCategory = "fruit" : getCategory = getCategory;
   console.log("getCategory ==== ", getCategory);
 
   window.addEventListener("load", function () {
