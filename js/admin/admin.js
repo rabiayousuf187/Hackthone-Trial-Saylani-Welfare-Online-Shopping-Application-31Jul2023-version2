@@ -51,6 +51,7 @@ if (userAcc && userAcc.acc_type === 'admin') {
     }
     // Simulate data loading
     const simulateDataLoading = async () => {
+      console.log("entered inloading");
       try {
         if (isFirstLoad) {
           console.log("entered inloading");
@@ -127,11 +128,72 @@ if (userAcc && userAcc.acc_type === 'admin') {
     simulateDataLoading()
       .then(() => {
         // Spinner Show  only first load
-
+        const itemsData = JSON.parse(localStorage.getItem("category"));
+          itemsData.forEach((ele, ind) => {
+            console.log("Each Item ==== :", ele);
+            console.log("Each Item ==== :", ele.categoryName, ele.imageUrl);
+      
+            // Call the function to add a fruit item
+            // name, weight, price, imageURL
+            addElement(
+              ind,
+              ele.categoryName,
+              ele.imageUrl
+            );
+          });
+          
+      
+            // if(!isFirstLoad) {  
+              const lazyImages = document.querySelectorAll(".lazy-image");
+              const loadImagePromises = [];
+              lazyImages.forEach((img) => {
+                const promise = new Promise((resolve) => {
+                  img.addEventListener("load", () => {
+                    resolve();
+                  });
+                  img.src = img.getAttribute("data-src");
+                  // showElement("sub-cat-details-" + ind);
+                  // showElement("sub-cat-price-" + ind);
+                  // showElement(`cat-fruit-${ind}`);
+                });
+                loadImagePromises.push(promise);
+              });
+              Promise.all(loadImagePromises)
+                .then(() => {
+                  console.log("All lazy-loaded images are loaded.");
+                  setTimeout(() => {
+                    console.log("Page Completely Loaded");
+                    showElement("header");
+                    showElement("cat-section");
+                    showElement("footer");
+        
+                  }, 3000);
+        
+        
+                })
+                .catch((error) => {
+                  console.error("An error occurred:", error);
+                });
+      
         if (isFirstLoad) {
           localStorage.setItem("isAdminFirstLoad", "false"); // Mark the page as loaded
+          setTimeout(() => {
+            console.log("Page Completely Loaded");
+            showElement("header");
+            showElement("cat-section");
+            showElement("footer");
+            console.log("Hide Progress")
+            console.log("HIDEEEEEEE ===== loader ", document.getElementById("loading-container"));
+            hideElement("loading") ;  
+            hideElement("loading-container") ;  
+            // Conditionally show or hide the spinner based on isFirstLoad flag
+            // isFirstLoad === "true" ? showElement("loading-container") :                
+          }, 3000);
           console.log("Display Pageeeeeeeeeee");
           showElement("Top");
+          
+      
+          
           console.log("Page Completely Loaded");
           showElement("header");
           showElement("cat-section");
@@ -154,52 +216,6 @@ if (userAcc && userAcc.acc_type === 'admin') {
     // console.log("2nd Load");
     // });
 
-    const itemsData = JSON.parse(localStorage.getItem("category"));
-    itemsData.forEach((ele, ind) => {
-      console.log("Each Item ==== :", ele);
-      console.log("Each Item ==== :", ele.categoryName, ele.imageUrl);
-
-      // Call the function to add a fruit item
-      // name, weight, price, imageURL
-      addElement(
-        ind,
-        ele.categoryName,
-        ele.imageUrl
-      );
-
-      // if(!isFirstLoad) {  
-      const lazyImages = document.querySelectorAll(".lazy-image");
-      const loadImagePromises = [];
-      lazyImages.forEach((img) => {
-        const promise = new Promise((resolve) => {
-          img.addEventListener("load", () => {
-            resolve();
-          });
-          img.src = img.getAttribute("data-src");
-          // showElement("sub-cat-details-" + ind);
-          // showElement("sub-cat-price-" + ind);
-          // showElement(`cat-fruit-${ind}`);
-        });
-        loadImagePromises.push(promise);
-      });
-      Promise.all(loadImagePromises)
-        .then(() => {
-          console.log("All lazy-loaded images are loaded.");
-          setTimeout(() => {
-            console.log("Page Completely Loaded");
-            showElement("header");
-            showElement("cat-section");
-            showElement("footer");
-
-          }, 3000);
-
-
-        })
-        .catch((error) => {
-          console.error("An error occurred:", error);
-        });
-
-    });
 
     let current_page = document.getElementById("home");
     console.log("current_page color change", current_page);
