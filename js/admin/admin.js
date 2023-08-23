@@ -101,7 +101,7 @@ if (userAcc && userAcc.acc_type === 'admin') {
     document.getElementById("adminname").innerText = userAcc.fullname;
     let replaceSpacesWithHyphens = (text) => {
       // Replace spaces with hyphens using regular expression
-      text = text.trim(text);
+      text = text.trim().toLowerCase();
       return text.replace(/\s+/g, '-');
     }
     const container = document.getElementById("content-category");
@@ -186,7 +186,7 @@ if (userAcc && userAcc.acc_type === 'admin') {
             console.log("HIDEEEEEEE ===== loader ", document.getElementById("loading-container"));
             hideElement("loading") ;  
             hideElement("loading-container") ;  
-                            
+
             console.log("Display Pageeeeeeeeeee");
           }, 3000);
           showElement("Top");

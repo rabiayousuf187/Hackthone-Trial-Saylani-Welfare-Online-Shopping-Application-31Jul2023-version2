@@ -70,7 +70,7 @@ if (userAcc && userAcc.acc_type === "admin") {
 
   let replaceSpacesWithHyphens = (text) => {
     // Replace spaces with hyphens using regular expression
-    text=text.trim(text);
+    text=text.trim().toLowerCase();
     return text.replace(/\s+/g, '-');
   } 
   let capitalizeWords = (str) => {
@@ -373,7 +373,7 @@ if (userAcc && userAcc.acc_type === "admin") {
                     console.log(
                       "Category Data successfully Stored in local Storage"
                     );
-                    window.location.href = `./admin/admin.html`;
+                    window.location.href = `./admin.html`;
                   }).catch((error)=>{
                     
                   alert("Error stored item in local SSSSST:", error);
