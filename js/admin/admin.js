@@ -186,18 +186,14 @@ if (userAcc && userAcc.acc_type === 'admin') {
             console.log("HIDEEEEEEE ===== loader ", document.getElementById("loading-container"));
             hideElement("loading") ;  
             hideElement("loading-container") ;  
-            // Conditionally show or hide the spinner based on isFirstLoad flag
-            // isFirstLoad === "true" ? showElement("loading-container") :                
+                            
+            console.log("Display Pageeeeeeeeeee");
           }, 3000);
-          console.log("Display Pageeeeeeeeeee");
           showElement("Top");
           
       
           
           console.log("Page Completely Loaded");
-          showElement("header");
-          showElement("cat-section");
-          showElement("footer");
         } else {
           console.log("Show 2nd LOAD");
 
