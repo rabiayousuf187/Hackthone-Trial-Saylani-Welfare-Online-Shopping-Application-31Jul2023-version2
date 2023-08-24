@@ -115,7 +115,7 @@ if (userAcc && userAcc.acc_type === "admin") {
           height: $(document).height(),
         });
         $("body").css({
-          overflow: "hidden",
+          overflow: "auto",
         });
         $("#loading")
           .css({
