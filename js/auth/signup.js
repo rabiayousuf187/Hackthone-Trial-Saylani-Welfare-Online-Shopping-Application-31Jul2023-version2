@@ -229,10 +229,13 @@ if (userAcc === null || userAcc === undefined) {
     alert(
       "User logged in Successfully!\nYou are redirected to User Purchase Corner"
     );
+    
+    localStorage.setItem("isUserFirstLoad", "true");
     console.log("User Data ACCType", userAcc);
     window.location.href = "../purchase/purchase.html";
   } else if (userAcc.acc_type === "admin") {
     console.log("User Data ACCType", userAcc);
+    localStorage.setItem("isAdminFirstLoad", "true");
     window.location.href = "../admin/admin.html";
     alert("User is already logged In, did not required Create again!\nYou are redirected to Admin Corner");
   } else {
