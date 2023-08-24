@@ -1,3 +1,15 @@
+import { isAuth } from "../auth/auth.js";
+import firebaseExports from "../config/firebase-config.js";
+
+let userAcc = isAuth();
+console.log("userAcc get via is Auth()", userAcc);
+
+if (userAcc && userAcc.acc_type === "admin") {
+
+    
+    document.getElementById("Top").style.visible = "visible";
+    document.getElementById("adminname").innerText = userAcc.fullname;
+
 let current_page  = document.getElementById("order");
 console.log("current_page color change", current_page);
 current_page.querySelector('img').style.filter = 'invert(62%) sepia(112%) saturate(349%) hue-rotate(61deg) brightness(56%) contrast(168%)';
@@ -35,3 +47,16 @@ acc_setting.addEventListener('click', function(event) {
     //         // You can perform additional actions with the selectedValue here
     //     });
     // });
+
+} else if (
+    (userAcc && userAcc.acc_type === "user") ||
+    userAcc === null ||
+    userAcc === undefined
+  ) {
+    console.log("User is Auth but role is not Admin");
+    window.location.href = "../../auth/signin.html";
+  } else {
+    console.log("Unauth User Access!");
+    window.location.href = "../../auth/signin.html";
+  }
+  

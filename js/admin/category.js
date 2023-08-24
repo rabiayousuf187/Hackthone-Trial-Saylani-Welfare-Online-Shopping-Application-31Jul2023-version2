@@ -295,11 +295,6 @@ if (userAcc && userAcc.acc_type === "admin") {
     // console.log("2nd Load");
   });
 
-  // window.addEventListener("load", function() {
-
-  // });
-
-  // });
 } else if (
   (userAcc && userAcc.acc_type === "user") ||
   userAcc === null ||
