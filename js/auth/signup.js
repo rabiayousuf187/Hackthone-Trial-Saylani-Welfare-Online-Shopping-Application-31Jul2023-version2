@@ -56,20 +56,23 @@ if (userAcc === null || userAcc === undefined) {
     );
   }
 
-  // Get Category Data for admin
-  let getAllItemData = async () => {
-    try {
-      const snapshot = await get(ref(database, `categories/`));
-      // Data snapshot contains the data at the specified location
-      let itemsData = snapshot.val();
-      console.log("Retrieved data:", itemsData);
-      itemsData = Object.values(itemsData);
-      return itemsData;
-    } catch (error) {
-      console.error("Error getting data:", error);
-      return false;
-    }
-  };
+
+    // Get Category Data for admin
+    let getAllItemData = async () => {
+      try {
+        const snapshot = await get(ref(database, `categories/`));
+        // Data snapshot contains the data at the specified location
+        let itemsData = snapshot.val();
+        console.log("Retrieved data:", itemsData);
+        itemsData = Object.values(itemsData);
+        return itemsData;
+      } catch (error) {
+        console.error("Error getting data:", error);
+        alert("Error getting data:", error);
+        return false;
+      }
+    };
+    
   // Function to validate the form on submission
   function validateForm(event) {
     event.preventDefault();
@@ -177,6 +180,14 @@ if (userAcc === null || userAcc === undefined) {
               };
               localStorage.setItem("userAcc", JSON.stringify(userAcc));
 
+              getAllItemData().then((category) => {
+                console.log("Retrieved data:", category);
+                localStorage.setItem(
+                  "category",
+                  JSON.stringify(Object.values(category))
+                );
+                
+              });
               if (acc_type === "user") {
                 localStorage.setItem("isUserFirstLoad", "true");
                 alert("You are redirected to User Purchase Corner");
@@ -194,6 +205,30 @@ if (userAcc === null || userAcc === undefined) {
               console.error("Error writing user data:", error);
             });
 
+          // // .then((writedb) => {
+          // userAcc = {
+          //   userId: user.uid,
+          //   acc_type: acc_type,
+          // };
+          // localStorage.setItem("userAcc", JSON.stringify(userAcc));
+          // alert("User Created Successfully! ");
+          // if (acc_type === "user") {
+          //   alert("You are redirected to User Purchase Corner");
+          //   window.location.href = "../purchase/purchase.html";
+          //   // openpage("sale/sale.html"); // Redirect to the sales page
+          // } else if (acc_type === "admin") {
+          //   console.log("User Data ACCType", acc_type);
+          //   window.location.href = "./admin/sale-product.html";
+          //   alert("You are redirected to Admin Corner");
+          //   // openpage("purchase/purchase.html"); // Redirect to the purchase page
+          // } else {
+          //   alert("Invalid Credential!");
+          // }
+          // })
+          // .catch((error) => {
+          //   // Handle any errors that may occur during the data retrieval
+          //   console.error("Error:", error);
+          // });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -239,26 +274,15 @@ if (userAcc === null || userAcc === undefined) {
 
 }else if (userAcc !== null) {
   console.log("User is already logged In, did not required Create again");
-  getAllItemData().then((category) => {
-    console.log("Retrieved data:", category);
-    localStorage.setItem(
-      "category",
-      JSON.stringify(Object.values(category))
-    );
-    
-  });
   if (userAcc.acc_type === "user") {
     alert(
       "User logged in Successfully!\nYou are redirected to User Purchase Corner"
     );
-    
-    localStorage.setItem("isUserFirstLoad", "true");
     console.log("User Data ACCType", userAcc);
-    window.location.href = "../purchase/purchase.html";
+    window.location.href = "./purchase/purchase.html";
   } else if (userAcc.acc_type === "admin") {
     console.log("User Data ACCType", userAcc);
-    localStorage.setItem("isAdminFirstLoad", "true");
-    window.location.href = "../admin/admin.html";
+    window.location.href = "./admin/admin.html";
     alert("User is already logged In, did not required Create again!\nYou are redirected to Admin Corner");
   } else {
     alert("Invalid Credential!");
