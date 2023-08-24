@@ -19,7 +19,7 @@ current_page.querySelector('img').style.borderRadius = '4px';
 let home  = document.getElementById("home");
 home.addEventListener('click', function(event) {
     event.preventDefault(); // Prevent the default link behavior
-    window.location.href = "./sale-product.html"
+    window.location.href = "./admin.html"
 });
 
 let add_item  = document.getElementById("add-item");
