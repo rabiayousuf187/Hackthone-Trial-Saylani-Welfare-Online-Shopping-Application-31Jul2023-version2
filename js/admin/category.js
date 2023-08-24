@@ -50,7 +50,7 @@ if (userAcc && userAcc.acc_type === "admin") {
     // Page Links
     addClickListener("add-item", "./add-item.html");
     addClickListener("acc-setting", "./account-setting.html");
-    addClickListener("order", ".order.html");
+    addClickListener("order", "./order.html");
 
     // Create a function to generate and add a fruit item to the container
     // Assuming you have a container element with id "content-category"
