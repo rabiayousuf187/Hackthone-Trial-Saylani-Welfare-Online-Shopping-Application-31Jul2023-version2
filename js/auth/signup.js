@@ -14,7 +14,7 @@ if (userAcc === null || userAcc === undefined) {
 
   document.getElementById("Top").style.display = "block";
   // Use the Firebase Configuration functions
-  const { auth, createUserWithEmailAndPassword, database, ref, set } =
+  const { auth, get, createUserWithEmailAndPassword, database, ref, set } =
     firebaseExports;
 
   const signupForm = document.getElementById("signup-form");
@@ -68,11 +68,11 @@ if (userAcc === null || userAcc === undefined) {
         return itemsData;
       } catch (error) {
         console.error("Error getting data:", error);
-        alert("Error getting data:", error);
+        alert(error);
         return false;
       }
     };
-    
+
   // Function to validate the form on submission
   function validateForm(event) {
     event.preventDefault();
@@ -204,31 +204,6 @@ if (userAcc === null || userAcc === undefined) {
             .catch((error) => {
               console.error("Error writing user data:", error);
             });
-
-          // // .then((writedb) => {
-          // userAcc = {
-          //   userId: user.uid,
-          //   acc_type: acc_type,
-          // };
-          // localStorage.setItem("userAcc", JSON.stringify(userAcc));
-          // alert("User Created Successfully! ");
-          // if (acc_type === "user") {
-          //   alert("You are redirected to User Purchase Corner");
-          //   window.location.href = "../purchase/purchase.html";
-          //   // openpage("sale/sale.html"); // Redirect to the sales page
-          // } else if (acc_type === "admin") {
-          //   console.log("User Data ACCType", acc_type);
-          //   window.location.href = "./admin/sale-product.html";
-          //   alert("You are redirected to Admin Corner");
-          //   // openpage("purchase/purchase.html"); // Redirect to the purchase page
-          // } else {
-          //   alert("Invalid Credential!");
-          // }
-          // })
-          // .catch((error) => {
-          //   // Handle any errors that may occur during the data retrieval
-          //   console.error("Error:", error);
-          // });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -279,10 +254,10 @@ if (userAcc === null || userAcc === undefined) {
       "User logged in Successfully!\nYou are redirected to User Purchase Corner"
     );
     console.log("User Data ACCType", userAcc);
-    window.location.href = "./purchase/purchase.html";
+    window.location.href = "../purchase/purchase.html";
   } else if (userAcc.acc_type === "admin") {
     console.log("User Data ACCType", userAcc);
-    window.location.href = "./admin/admin.html";
+    window.location.href = "../admin/admin.html";
     alert("User is already logged In, did not required Create again!\nYou are redirected to Admin Corner");
   } else {
     alert("Invalid Credential!");
