@@ -180,30 +180,6 @@ if (userAcc === null || userAcc === undefined) {
               console.error("Error writing user data:", error);
             });
 
-          // // .then((writedb) => {
-          // userAcc = {
-          //   userId: user.uid,
-          //   acc_type: acc_type,
-          // };
-          // localStorage.setItem("userAcc", JSON.stringify(userAcc));
-          // alert("User Created Successfully! ");
-          // if (acc_type === "user") {
-          //   alert("You are redirected to User Purchase Corner");
-          //   window.location.href = "../purchase/purchase.html";
-          //   // openpage("sale/sale.html"); // Redirect to the sales page
-          // } else if (acc_type === "admin") {
-          //   console.log("User Data ACCType", acc_type);
-          //   window.location.href = "./admin/sale-product.html";
-          //   alert("You are redirected to Admin Corner");
-          //   // openpage("purchase/purchase.html"); // Redirect to the purchase page
-          // } else {
-          //   alert("Invalid Credential!");
-          // }
-          // })
-          // .catch((error) => {
-          //   // Handle any errors that may occur during the data retrieval
-          //   console.error("Error:", error);
-          // });
         })
         .catch((error) => {
           const errorCode = error.code;
