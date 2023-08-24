@@ -56,6 +56,20 @@ if (userAcc === null || userAcc === undefined) {
     );
   }
 
+  // Get Category Data for admin
+  let getAllItemData = async () => {
+    try {
+      const snapshot = await get(ref(database, `categories/`));
+      // Data snapshot contains the data at the specified location
+      let itemsData = snapshot.val();
+      console.log("Retrieved data:", itemsData);
+      itemsData = Object.values(itemsData);
+      return itemsData;
+    } catch (error) {
+      console.error("Error getting data:", error);
+      return false;
+    }
+  };
   // Function to validate the form on submission
   function validateForm(event) {
     event.preventDefault();
@@ -225,6 +239,14 @@ if (userAcc === null || userAcc === undefined) {
 
 }else if (userAcc !== null) {
   console.log("User is already logged In, did not required Create again");
+  getAllItemData().then((category) => {
+    console.log("Retrieved data:", category);
+    localStorage.setItem(
+      "category",
+      JSON.stringify(Object.values(category))
+    );
+    
+  });
   if (userAcc.acc_type === "user") {
     alert(
       "User logged in Successfully!\nYou are redirected to User Purchase Corner"
