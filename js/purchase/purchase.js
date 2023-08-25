@@ -4,6 +4,31 @@ let userAcc = isAuth();
 console.log("userAcc get via is Auth()", userAcc);
 
 if (userAcc && userAcc.acc_type === "user") {
+
+  // Function to add or remove a class based on media query
+  function toggleClassBasedOnMediaQuery(mediaQuery, element, className) {
+    const mq = window.matchMedia(mediaQuery);
+
+    // Initial check
+    if (mq.matches) {
+      element.classList.add(className);
+    } else {
+      element.classList.remove(className);
+    }
+
+    // Listen for changes to the media query
+    mq.addListener(function (e) {
+      if (e.matches) {
+        element.classList.add(className);
+      } else {
+        element.classList.remove(className);
+      }
+    });
+  }
+
+  // Example usage
+  toggleClassBasedOnMediaQuery('(max-width: 565px)', document.querySelector('#prod-cat-slider'), 'uk-child-width-1-3'); // Change the media query and class name accordingly
+
   console.log("Admin Account Setting Page");
   let userData,
     selectedCategory,
@@ -302,9 +327,8 @@ if (userAcc && userAcc.acc_type === "user") {
     category = capitalizeWords(category);
     let link = replaceSpacesWithHyphens(category);
     const itemHTML = `
-    <div id="cat-${link}-${name}" class="cat-row ${
-      disableItem === true ? "disable" : ""
-    }"  disabled = ${disabled}>
+    <div id="cat-${link}-${name}" class="cat-row ${disableItem === true ? "disable" : ""
+      }"  disabled = ${disabled}>
                             <div class="col-12 cat-item">
                                 <div class="sub-cat-title">
                                     <img src="../../img/icons/placeholder.png" alt="${category}" data-src="${imageURL}" class="lazy-image"/>
