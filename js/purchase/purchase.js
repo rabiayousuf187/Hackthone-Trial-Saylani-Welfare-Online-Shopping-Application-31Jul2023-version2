@@ -6,7 +6,8 @@ console.log("userAcc get via is Auth()", userAcc);
 if (userAcc && userAcc.acc_type === "user") {
 
   // Function to add or remove a class based on media query
-  function toggleClassBasedOnMediaQuery(mediaQuery, element, className) {
+  let toggleClassBasedOnMediaQuery = (mediaQuery, element, className) => {
+    console.log("mediaQuery === ", mediaQuery)
     const mq = window.matchMedia(mediaQuery);
 
     // Initial check
@@ -28,6 +29,7 @@ if (userAcc && userAcc.acc_type === "user") {
 
   // Example usage
   toggleClassBasedOnMediaQuery('(max-width: 565px)', document.querySelector('#prod-cat-slider'), 'uk-child-width-1-3'); // Change the media query and class name accordingly
+  toggleClassBasedOnMediaQuery('(max-width: 1120px)', document.querySelector('#prod-cat-slider'), 'uk-child-width-1-3'); // Change the media query and class name accordingly
 
   console.log("Admin Account Setting Page");
   let userData,
