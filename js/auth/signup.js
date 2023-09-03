@@ -5,6 +5,7 @@ let localStExpCase = () => {
   localStorage.removeItem("userAcc");
 };
 
+
 userAcc === null || userAcc === undefined
   ? localStExpCase()
   : (userAcc = JSON.parse(userAcc));
@@ -14,9 +15,23 @@ if (userAcc === null || userAcc === undefined) {
 
   document.getElementById("Top").style.display = "block";
   // Use the Firebase Configuration functions
-  const { auth, get, createUserWithEmailAndPassword, database, ref, set } =
-    firebaseExports;
 
+  const { auth, createUserWithEmailAndPassword, database, ref, set, get } = firebaseExports;
+
+      // Get Category Data for admin
+  let getAllItemData = async () => {
+    try {
+      const snapshot = await get(ref(database, `categories/`));
+      // Data snapshot contains the data at the specified location
+      let itemsData = snapshot.val();
+      console.log("Retrieved data:", itemsData);
+      itemsData = Object.values(itemsData);
+      return itemsData;
+    } catch (error) {
+      console.error("Error getting data:", error);
+      return false;
+    }
+  };
   const signupForm = document.getElementById("signup-form");
 
   // Regular expressions for validation
@@ -181,6 +196,7 @@ if (userAcc === null || userAcc === undefined) {
               localStorage.setItem("userAcc", JSON.stringify(userAcc));
 
               getAllItemData().then((category) => {
+<<<<<<< HEAD
                 console.log("Retrieved data:", category);
                 localStorage.setItem(
                   "category",
@@ -188,6 +204,15 @@ if (userAcc === null || userAcc === undefined) {
                 );
                 
               });
+=======
+                  console.log("Retrieved data:", category);
+                  localStorage.setItem(
+                    "category",
+                    JSON.stringify(Object.values(category))
+                  );
+                  
+                });
+>>>>>>> c243bfeebd078643361be01f6b131b8b5102d7d9
               if (acc_type === "user") {
                 localStorage.setItem("isUserFirstLoad", "true");
                 alert("You are redirected to User Purchase Corner");
