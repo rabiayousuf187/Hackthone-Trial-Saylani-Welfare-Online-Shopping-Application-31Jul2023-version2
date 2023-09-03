@@ -18,18 +18,18 @@ if (userAcc && userAcc.acc_type === "user") {
     }
 
     // Listen for changes to the media query
-    mq.addListener(function (e) {
-      if (e.matches) {
-        element.classList.add(className);
-      } else {
-        element.classList.remove(className);
-      }
-    });
+    mq.addListener( (e) => {
+    if (e.matches) {
+      element.classList.add(className);
+    } else {
+      element.classList.remove(className);
+    }
+  });
   }
 
   // Example usage
   toggleClassBasedOnMediaQuery('(max-width: 565px)', document.querySelector('#prod-cat-slider'), 'uk-child-width-1-3'); // Change the media query and class name accordingly
-  toggleClassBasedOnMediaQuery('(max-width: 1120px)', document.querySelector('#prod-cat-slider'), 'uk-child-width-1-3'); // Change the media query and class name accordingly
+  toggleClassBasedOnMediaQuery('(max-width: 2048px)', document.querySelector('#prod-cat-slider'), 'uk-child-width-1-4'); // Change the media query and class name accordingly
 
   console.log("Admin Account Setting Page");
   let userData,
